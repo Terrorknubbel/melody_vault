@@ -3,6 +3,10 @@ const COLORS = {
   white: '#FFFFEC'
 };
 
+const FONT = {
+  regular: "Noto"
+};
+
 const SIZES = {
   xSmall: 10,
   small: 12,
@@ -12,4 +16,4 @@ const SIZES = {
   xxLarge: 32,
 };
 
-export { COLORS, SIZES };
+export { COLORS, SIZES, FONT };

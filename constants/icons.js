@@ -1,9 +1,11 @@
-import settings from "../assets/icons/settings.png";
-import search from "../assets/icons/search.png";
-import filter from "../assets/icons/filter.png";
+import settings from "../assets/icons/settings.png"
+import search from "../assets/icons/search.png"
+import filter from "../assets/icons/filter.png"
+import dots from "../assets/icons/dots.png"
 
 export default {
   settings,
   search,
-  filter
+  filter,
+  dots
 };
