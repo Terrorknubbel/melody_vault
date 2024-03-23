@@ -1,28 +1,33 @@
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
+import * as DB from './db';
 
 export const pdfUpload = async () => {
   let result = await DocumentPicker.getDocumentAsync({
     type: 'application/pdf',
   });
 
-  if (result.canceled === false) {
-    saveFile(result.assets[0].uri, result.assets[0].name)
+  if (!result.canceled) {
+    const filename = result.assets[0].name
+    const fileUri = result.assets[0].uri
+
+    const downloadDest = `${FileSystem.documentDirectory}/pdfs/${filename}`;
+    await FileSystem.copyAsync({ from: fileUri, to: downloadDest });
+
+    await DB.saveFile({filename: filename.replace('.pdf', '')})
+    return filename.replace('.pdf', '');
+  }else {
+    return null;
   }
 }
 
-const saveFile = async (uri, name) => {
-  const downloadDest = `${FileSystem.documentDirectory}/pdfs/${name}`;
-  await FileSystem.copyAsync({ from: uri, to: downloadDest });
-  getSavedFiles()
-};
+export const extractFileData = (fileName) => {
+  const parts = fileName.split('_');
+  const id = parts.shift();
+  const nameRaw = parts.join('_').replace('.pdf', '');
 
-const getSavedFiles = async () => {
-  const directoryUri = `${FileSystem.documentDirectory}/pdfs/`;
-  try {
-    const fileInfos = await FileSystem.getInfoAsync(directoryUri);
-    console.log("infos: ", fileInfos)
-  } catch (error) {
-    console.error('Error getting saved file names:', error);
-  }
-};
+  return {
+    id,
+    name: nameRaw?.replace('.pdf', '') ?? nameRaw
+  };
+}

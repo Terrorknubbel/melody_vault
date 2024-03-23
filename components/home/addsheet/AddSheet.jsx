@@ -3,7 +3,7 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import styles from './addsheet.style'
 import AddSheetModal from '../addsheetmodal/AddSheetModal';
 
-const AddSheet = () => {
+const AddSheet = ({ updateFileList }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
@@ -20,7 +20,7 @@ const AddSheet = () => {
         <Text style={styles.defaultText}>Neu</Text>
       </TouchableOpacity>
 
-      <AddSheetModal visible={modalVisible} onClose={closeModal} />
+      <AddSheetModal visible={modalVisible} onClose={closeModal} updateFileList={updateFileList} />
     </View>
   )
 }

@@ -1,10 +1,27 @@
-import { Text, ScrollView, View, SafeAreaView } from 'react-native';
-import { Stack } from 'expo-router';
+import { useEffect, useState } from 'react'
+import { Text, ScrollView, View, SafeAreaView } from 'react-native'
+import { Stack } from 'expo-router'
+import * as DB from '../utils/db'
 
 import { COLORS, SIZES, icons } from '../constants'
 import { ScreenHeaderBtn, Sheets, AddSheet } from '../components'
 
 const Home = () => {
+  const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    const loadAllMetadata = async () => {
+      const allData = await DB.getFiles();
+      const dbFilenames = allData.map((f) => f.filename );
+      setFileList(dbFilenames)
+    };
+    loadAllMetadata();
+  }, []);
+
+  const updateFileList = (newFileName) => {
+    setFileList((prevFileList) => [...prevFileList, newFileName]);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
       <Stack.Screen
@@ -27,11 +44,11 @@ const Home = () => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, padding: SIZES.medium }}>
-          <Sheets />
+          <Sheets fileList={fileList}/>
         </View>
       </ScrollView>
 
-      <AddSheet />
+      <AddSheet updateFileList={updateFileList}/>
     </SafeAreaView>
   );
 }
