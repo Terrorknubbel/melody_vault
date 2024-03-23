@@ -1,7 +1,9 @@
 import React from 'react'
 import { View } from 'react-native'
 
-import SheetCard from '../common/cards/SheetCard'
+import styles from './sheets.style'
+
+import SheetCard from '../../common/cards/SheetCard'
 
 const Sheets = ({ iconUrl, dimension, handlePress }) => {
   const data = [
@@ -16,7 +18,7 @@ const Sheets = ({ iconUrl, dimension, handlePress }) => {
   ]
 
   return (
-    <View>
+    <View style={styles.container}>
       {data?.map((sheet) => (
         <SheetCard
           key={sheet.id}

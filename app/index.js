@@ -2,7 +2,7 @@ import { Text, ScrollView, View, SafeAreaView } from 'react-native';
 import { Stack } from 'expo-router';
 
 import { COLORS, SIZES, icons } from '../constants'
-import { ScreenHeaderBtn, Sheets } from '../components'
+import { ScreenHeaderBtn, Sheets, AddSheet } from '../components'
 
 const Home = () => {
   return (
@@ -30,6 +30,8 @@ const Home = () => {
           <Sheets />
         </View>
       </ScrollView>
+
+      <AddSheet />
     </SafeAreaView>
   );
 }

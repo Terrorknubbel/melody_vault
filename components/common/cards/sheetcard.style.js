@@ -15,8 +15,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   btnContainer: {
-    paddingTop: SIZES.small,
-    paddingBottom: SIZES.small,
     width: "90%",
   },
   dotsContainer: {
