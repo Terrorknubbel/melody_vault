@@ -1,3 +1,5 @@
+import { moderateScale } from '../utils/Metrics';
+
 const COLORS = {
   dark: '#04091a',
   white: '#FFFFEC',
@@ -13,9 +15,9 @@ const FONT = {
 const SIZES = {
   xSmall: 10,
   small: 14,
-  medium: 16,
-  large: 20,
-  xLarge: 24,
+  medium: moderateScale(14),
+  large: moderateScale(20),
+  xLarge: moderateScale(24),
   xxLarge: 32,
 };
 

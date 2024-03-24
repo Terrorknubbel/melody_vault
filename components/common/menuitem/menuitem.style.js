@@ -2,21 +2,23 @@ import { StyleSheet } from "react-native";
 
 import { SIZES, COLORS, FONT } from "../../../constants";
 
+import { moderateScale } from '../../../utils/Metrics';
+
 const styles = StyleSheet.create({
   btnContainer: {
     flexDirection: 'row',
-    gap: 30,
-    alignItems: "center",
+    gap: moderateScale(30),
+    alignItems: "center"
   },
   btnImg: {
     width: SIZES.large,
-    height: SIZES.large,
+    height: SIZES.large
   },
   imgContainer: {
-    flex: 1,
+    flex: 1
   },
   defaultText: {
-    fontSize: SIZES.small,
+    fontSize: SIZES.medium,
     fontFamily: FONT.regular,
     color: COLORS.white
   },

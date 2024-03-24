@@ -2,6 +2,8 @@ import { StyleSheet } from "react-native";
 
 import { SIZES, COLORS, FONT } from "../../../constants";
 
+import { moderateScale } from '../../../utils/Metrics';
+
 const styles = StyleSheet.create({
   defaultText: {
     fontSize: SIZES.medium,
@@ -15,19 +17,20 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   btnContainer: {
-    width: "90%",
+    flex: 1
   },
   dotsContainer: {
-    width: "10%"
+    width: moderateScale(40),
+    alignItems: 'center'
   },
   dotsImg: {
     width: SIZES.large,
-    height: SIZES.large,
+    height: SIZES.large
   },
   separator: {
     height: 10,
     backgroundColor: 'white',
-    marginVertical: 10,
+    marginVertical: 10
   }
 });
 

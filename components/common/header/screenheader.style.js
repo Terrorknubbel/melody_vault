@@ -1,11 +1,13 @@
 import { StyleSheet } from "react-native";
 
+import { moderateScale } from '../../../utils/Metrics';
+
 const styles = StyleSheet.create({
   btnContainer: {
-    width: 40,
-    height: 40,
+    width: moderateScale(40),
+    aspectRatio: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   btnImg: (dimension) => ({
     width: dimension,

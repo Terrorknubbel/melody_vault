@@ -27,7 +27,6 @@ const Home = () => {
       <Stack.Screen
         options={{
           headerStyle: { backgroundColor: COLORS.dark },
-          headerShadowVisible: false,
           headerLeft: () => (
             <Text style={{fontSize: SIZES.large, color: COLORS.white, fontWeight: "bold"}}>Melody Vault</Text>
           ),
