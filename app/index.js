@@ -3,8 +3,8 @@ import { Text, ScrollView, View, SafeAreaView } from 'react-native'
 import { Stack } from 'expo-router'
 import * as DB from '../utils/db'
 
-import { COLORS, SIZES, icons } from '../constants'
-import { ScreenHeaderBtn, Sheets, AddSheet } from '../components'
+import { COLORS, SIZES } from '../constants'
+import { IconButton, Sheets, AddSheet } from '../components'
 
 const Home = () => {
   const [fileList, setFileList] = useState([]);
@@ -29,9 +29,9 @@ const Home = () => {
           ),
           headerRight: () => (
             <>
-              <ScreenHeaderBtn iconUrl={icons.filter} dimension="50%" />
-              <ScreenHeaderBtn iconUrl={icons.search} dimension="50%" />
-              <ScreenHeaderBtn iconUrl={icons.settings} dimension="50%" />
+              <IconButton iconName='filter' />
+              <IconButton iconName='search' />
+              <IconButton iconName='settings-outline' />
             </>
           ),
           headerTitle: ""
