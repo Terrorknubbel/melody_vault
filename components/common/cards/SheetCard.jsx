@@ -4,13 +4,13 @@ import { View, TouchableOpacity, Text, Image } from 'react-native'
 import styles from './sheetcard.style'
 import { icons } from '../../../constants';
 
-const SheetCard = ({ name, handlePress }) => {
+const SheetCard = ({ sheetKey, name, handlePress }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.btnContainer} onPress={handlePress}>
+      <TouchableOpacity style={styles.btnContainer} onPress={() => handlePress(sheetKey)}>
         <Text numberOfLines={2} style={styles.defaultText}>{name}</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.dotsContainer} onPress={handlePress}>
+      <TouchableOpacity style={styles.dotsContainer}>
         <Image
             source={icons.dots}
             resizeMode="cover"

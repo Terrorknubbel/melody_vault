@@ -14,20 +14,9 @@ export const pdfUpload = async () => {
     const downloadDest = `${FileSystem.documentDirectory}/pdfs/${filename}`;
     await FileSystem.copyAsync({ from: fileUri, to: downloadDest });
 
-    await DB.saveFile({filename: filename.replace('.pdf', '')})
-    return filename.replace('.pdf', '');
+    await DB.saveFile({filename: filename.replace('.pdf', ''), filepath: downloadDest})
+    return true;
   }else {
     return null;
   }
-}
-
-export const extractFileData = (fileName) => {
-  const parts = fileName.split('_');
-  const id = parts.shift();
-  const nameRaw = parts.join('_').replace('.pdf', '');
-
-  return {
-    id,
-    name: nameRaw?.replace('.pdf', '') ?? nameRaw
-  };
 }

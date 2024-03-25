@@ -7,10 +7,10 @@ import styles from './addsheetmodal.style'
 
 import MenuItem from '../../common/menuitem/MenuItem';
 
-const AddSheetModal = ({ visible, onClose, updateFileList}) => {
+const AddSheetModal = ({ visible, onClose, refresh}) => {
   const handlePdfUpload = async () => {
-    const filename = await pdfUpload();
-    filename && updateFileList(filename)
+    const success = await pdfUpload();
+    success && refresh()
     onClose()
   };
 

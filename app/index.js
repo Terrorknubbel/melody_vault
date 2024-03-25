@@ -9,18 +9,15 @@ import { ScreenHeaderBtn, Sheets, AddSheet } from '../components'
 const Home = () => {
   const [fileList, setFileList] = useState([]);
 
+  const loadAllMetadata = async () => {
+    const allData = await DB.getFiles();
+    const files = allData.map((f) => ({ id: f.id, name: f.filename}) );
+    setFileList(files)
+  };
+
   useEffect(() => {
-    const loadAllMetadata = async () => {
-      const allData = await DB.getFiles();
-      const dbFilenames = allData.map((f) => f.filename );
-      setFileList(dbFilenames)
-    };
     loadAllMetadata();
   }, []);
-
-  const updateFileList = (newFileName) => {
-    setFileList((prevFileList) => [...prevFileList, newFileName]);
-  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
@@ -47,7 +44,7 @@ const Home = () => {
         </View>
       </ScrollView>
 
-      <AddSheet updateFileList={updateFileList}/>
+      <AddSheet refresh={loadAllMetadata}/>
     </SafeAreaView>
   );
 }
