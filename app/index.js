@@ -40,11 +40,11 @@ const Home = () => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, padding: SIZES.medium }}>
-          <Sheets fileList={fileList}/>
+          <Sheets fileList={fileList} refresh={loadAllMetadata} />
         </View>
       </ScrollView>
 
-      <AddSheet refresh={loadAllMetadata}/>
+      <AddSheet refresh={loadAllMetadata} />
     </SafeAreaView>
   );
 }

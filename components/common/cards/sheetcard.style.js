@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    width: "100%",
+    width: "100%"
   },
   btnContainer: {
     flex: 1
@@ -26,11 +26,6 @@ const styles = StyleSheet.create({
   dotsImg: {
     width: SIZES.large,
     height: SIZES.large
-  },
-  separator: {
-    height: 10,
-    backgroundColor: 'white',
-    marginVertical: 10
   }
 });
 

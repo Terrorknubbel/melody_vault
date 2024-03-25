@@ -13,6 +13,7 @@ const AddSheet = ({ refresh }) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
   return (
     <View>
       <TouchableOpacity style={styles.container} onPress={openModal}>

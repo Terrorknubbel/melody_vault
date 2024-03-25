@@ -5,7 +5,7 @@ import styles from './sheets.style'
 
 import SheetCard from '../../common/cards/SheetCard'
 
-const Sheets = ({ fileList }) => {
+const Sheets = ({ fileList, refresh }) => {
   const router = useRouter();
 
   const handleSheetPress = (key) => {
@@ -15,7 +15,15 @@ const Sheets = ({ fileList }) => {
   return (
     <View style={styles.container}>
       {fileList.map((file) => {
-        return <SheetCard key={file.id} sheetKey={file.id} name={file.name} handlePress={handleSheetPress} />
+        return (
+          <SheetCard
+            key={file.id}
+            sheetKey={file.id}
+            name={file.name}
+            handlePress={handleSheetPress}
+            refresh={refresh}
+          />
+        )
       })}
     </View>
   )

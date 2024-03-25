@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Modal, View, TouchableWithoutFeedback } from 'react-native';
 import { pdfUpload } from '../../../utils';
 import { icons } from '../../../constants'
