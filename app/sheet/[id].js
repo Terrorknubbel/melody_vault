@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native'
+import { View, SafeAreaView } from 'react-native'
 import {  Stack, useGlobalSearchParams } from "expo-router";
 import * as DB from '../../utils/db'
 import Pdf from 'react-native-pdf';
@@ -36,12 +36,14 @@ const sheet = () => {
         }}
 
       />
-      <Pdf
-        style={styles.pdf}
-        source={{uri: pdfUri}}
-        enablePaging={true}
-        horizontal={true}
-      />
+      <View style={styles.container}>
+        <Pdf
+          style={styles.pdf}
+          source={{uri: pdfUri}}
+          enablePaging={true}
+          horizontal={true}
+        />
+      </View>
     </SafeAreaView>
   );
 }

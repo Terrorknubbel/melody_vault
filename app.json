@@ -3,7 +3,7 @@
     "name": "Melody Vault",
     "slug": "melody_vault",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "melodyvault",
     "userInterfaceStyle": "automatic",
