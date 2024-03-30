@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import { COLORS } from "../../../constants";
-import { moderateScale } from '../../../utils/Metrics';
+import { COLORS } from "../../../../constants";
+import { moderateScale } from '../../../../utils/Metrics';
 
 const styles = StyleSheet.create({
   modalView: {

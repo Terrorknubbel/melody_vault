@@ -3,9 +3,12 @@ import { moderateScale } from '../utils/Metrics';
 const COLORS = {
   dark: '#04091a',
   white: '#FFFFEC',
+  danger: '#f44336',
+  gray: '#AAA',
 
   background: '#6421c2',
-  backgroundNeutral: '#1c1c1e'
+  backgroundNeutral: '#1c1c1e',
+  backgroundLight: '#123'
 };
 
 const FONT = {

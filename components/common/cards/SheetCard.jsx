@@ -3,11 +3,14 @@ import { View, TouchableOpacity, Text, Image } from 'react-native'
 
 import styles from './sheetcard.style'
 import { icons } from '../../../constants';
-import SheetCardModal from '../../home/sheetcardmodal/SheetCardModal';
+import SheetCardModal from './sheetcardmodal/SheetCardModal';
+import SheetCardDestroyModal from './sheetcarddestroymodal/SheetCardDestroyModal';
 
 const SheetCard = ({ sheetKey, name, handlePress, refresh }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [cardPosition, setCardPosition] = useState(null);
+
+  const [destroyModalVisible, setDestroyModalVisible] = useState(false)
 
   const openModal = () => {
     setModalVisible(true);
@@ -16,6 +19,14 @@ const SheetCard = ({ sheetKey, name, handlePress, refresh }) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
+  const openDestroyModal = () => {
+    setDestroyModalVisible(true);
+  }
+
+  const closeDestroyModal = () => {
+    setDestroyModalVisible(false);
+  }
 
   const handleLayout = (event) => {
     const layout = event.nativeEvent.layout;
@@ -34,7 +45,13 @@ const SheetCard = ({ sheetKey, name, handlePress, refresh }) => {
             style={styles.dotsImg}
           />
       </TouchableOpacity>
-      <SheetCardModal visible={modalVisible} onClose={closeModal} refresh={refresh} cardPosition={cardPosition} />
+      <SheetCardModal
+        visible={modalVisible}
+        onDestroyOpen={openDestroyModal}
+        onClose={closeModal}
+        cardPosition={cardPosition}
+      />
+      <SheetCardDestroyModal visible={destroyModalVisible} onClose={closeDestroyModal} refresh={refresh} />
     </View>
   )
 }

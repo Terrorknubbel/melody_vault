@@ -1,17 +1,16 @@
 import { Modal, View, TouchableWithoutFeedback } from 'react-native';
-import { icons } from '../../../constants'
-
+import { icons } from '../../../../constants'
 import styles from './sheetcardmodal.style'
+import MenuItem from '../../menuitem/MenuItem';
+import { moderateScale } from '../../../../utils/Metrics';
 
-import MenuItem from '../../common/menuitem/MenuItem';
-import { moderateScale } from '../../../utils/Metrics';
-
-const SheetCardModal = ({ visible, onClose, refresh, cardPosition }) => {
+const SheetCardModal = ({ visible, onDestroyOpen, onClose, cardPosition }) => {
   const changeName = async () => {
     onClose()
   }
 
   const destroy = async () => {
+    onDestroyOpen()
     onClose()
   };
 
