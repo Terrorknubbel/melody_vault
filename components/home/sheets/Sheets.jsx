@@ -1,9 +1,8 @@
 import React from 'react'
-import { View } from 'react-native'
 import { useRouter } from "expo-router";
-import styles from './sheets.style'
+import { List } from 'react-native-paper';
 
-import SheetCard from '../../common/cards/SheetCard'
+import SheetCard from '../../common/cards/sheetcard/SheetCard'
 
 const Sheets = ({ fileList, refresh }) => {
   const router = useRouter();
@@ -13,7 +12,7 @@ const Sheets = ({ fileList, refresh }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <List.Section>
       {fileList.map((file) => {
         return (
           <SheetCard
@@ -25,7 +24,7 @@ const Sheets = ({ fileList, refresh }) => {
           />
         )
       })}
-    </View>
+    </List.Section>
   )
 }
 

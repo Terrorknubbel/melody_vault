@@ -1,27 +1,36 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
+import { useState } from 'react';
+import { View } from 'react-native';
+import { Button, Menu } from 'react-native-paper';
+
 import styles from './addsheet.style'
-import AddSheetModal from '../addsheetmodal/AddSheetModal';
+import { pdfUpload } from '../../../utils'
 
 const AddSheet = ({ refresh }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
 
-  const closeModal = () => {
-    setModalVisible(false);
+  const handlePdfUpload = async () => {
+    await pdfUpload();
+    refresh()
+    closeMenu()
   };
 
   return (
-    <View>
-      <TouchableOpacity style={styles.container} onPress={openModal}>
-        <Text style={styles.plus}>+</Text>
-        <Text style={styles.defaultText}>Neu</Text>
-      </TouchableOpacity>
-
-      <AddSheetModal visible={modalVisible} onClose={closeModal} refresh={refresh} />
+    <View style={styles.container}>
+      <Menu
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={
+          <Button style={styles.button} icon='plus' mode='contained' onPress={openMenu}>
+            Neu
+          </Button>
+        }
+      >
+        <Menu.Item leadingIcon="file-image-plus-outline" onPress={() => {}} title="Foto aufnehmen" />
+        <Menu.Item leadingIcon="file-pdf-box" onPress={handlePdfUpload} title="PDF hochladen" />
+      </Menu>
     </View>
   )
 }

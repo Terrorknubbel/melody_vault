@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { View, SafeAreaView } from 'react-native'
-import {  Stack, useGlobalSearchParams } from "expo-router";
+import { Stack, useGlobalSearchParams } from "expo-router";
 import * as DB from '../../utils/db'
 import Pdf from 'react-native-pdf';
+import { Appbar } from 'react-native-paper';
 
 import styles from './sheet.style'
-
 import { COLORS } from '../../constants'
-import { IconButton } from '../../components';
 
 const sheet = () => {
   const params = useGlobalSearchParams();
@@ -27,12 +26,11 @@ const sheet = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
       <Stack.Screen
         options={{
-          headerShown: true,
-          headerStyle: { backgroundColor: COLORS.dark },
-          headerLeft: () => (
-            <IconButton iconName='arrow-back' handlePress={() => navigation.goBack()}/>
-          ),
-          headerTitle: ""
+          header: () => (
+            <Appbar.Header style={{ backgroundColor: COLORS.dark }}>
+              <Appbar.BackAction onPress={() => navigation.goBack()} />
+            </Appbar.Header>
+          )
         }}
 
       />

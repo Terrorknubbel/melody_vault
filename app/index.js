@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Text, ScrollView, View, SafeAreaView } from 'react-native'
+import { ScrollView, View, SafeAreaView } from 'react-native'
 import { Stack } from 'expo-router'
 import * as DB from '../utils/db'
 
 import { COLORS, SIZES } from '../constants'
-import { IconButton, Sheets, AddSheet } from '../components'
+import { Sheets, AddSheet } from '../components'
+import { Appbar } from 'react-native-paper'
 
 const Home = () => {
   const [fileList, setFileList] = useState([]);
@@ -23,18 +24,16 @@ const Home = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
       <Stack.Screen
         options={{
-          headerStyle: { backgroundColor: COLORS.dark },
-          headerLeft: () => (
-            <Text style={{fontSize: SIZES.large, color: COLORS.white, fontWeight: "bold"}}>Melody Vault</Text>
-          ),
-          headerRight: () => (
-            <>
-              <IconButton iconName='filter' />
-              <IconButton iconName='search' />
-              <IconButton iconName='settings-outline' />
-            </>
-          ),
-          headerTitle: ""
+          header: () => (
+            <Appbar.Header style={{ backgroundColor: COLORS.dark }}>
+              <Appbar.Content
+                title="Melody Vault"
+              />
+              <Appbar.Action icon="filter-variant" color={COLORS.white} onPress={() => {}} />
+              <Appbar.Action icon="magnify" color={COLORS.white} onPress={() => {}} />
+              <Appbar.Action icon="cog" color={COLORS.white} onPress={() => {}} />
+            </Appbar.Header>
+          )
         }}
       />
 
