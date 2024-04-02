@@ -2,7 +2,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import * as DB from './db';
 
-export const pdfUpload = async () => {
+const pdfUpload = async () => {
   let result = await DocumentPicker.getDocumentAsync({
     type: 'application/pdf',
   });
@@ -19,4 +19,11 @@ export const pdfUpload = async () => {
   }else {
     return null;
   }
+}
+
+const destroyPDF = async (filepath) => await FileSystem.deleteAsync(filepath);
+
+export {
+  pdfUpload,
+  destroyPDF
 }

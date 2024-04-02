@@ -1,10 +1,9 @@
-import React from 'react'
 import { useRouter } from "expo-router";
 import { List } from 'react-native-paper';
 
 import SheetCard from '../../common/cards/sheetcard/SheetCard'
 
-const Sheets = ({ fileList, refresh }) => {
+const Sheets = ({ fileList, refresh, onSnackbarTrigger }) => {
   const router = useRouter();
 
   const handleSheetPress = (key) => {
@@ -21,6 +20,7 @@ const Sheets = ({ fileList, refresh }) => {
             name={file.name}
             handlePress={handleSheetPress}
             refresh={refresh}
+            onSnackbarTrigger={onSnackbarTrigger}
           />
         )
       })}

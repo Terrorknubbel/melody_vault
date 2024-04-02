@@ -1,7 +1,17 @@
 import { Button, Dialog, Portal, Text, useTheme } from 'react-native-paper';
+import * as DB from '../../../../utils/db';
+import { destroyPDF } from '../../../../utils';
 
-const SheetDestroyDialog = ({ visible, closeDialog, refresh }) => {
+const SheetDestroyDialog = ({ visible, closeDialog, refresh, sheetKey, sheetName, onSnackbarTrigger }) => {
   const theme = useTheme();
+
+  const deleteSheet = async () => {
+    const filepath = await DB.getFilepath(sheetKey)
+    await destroyPDF(filepath)
+    await DB.deleteFile(sheetKey)
+    refresh()
+    onSnackbarTrigger("Gelöscht", sheetName)
+  }
 
   return (
     <Portal>
@@ -20,7 +30,7 @@ const SheetDestroyDialog = ({ visible, closeDialog, refresh }) => {
               borderColor: theme.colors.error,
               borderRadius: 5
             }}
-            onPress={() => {}}
+            onPress={deleteSheet}
           >
             Löschen
           </Button>

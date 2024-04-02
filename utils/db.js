@@ -23,6 +23,14 @@ const saveFile = async (metadata) => {
   }, false);
 };
 
+const deleteFile = async (id) => {
+  const db = SQLite.openDatabase('melody_vault');
+  await db.transactionAsync(async tx => {
+    await tx.executeSqlAsync('DELETE FROM filedata WHERE id = (?)', [id]
+    );
+  }, false);
+};
+
 const getFiles = async () => {
   const db = SQLite.openDatabase('melody_vault');
   let result;
@@ -44,6 +52,7 @@ const getFilepath = async (id) => {
 export {
   initDatabase,
   saveFile,
+  deleteFile,
   getFiles,
   getFilepath
 }

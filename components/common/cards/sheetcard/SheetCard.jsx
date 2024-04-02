@@ -6,7 +6,7 @@ import { List } from 'react-native-paper';
 import SheetMenu from './SheetMenu'
 import SheetDestroyDialog from './SheetDestroyDialog';
 
-const SheetCard = ({ sheetKey, name, handlePress, refresh }) => {
+const SheetCard = ({ sheetKey, name, handlePress, refresh, onSnackbarTrigger }) => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [destroyDialogVisible, setDestroyDialogVisible] = useState(false)
 
@@ -23,8 +23,20 @@ const SheetCard = ({ sheetKey, name, handlePress, refresh }) => {
         onPress={() => handlePress(sheetKey)}
         style={styles.itemContainer}
       />
-      <SheetMenu visible={menuVisible} openMenu={openMenu} closeMenu={closeMenu} openDestroyDialog={openDestroyDialog} />
-      <SheetDestroyDialog visible={destroyDialogVisible} closeDialog={closeDestroyDialog} refresh={refresh} />
+      <SheetMenu
+        visible={menuVisible}
+        openMenu={openMenu}
+        closeMenu={closeMenu}
+        openDestroyDialog={openDestroyDialog}
+      />
+      <SheetDestroyDialog
+        visible={destroyDialogVisible}
+        closeDialog={closeDestroyDialog}
+        refresh={refresh}
+        sheetKey={sheetKey}
+        sheetName={name}
+        onSnackbarTrigger={onSnackbarTrigger}
+      />
     </View>
   )
 }

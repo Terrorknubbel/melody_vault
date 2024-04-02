@@ -5,16 +5,25 @@ import * as DB from '../utils/db'
 
 import { COLORS, SIZES } from '../constants'
 import { Sheets, AddSheet } from '../components'
-import { Appbar } from 'react-native-paper'
+import { Appbar, Snackbar } from 'react-native-paper'
 
 const Home = () => {
   const [fileList, setFileList] = useState([]);
+  const [snackbarVisible, setSnackbarVisible] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState({ action: '', text: '' });
 
   const loadAllMetadata = async () => {
     const allData = await DB.getFiles();
     const files = allData.map((f) => ({ id: f.id, name: f.filename}) );
     setFileList(files)
   };
+
+  const handleSnackbarTrigger = (action, text) => {
+    setSnackbarMessage({ action, text })
+    setSnackbarVisible(true);
+  }
+
+  const onDismissSnackBar = () => setSnackbarVisible(false);
 
   useEffect(() => {
     loadAllMetadata();
@@ -39,11 +48,19 @@ const Home = () => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, padding: SIZES.medium }}>
-          <Sheets fileList={fileList} refresh={loadAllMetadata} />
+          <Sheets fileList={fileList} refresh={loadAllMetadata} onSnackbarTrigger={handleSnackbarTrigger} />
         </View>
       </ScrollView>
 
       <AddSheet refresh={loadAllMetadata} />
+
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={onDismissSnackBar}
+        duration={3000}
+      >
+        {`${snackbarMessage.action}: ${snackbarMessage.text}`}
+      </Snackbar>
     </SafeAreaView>
   );
 }
