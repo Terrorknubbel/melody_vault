@@ -4,26 +4,25 @@ import { Button, Menu } from 'react-native-paper';
 
 import styles from './addsheet.style'
 import { pdfUpload } from '../../../utils'
+import { useFileStore } from '../../../store';
 
-const AddSheet = ({ refresh }) => {
+const AddSheet = () => {
   const [visible, setVisible] = useState(false);
-
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
+  const loadMetaData = useFileStore((store) => store.loadMetaData)
 
   const handlePdfUpload = async () => {
     await pdfUpload();
-    refresh()
-    closeMenu()
+    loadMetaData()
+    setVisible(false)
   };
 
   return (
     <View style={styles.container}>
       <Menu
         visible={visible}
-        onDismiss={closeMenu}
+        onDismiss={() => setVisible(false)}
         anchor={
-          <Button style={styles.button} icon='plus' mode='contained' onPress={openMenu}>
+          <Button style={styles.button} icon='plus' mode='contained' onPress={() => setVisible(true)}>
             Neu
           </Button>
         }

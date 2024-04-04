@@ -1,29 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { ScrollView, View, SafeAreaView } from 'react-native'
 import { Stack } from 'expo-router'
-import * as DB from '../utils/db'
 
 import { COLORS, SIZES } from '../constants'
 import { Sheets, AddSheet } from '../components'
 import { Appbar, Snackbar } from 'react-native-paper'
+import { useFileStore, useSnackbarStore, useSnackbarMessageStore } from '../store'
 
 const Home = () => {
-  const [fileList, setFileList] = useState([]);
-  const [snackbarVisible, setSnackbarVisible] = useState(false)
-  const [snackbarMessage, setSnackbarMessage] = useState({ action: '', text: '' });
+  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)
 
-  const loadAllMetadata = async () => {
-    const allData = await DB.getFiles();
-    const files = allData.map((f) => ({ id: f.id, name: f.filename}) );
-    setFileList(files)
-  };
+  const snackbarVisible = useSnackbarStore((state) => state.visible)
+  const setSnackbarVisible = useSnackbarStore((state) => state.setVisible)
 
-  const handleSnackbarTrigger = (action, text) => {
-    setSnackbarMessage({ action, text })
-    setSnackbarVisible(true);
-  }
-
-  const onDismissSnackBar = () => setSnackbarVisible(false);
+  const snackbarMessage = useSnackbarMessageStore((state) => state.snackbarMessage)
 
   useEffect(() => {
     loadAllMetadata();
@@ -48,15 +38,15 @@ const Home = () => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, padding: SIZES.medium }}>
-          <Sheets fileList={fileList} refresh={loadAllMetadata} onSnackbarTrigger={handleSnackbarTrigger} />
+          <Sheets/>
         </View>
       </ScrollView>
 
-      <AddSheet refresh={loadAllMetadata} />
+      <AddSheet />
 
       <Snackbar
         visible={snackbarVisible}
-        onDismiss={onDismissSnackBar}
+        onDismiss={() => setSnackbarVisible(false)}
         duration={3000}
       >
         {`${snackbarMessage.action}: ${snackbarMessage.text}`}
