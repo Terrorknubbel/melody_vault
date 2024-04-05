@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { List } from 'react-native-paper';
 
 import SheetCard from '../../common/cards/sheetcard/SheetCard'
-import { useFileStore } from "../../../store";
+import { useFileStore } from "../../../store/store";
 
 const Sheets = () => {
   const router = useRouter();

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import * as DB from './utils/db'
+import * as DB from '../utils/db'
 
 export const useFileStore = create((set) => ({
   fileList: [],

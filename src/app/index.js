@@ -5,7 +5,7 @@ import { Stack } from 'expo-router'
 import { COLORS, SIZES } from '../constants'
 import { Sheets, AddSheet } from '../components'
 import { Appbar, Snackbar } from 'react-native-paper'
-import { useFileStore, useSnackbarStore, useSnackbarMessageStore } from '../store'
+import { useFileStore, useSnackbarStore, useSnackbarMessageStore } from '../store/store'
 
 const Home = () => {
   const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)

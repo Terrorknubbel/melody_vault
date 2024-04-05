@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Menu, IconButton } from 'react-native-paper';
-import { useSheetDestroyDialogStore } from '../../../../store';
+import { useSheetDestroyDialogStore } from '../../../../store/store';
 
 const SheetMenu = () => {
   const [visible, setVisible] = useState(false);

@@ -1,9 +1,9 @@
 import { Button, Dialog, Portal, Text, useTheme } from 'react-native-paper';
 import * as DB from '../../../../utils/db';
 import { destroyPDF } from '../../../../utils';
-import { useSnackbarMessageStore, useSnackbarStore } from '../../../../store';
-import { useFileStore } from '../../../../store';
-import { useSheetDestroyDialogStore } from '../../../../store';
+import { useSnackbarMessageStore, useSnackbarStore } from '../../../../store/store';
+import { useFileStore } from '../../../../store/store';
+import { useSheetDestroyDialogStore } from '../../../../store/store';
 
 const SheetDestroyDialog = ({ sheetKey, sheetName }) => {
   const theme = useTheme();

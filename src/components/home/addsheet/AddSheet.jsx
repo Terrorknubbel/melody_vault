@@ -4,7 +4,7 @@ import { Button, Menu } from 'react-native-paper';
 
 import styles from './addsheet.style'
 import { pdfUpload } from '../../../utils'
-import { useFileStore } from '../../../store';
+import { useFileStore } from '../../../store/store';
 
 const AddSheet = () => {
   const [visible, setVisible] = useState(false);
