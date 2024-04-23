@@ -6,12 +6,12 @@ const guidelineBaseWidth = 375;
 const guidelineBaseHeight = 812;
 
 // width, marginLeft, marginRight, marginHorizontal, paddingLeft, paddingRight, paddingHorizontal
-const horizontalScale = (size) => (width / guidelineBaseWidth) * size;
+const horizontalScale = (size: number): number => (width / guidelineBaseWidth) * size;
 
 // height, marginTop, marginBottom, marginVertical, line-height, paddingTop, paddingBottom, paddingVertical
-const verticalScale = (size) => (height / guidelineBaseHeight) * size;
+const verticalScale = (size: number): number => (height / guidelineBaseHeight) * size;
 
 // font-size, borderRadius
-const moderateScale = (size, factor = 0.5) => size + (horizontalScale(size) - size) * factor;
+const moderateScale = (size: number, factor: number = 0.5): number => size + (horizontalScale(size) - size) * factor;
 
 export { horizontalScale, verticalScale, moderateScale };

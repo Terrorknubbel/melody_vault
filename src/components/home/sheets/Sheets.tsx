@@ -8,7 +8,7 @@ const Sheets = () => {
   const router = useRouter();
   const fileList = useFileStore((state) => state.fileList)
 
-  const handleSheetPress = (key) => {
+  const handleSheetPress = (key: number): void => {
     router.push(`/sheet/${key}`)
   }
 
@@ -19,7 +19,7 @@ const Sheets = () => {
           <SheetCard
             key={file.id}
             sheetKey={file.id}
-            name={file.name}
+            name={file.filename}
             handlePress={handleSheetPress}
           />
         )

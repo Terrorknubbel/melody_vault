@@ -8,9 +8,9 @@ import { useFileStore } from '../../../store/store';
 
 const AddSheet = () => {
   const [visible, setVisible] = useState(false);
-  const loadMetaData = useFileStore((store) => store.loadMetaData)
+  const loadMetaData = useFileStore((store) => store.loadAllMetadata)
 
-  const handlePdfUpload = async () => {
+  const handlePdfUpload = async (): Promise<void> => {
     await pdfUpload();
     loadMetaData()
     setVisible(false)

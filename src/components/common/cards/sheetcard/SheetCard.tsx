@@ -5,7 +5,13 @@ import { List } from 'react-native-paper';
 import SheetMenu from './SheetMenu'
 import SheetDestroyDialog from './SheetDestroyDialog';
 
-const SheetCard = ({ sheetKey, name, handlePress }) => {
+interface Props {
+  sheetKey: number,
+  name: string,
+  handlePress: (key: number) => void
+}
+
+const SheetCard = ({ sheetKey, name, handlePress }: Props) => {
   return (
     <View style={styles.container}>
       <List.Item

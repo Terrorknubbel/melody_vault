@@ -13,7 +13,7 @@ const Home = () => {
   const snackbarVisible = useSnackbarStore((state) => state.visible)
   const setSnackbarVisible = useSnackbarStore((state) => state.setVisible)
 
-  const snackbarMessage = useSnackbarMessageStore((state) => state.snackbarMessage)
+  const snackbarMessage = useSnackbarMessageStore((state) => state.message)
 
   useEffect(() => {
     loadAllMetadata();

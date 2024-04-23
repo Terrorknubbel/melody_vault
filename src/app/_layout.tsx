@@ -4,6 +4,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { initDatabase } from '../utils/db';
 import { PaperProvider, MD3LightTheme as DefaultTheme } from 'react-native-paper';
+import { View } from 'react-native';
 
 const darkScheme = {
   "colors": {
@@ -78,7 +79,9 @@ export default function Layout() {
 
   return (
     <PaperProvider theme={theme}>
-      <Stack onLayout={onLayoutRootView} />
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <Stack />
+      </View>
     </PaperProvider>
   )
 }

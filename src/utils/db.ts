@@ -1,8 +1,9 @@
 import * as SQLite from 'expo-sqlite';
+import type { FileMetadata, FileData } from '../shared/types'
 
-const initDatabase = async () => {
+const initDatabase = async (): Promise<void> => {
   const db = SQLite.openDatabase('melody_vault');
-  await db.transaction(
+  db.transaction(
     (tx) => {
       tx.executeSql(
         'CREATE TABLE IF NOT EXISTS filedata (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT, filepath TEXT);'
@@ -14,7 +15,7 @@ const initDatabase = async () => {
   console.log("Database initialization complete");
 };
 
-const saveFile = async (metadata) => {
+const saveFile = async (metadata: FileMetadata): Promise<void> => {
   const db = SQLite.openDatabase('melody_vault');
   await db.transactionAsync(async tx => {
     await tx.executeSqlAsync('INSERT INTO filedata (filename, filepath) VALUES (?, ?)',
@@ -23,7 +24,7 @@ const saveFile = async (metadata) => {
   }, false);
 };
 
-const deleteFile = async (id) => {
+const deleteFile = async (id: number): Promise<void> => {
   const db = SQLite.openDatabase('melody_vault');
   await db.transactionAsync(async tx => {
     await tx.executeSqlAsync('DELETE FROM filedata WHERE id = (?)', [id]
@@ -31,22 +32,26 @@ const deleteFile = async (id) => {
   }, false);
 };
 
-const getFiles = async () => {
+const getFiles = async (): Promise<FileData[]> => {
   const db = SQLite.openDatabase('melody_vault');
-  let result;
+  let files: FileData[] = [];
+
   await db.transactionAsync(async tx => {
-    result = await tx.executeSqlAsync('SELECT * FROM filedata', []);
+    let result: SQLite.ResultSet = await tx.executeSqlAsync('SELECT * FROM filedata', []);
+
+    files = Array.from(result.rows) as FileData[]
   }, true);
-  return result.rows
+  return files
 }
 
-const getFilepath = async (id) => {
+const getFilepath = async (id: number): Promise<string> => {
   const db = SQLite.openDatabase('melody_vault');
-  let result;
+  let result: SQLite.ResultSet | undefined;
   await db.transactionAsync(async tx => {
     result = await tx.executeSqlAsync('SELECT filepath FROM filedata WHERE id = (?)', [id]);
   }, true);
-  return result.rows[0].filepath
+
+  return result?.rows[0].filepath
 }
 
 export {

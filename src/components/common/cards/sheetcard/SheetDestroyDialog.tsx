@@ -5,26 +5,33 @@ import { useSnackbarMessageStore, useSnackbarStore } from '../../../../store/sto
 import { useFileStore } from '../../../../store/store';
 import { useSheetDestroyDialogStore } from '../../../../store/store';
 
-const SheetDestroyDialog = ({ sheetKey, sheetName }) => {
+interface Props {
+  sheetKey: number,
+  sheetName: string
+}
+
+const SheetDestroyDialog = ({ sheetKey, sheetName }: Props) => {
   const theme = useTheme();
 
   const visible = useSheetDestroyDialogStore((store) => store.visible)
   const setVisible = useSheetDestroyDialogStore((store) => store.setVisible)
 
-  const setSnackbarVisible = useSnackbarStore((store) => store.setSnackbarVisible)
-  const setSnackbarMessage = useSnackbarMessageStore((store) => store.setSnackbarMessage)
+  const setSnackbarVisible = useSnackbarStore((store) => store.setVisible)
+  const setSnackbarMessage = useSnackbarMessageStore((store) => store.setMessage)
 
-  const loadMetaData = useFileStore((state) => state.loadMetaData)
+  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)
 
-  const deleteSheet = async () => {
+  const deleteSheet = async (): Promise<void> => {
     const filepath = await DB.getFilepath(sheetKey)
+
     await destroyPDF(filepath)
     await DB.deleteFile(sheetKey)
 
-    loadMetaData()
+    loadAllMetadata()
 
     setSnackbarMessage({ action: "Gelöscht", text: sheetName })
     setSnackbarVisible(true);
+    setVisible(false)
   }
 
   return (

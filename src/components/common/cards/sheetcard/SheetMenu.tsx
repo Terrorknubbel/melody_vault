@@ -6,9 +6,9 @@ const SheetMenu = () => {
   const [visible, setVisible] = useState(false);
   const setSheetDestroyDialogVisible = useSheetDestroyDialogStore((store) => store.setVisible)
 
-  const changeName = () => setVisible(false)
+  const changeName = (): void => setVisible(false)
 
-  const destroy = async () => {
+  const destroy = (): void => {
     setSheetDestroyDialogVisible(true)
     setVisible(false)
   };
