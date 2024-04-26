@@ -12,7 +12,7 @@ const COLORS = {
 };
 
 const FONT = {
-  regular: "Noto"
+  regular: 'Noto'
 };
 
 const SIZES = {
@@ -21,7 +21,7 @@ const SIZES = {
   medium: moderateScale(14),
   large: moderateScale(20),
   xLarge: moderateScale(24),
-  xxLarge: 32,
+  xxLarge: 32
 };
 
 export { COLORS, SIZES, FONT };

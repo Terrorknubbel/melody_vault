@@ -1,14 +1,14 @@
-import { View } from 'react-native'
-
-import styles from './sheetcard.style'
+import { View } from 'react-native';
 import { List } from 'react-native-paper';
-import SheetMenu from './SheetMenu'
+
 import SheetDestroyDialog from './SheetDestroyDialog';
+import SheetMenu from './SheetMenu';
+import styles from './sheetcard.style';
 
 interface Props {
-  sheetKey: number,
-  name: string,
-  handlePress: (key: number) => void
+  sheetKey: number;
+  name: string;
+  handlePress: (key: number) => void;
 }
 
 const SheetCard = ({ sheetKey, name, handlePress }: Props) => {
@@ -22,7 +22,7 @@ const SheetCard = ({ sheetKey, name, handlePress }: Props) => {
       <SheetMenu />
       <SheetDestroyDialog sheetKey={sheetKey} sheetName={name} />
     </View>
-  )
-}
+  );
+};
 
-export default SheetCard
+export default SheetCard;

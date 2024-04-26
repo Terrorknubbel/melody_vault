@@ -1,6 +1,7 @@
 import { create } from 'zustand';
+
+import type { FileData } from '../shared/types';
 import * as DB from '../utils/db';
-import type { FileData } from '../shared/types'
 
 interface FileStoreState {
   fileList: FileData[];
@@ -28,20 +29,24 @@ export const useFileStore = create<FileStoreState>((set) => ({
   setFileList: (fileList) => set({ fileList }),
   loadAllMetadata: async () => {
     set({ fileList: await DB.getFiles() });
-  },
+  }
 }));
 
 export const useSnackbarStore = create<SnackbarStoreState>((set) => ({
   visible: false,
-  setVisible: (visible) => set({ visible }),
+  setVisible: (visible) => set({ visible })
 }));
 
-export const useSnackbarMessageStore = create<SnackbarMessageStoreState>((set) => ({
-  message: { action: '', text: '' },
-  setMessage: (message) => set({ message }),
-}));
+export const useSnackbarMessageStore = create<SnackbarMessageStoreState>(
+  (set) => ({
+    message: { action: '', text: '' },
+    setMessage: (message) => set({ message })
+  })
+);
 
-export const useSheetDestroyDialogStore = create<SheetDestroyDialogStoreState>((set) => ({
-  visible: false,
-  setVisible: (visible) => set({ visible }),
-}));
+export const useSheetDestroyDialogStore = create<SheetDestroyDialogStoreState>(
+  (set) => ({
+    visible: false,
+    setVisible: (visible) => set({ visible })
+  })
+);

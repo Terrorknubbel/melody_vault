@@ -1,42 +1,52 @@
 import { Button, Dialog, Portal, Text, useTheme } from 'react-native-paper';
-import * as DB from '../../../../utils/db';
+
+import {
+  useSnackbarMessageStore,
+  useSnackbarStore,
+  useFileStore,
+  useSheetDestroyDialogStore
+} from '../../../../store/store';
 import { destroyPDF } from '../../../../utils';
-import { useSnackbarMessageStore, useSnackbarStore } from '../../../../store/store';
-import { useFileStore } from '../../../../store/store';
-import { useSheetDestroyDialogStore } from '../../../../store/store';
+import * as DB from '../../../../utils/db';
 
 interface Props {
-  sheetKey: number,
-  sheetName: string
+  sheetKey: number;
+  sheetName: string;
 }
 
 const SheetDestroyDialog = ({ sheetKey, sheetName }: Props) => {
   const theme = useTheme();
 
-  const visible = useSheetDestroyDialogStore((store) => store.visible)
-  const setVisible = useSheetDestroyDialogStore((store) => store.setVisible)
+  const visible = useSheetDestroyDialogStore((store) => store.visible);
+  const setVisible = useSheetDestroyDialogStore((store) => store.setVisible);
 
-  const setSnackbarVisible = useSnackbarStore((store) => store.setVisible)
-  const setSnackbarMessage = useSnackbarMessageStore((store) => store.setMessage)
+  const setSnackbarVisible = useSnackbarStore((store) => store.setVisible);
+  const setSnackbarMessage = useSnackbarMessageStore(
+    (store) => store.setMessage
+  );
 
-  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)
+  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata);
 
   const deleteSheet = async (): Promise<void> => {
-    const filepath = await DB.getFilepath(sheetKey)
+    const filepath = await DB.getFilepath(sheetKey);
 
-    await destroyPDF(filepath)
-    await DB.deleteFile(sheetKey)
+    await destroyPDF(filepath);
+    await DB.deleteFile(sheetKey);
 
-    loadAllMetadata()
+    loadAllMetadata();
 
-    setSnackbarMessage({ action: "Gelöscht", text: sheetName })
+    setSnackbarMessage({ action: 'Gelöscht', text: sheetName });
     setSnackbarVisible(true);
-    setVisible(false)
-  }
+    setVisible(false);
+  };
 
   return (
     <Portal>
-      <Dialog visible={visible} onDismiss={() => setVisible(false)} style={{ marginLeft: "auto", marginRight: "auto" }}>
+      <Dialog
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        style={{ marginLeft: 'auto', marginRight: 'auto' }}
+      >
         <Dialog.Title>Unwiderruflich löschen?</Dialog.Title>
         <Dialog.Content>
           <Text variant="bodyLarge">
@@ -69,6 +79,6 @@ const SheetDestroyDialog = ({ sheetKey, sheetName }: Props) => {
       </Dialog>
     </Portal>
   );
-}
+};
 
 export default SheetDestroyDialog;

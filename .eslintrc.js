@@ -1,0 +1,14 @@
+module.exports = {
+  extends: ['universe/native'],
+  rules: {
+    'react-hooks/exhaustive-deps': 'warn',
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        trailingComma: 'none'
+      }
+    ]
+  },
+  ignorePatterns: ['expo-env.d.ts']
+};

@@ -1,25 +1,28 @@
-import { useEffect } from 'react'
-import { ScrollView, View, SafeAreaView } from 'react-native'
-import { Stack } from 'expo-router'
+import { Stack } from 'expo-router';
+import { useEffect } from 'react';
+import { ScrollView, View, SafeAreaView } from 'react-native';
+import { Appbar, Snackbar } from 'react-native-paper';
 
-import { COLORS, SIZES } from '../constants'
-import { Appbar, Snackbar } from 'react-native-paper'
-import { useFileStore, useSnackbarStore, useSnackbarMessageStore } from '../store/store'
-
-import Sheets from '../components/home/sheets/Sheets'
-import AddSheet from '../components/home/addsheet/AddSheet'
+import AddSheet from '../components/home/addsheet/AddSheet';
+import Sheets from '../components/home/sheets/Sheets';
+import { COLORS, SIZES } from '../constants';
+import {
+  useFileStore,
+  useSnackbarStore,
+  useSnackbarMessageStore
+} from '../store/store';
 
 const Home = () => {
-  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)
+  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata);
 
-  const snackbarVisible = useSnackbarStore((state) => state.visible)
-  const setSnackbarVisible = useSnackbarStore((state) => state.setVisible)
+  const snackbarVisible = useSnackbarStore((state) => state.visible);
+  const setSnackbarVisible = useSnackbarStore((state) => state.setVisible);
 
-  const snackbarMessage = useSnackbarMessageStore((state) => state.message)
+  const snackbarMessage = useSnackbarMessageStore((state) => state.message);
 
   useEffect(() => {
     loadAllMetadata();
-  }, []);
+  }, [loadAllMetadata]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
@@ -27,12 +30,22 @@ const Home = () => {
         options={{
           header: () => (
             <Appbar.Header style={{ backgroundColor: COLORS.dark }}>
-              <Appbar.Content
-                title="Melody Vault"
+              <Appbar.Content title="Melody Vault" />
+              <Appbar.Action
+                icon="filter-variant"
+                color={COLORS.white}
+                onPress={() => {}}
               />
-              <Appbar.Action icon="filter-variant" color={COLORS.white} onPress={() => {}} />
-              <Appbar.Action icon="magnify" color={COLORS.white} onPress={() => {}} />
-              <Appbar.Action icon="cog" color={COLORS.white} onPress={() => {}} />
+              <Appbar.Action
+                icon="magnify"
+                color={COLORS.white}
+                onPress={() => {}}
+              />
+              <Appbar.Action
+                icon="cog"
+                color={COLORS.white}
+                onPress={() => {}}
+              />
             </Appbar.Header>
           )
         }}
@@ -40,7 +53,7 @@ const Home = () => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ flex: 1, padding: SIZES.medium }}>
-          <Sheets/>
+          <Sheets />
         </View>
       </ScrollView>
 
@@ -55,6 +68,6 @@ const Home = () => {
       </Snackbar>
     </SafeAreaView>
   );
-}
+};
 
 export default Home;

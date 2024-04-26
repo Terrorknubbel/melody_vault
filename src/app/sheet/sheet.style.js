@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,10 +8,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   pdf: {
-      flex:1,
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'white'
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white'
   }
 });
 
