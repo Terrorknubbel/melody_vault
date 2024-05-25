@@ -4,11 +4,11 @@
     "slug": "melody_vault",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/assets/images/icon.png",
     "scheme": "melodyvault",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/icon.png",
+      "image": "./src/assets/images/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
+        "foregroundImage": "./src/assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": [
@@ -34,7 +34,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/icon.png"
+      "favicon": "./src/assets/images/icon.png"
     },
     "plugins": [
       "expo-router",
