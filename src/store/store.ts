@@ -19,11 +19,6 @@ interface SnackbarMessageStoreState {
   setMessage: (message: { action: string; text: string }) => void;
 }
 
-interface SheetDestroyDialogStoreState {
-  visible: boolean;
-  setVisible: (visible: boolean) => void;
-}
-
 export const useFileStore = create<FileStoreState>((set) => ({
   fileList: [],
   setFileList: (fileList) => set({ fileList }),
@@ -41,12 +36,5 @@ export const useSnackbarMessageStore = create<SnackbarMessageStoreState>(
   (set) => ({
     message: { action: '', text: '' },
     setMessage: (message) => set({ message })
-  })
-);
-
-export const useSheetDestroyDialogStore = create<SheetDestroyDialogStoreState>(
-  (set) => ({
-    visible: false,
-    setVisible: (visible) => set({ visible })
   })
 );

@@ -3,22 +3,25 @@ import { Button, Dialog, Portal, Text, useTheme } from 'react-native-paper';
 import {
   useSnackbarMessageStore,
   useSnackbarStore,
-  useFileStore,
-  useSheetDestroyDialogStore
-} from '../../../../store/store';
-import { destroyPDF } from '../../../../utils';
-import * as DB from '../../../../utils/db';
+  useFileStore
+} from '@/src/store/store';
+import { destroyPDF } from '@/src/utils';
+import * as DB from '@/src/utils/db';
 
 interface Props {
   sheetKey: number;
   sheetName: string;
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
 }
 
-const SheetDestroyDialog = ({ sheetKey, sheetName }: Props) => {
+const SheetDestroyDialog = ({
+  sheetKey,
+  sheetName,
+  visible,
+  setVisible
+}: Props) => {
   const theme = useTheme();
-
-  const visible = useSheetDestroyDialogStore((store) => store.visible);
-  const setVisible = useSheetDestroyDialogStore((store) => store.setVisible);
 
   const setSnackbarVisible = useSnackbarStore((store) => store.setVisible);
   const setSnackbarMessage = useSnackbarMessageStore(
@@ -40,12 +43,17 @@ const SheetDestroyDialog = ({ sheetKey, sheetName }: Props) => {
     setVisible(false);
   };
 
+  if (!visible) {
+    return null;
+  }
+
   return (
     <Portal>
       <Dialog
-        visible={visible}
+        visible
         onDismiss={() => setVisible(false)}
         style={{ marginLeft: 'auto', marginRight: 'auto' }}
+        testID="DestroyDialog"
       >
         <Dialog.Title>Unwiderruflich löschen?</Dialog.Title>
         <Dialog.Content>
@@ -72,6 +80,7 @@ const SheetDestroyDialog = ({ sheetKey, sheetName }: Props) => {
               borderRadius: 5
             }}
             onPress={() => setVisible(false)}
+            testID="DestroyDialog-cancel-button"
           >
             Abbrechen
           </Button>
