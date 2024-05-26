@@ -18,6 +18,10 @@ const SheetMenu = ({ setDestroyDialogVisible }: Props) => {
     <Menu
       visible={visible}
       onDismiss={() => setVisible(false)}
+      contentStyle={{
+        marginTop: 40,
+        marginRight: 10
+      }}
       anchor={
         <IconButton
           icon="dots-vertical"

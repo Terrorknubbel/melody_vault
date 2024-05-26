@@ -43,6 +43,7 @@ const AddSheet = () => {
       <Menu
         visible={visible}
         onDismiss={() => setVisible(false)}
+        contentStyle={styles.menu}
         anchor={
           <Button
             style={styles.button}

@@ -76,7 +76,7 @@ const Home = () => {
         showsVerticalScrollIndicator
         keyboardShouldPersistTaps="handled"
       >
-        <View style={{ flex: 1, padding: SIZES.medium }}>
+        <View style={{ flex: 1 }}>
           <Sheets />
         </View>
       </ScrollView>
