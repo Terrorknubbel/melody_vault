@@ -4,6 +4,7 @@ import { ScrollView, View, SafeAreaView } from 'react-native';
 import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper';
 
 import AddSheet from '../components/home/addsheet/AddSheet';
+import Filter from '../components/home/menu/filter/filter';
 import Sheets from '../components/home/sheets/Sheets';
 import { COLORS, SIZES } from '../constants';
 import {
@@ -60,11 +61,7 @@ const Home = () => {
                 color={COLORS.white}
                 onPress={() => setIsSearchVisible(true)}
               />
-              <Appbar.Action
-                icon="filter-variant"
-                color={COLORS.white}
-                onPress={() => {}}
-              />
+              <Filter />
               <Appbar.Action
                 icon="cog"
                 color={COLORS.white}

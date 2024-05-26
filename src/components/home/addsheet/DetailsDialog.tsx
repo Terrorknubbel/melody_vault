@@ -57,7 +57,7 @@ const DetailsDialog = ({
             }}
           />
           <TextInput
-            label="Name"
+            label="Titel"
             value={sheetName}
             mode="outlined"
             onChangeText={(text) => setSheetName(text)}

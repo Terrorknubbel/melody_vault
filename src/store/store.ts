@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+import { FilterEnum } from '../shared/enums';
 import type { FileData } from '../shared/types';
 import * as DB from '../utils/db';
 
@@ -9,6 +10,8 @@ interface FileStoreState {
   loadAllMetadata: () => Promise<void>;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  filter: FilterEnum;
+  setFilter: (filter: FilterEnum) => void;
 }
 
 interface SnackbarStoreState {
@@ -28,7 +31,9 @@ export const useFileStore = create<FileStoreState>((set) => ({
     set({ fileList: await DB.getFiles() });
   },
   searchQuery: '',
-  setSearchQuery: (query: string) => set({ searchQuery: query })
+  setSearchQuery: (query: string) => set({ searchQuery: query }),
+  filter: FilterEnum.TitleAsc,
+  setFilter: (filter: FilterEnum) => set({ filter })
 }));
 
 export const useSnackbarStore = create<SnackbarStoreState>((set) => ({
