@@ -2,18 +2,40 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { Button, Menu } from 'react-native-paper';
 
+import DetailsDialog from './DetailsDialog';
 import styles from './addsheet.style';
-import { useFileStore } from '../../../store/store';
-import { pdfUpload } from '../../../utils';
+
+import { useFileStore } from '@/src/store/store';
+import { pdfUpload, savePdf } from '@/src/utils';
 
 const AddSheet = () => {
+  const [fileData, setFileData] = useState<{
+    filename: string;
+    fileUri: string;
+  } | null>(null);
+
   const [visible, setVisible] = useState(false);
+  const [detailsDialogVisible, setDetailsDialogVisible] = useState(false);
+
   const loadMetaData = useFileStore((store) => store.loadAllMetadata);
 
-  const handlePdfUpload = async (): Promise<void> => {
-    await pdfUpload();
-    loadMetaData();
+  const handlePdfUpload = async () => {
     setVisible(false);
+
+    const result = await pdfUpload();
+    if (result) {
+      setFileData(result);
+      setDetailsDialogVisible(true);
+    }
+  };
+
+  const handlePdfSave = async (filename: string) => {
+    setVisible(false);
+
+    await savePdf(filename, fileData?.fileUri);
+
+    loadMetaData();
+    setDetailsDialogVisible(false);
   };
 
   return (
@@ -43,6 +65,15 @@ const AddSheet = () => {
           title="PDF hochladen"
         />
       </Menu>
+      {fileData && (
+        <DetailsDialog
+          initialSheetName={fileData.filename}
+          fileUri={fileData.fileUri}
+          visible={detailsDialogVisible}
+          setVisible={setDetailsDialogVisible}
+          handleSave={handlePdfSave}
+        />
+      )}
     </View>
   );
 };

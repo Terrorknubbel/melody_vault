@@ -63,7 +63,7 @@ const SheetDestroyDialog = ({
         </Dialog.Content>
         <Dialog.Actions style={{ gap: 5 }}>
           <Button
-            mode="outlined"
+            mode="text"
             textColor={theme.colors.error}
             style={{
               borderColor: theme.colors.error,
@@ -74,7 +74,7 @@ const SheetDestroyDialog = ({
             Löschen
           </Button>
           <Button
-            mode="outlined"
+            mode="text"
             textColor={theme.colors.elevation.level5}
             style={{
               borderRadius: 5
