@@ -6,7 +6,7 @@ import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper';
 import AddSheet from '../components/home/addsheet/AddSheet';
 import Filter from '../components/home/menu/filter/filter';
 import Sheets from '../components/home/sheets/Sheets';
-import { COLORS, SIZES } from '../constants';
+import { COLORS } from '../constants';
 import {
   useFileStore,
   useSnackbarStore,
