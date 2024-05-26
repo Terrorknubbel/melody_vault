@@ -5,10 +5,15 @@ import SheetCard from '../../common/cards/sheetcard/SheetCard';
 
 const Sheets = () => {
   const fileList = useFileStore((state) => state.fileList);
+  const searchQuery = useFileStore((state) => state.searchQuery);
+
+  const filteredList = fileList.filter((file) =>
+    file.filename.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <List.Section>
-      {fileList.map((file) => {
+      {filteredList.map((file) => {
         return (
           <SheetCard key={file.id} sheetKey={file.id} name={file.filename} />
         );

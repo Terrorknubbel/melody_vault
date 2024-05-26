@@ -1,7 +1,7 @@
 import { Stack } from 'expo-router';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ScrollView, View, SafeAreaView } from 'react-native';
-import { Appbar, Snackbar } from 'react-native-paper';
+import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper';
 
 import AddSheet from '../components/home/addsheet/AddSheet';
 import Sheets from '../components/home/sheets/Sheets';
@@ -13,6 +13,11 @@ import {
 } from '../store/store';
 
 const Home = () => {
+  const { colors } = useTheme();
+
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const searchQuery = useFileStore((state) => state.searchQuery);
+  const setSearchQuery = useFileStore((state) => state.setSearchQuery);
   const loadAllMetadata = useFileStore((state) => state.loadAllMetadata);
 
   const snackbarVisible = useSnackbarStore((state) => state.visible);
@@ -30,14 +35,33 @@ const Home = () => {
         options={{
           header: () => (
             <Appbar.Header style={{ backgroundColor: COLORS.dark }}>
-              <Appbar.Content title="Melody Vault" />
-              <Appbar.Action
-                icon="filter-variant"
-                color={COLORS.white}
-                onPress={() => {}}
-              />
+              {!isSearchVisible && <Appbar.Content title="Melody Vault" />}
+              {isSearchVisible && (
+                <Searchbar
+                  mode="bar"
+                  placeholder="Suchen…"
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                  autoFocus
+                  style={{
+                    margin: 15,
+                    backgroundColor: colors.elevation.level2
+                  }}
+                  icon="arrow-left"
+                  onIconPress={() => {
+                    setSearchQuery('');
+                    setIsSearchVisible(false);
+                  }}
+                  placeholderTextColor={COLORS.gray}
+                />
+              )}
               <Appbar.Action
                 icon="magnify"
+                color={COLORS.white}
+                onPress={() => setIsSearchVisible(true)}
+              />
+              <Appbar.Action
+                icon="filter-variant"
                 color={COLORS.white}
                 onPress={() => {}}
               />
@@ -51,7 +75,10 @@ const Home = () => {
         }}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={{ flex: 1, padding: SIZES.medium }}>
           <Sheets />
         </View>

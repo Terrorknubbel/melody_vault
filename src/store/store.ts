@@ -7,6 +7,8 @@ interface FileStoreState {
   fileList: FileData[];
   setFileList: (fileList: FileData[]) => void;
   loadAllMetadata: () => Promise<void>;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }
 
 interface SnackbarStoreState {
@@ -24,7 +26,9 @@ export const useFileStore = create<FileStoreState>((set) => ({
   setFileList: (fileList) => set({ fileList }),
   loadAllMetadata: async () => {
     set({ fileList: await DB.getFiles() });
-  }
+  },
+  searchQuery: '',
+  setSearchQuery: (query: string) => set({ searchQuery: query })
 }));
 
 export const useSnackbarStore = create<SnackbarStoreState>((set) => ({
