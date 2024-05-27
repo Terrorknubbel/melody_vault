@@ -1,4 +1,7 @@
-import { MD3LightTheme as DefaultTheme } from 'react-native-paper'
+import {
+  MD3LightTheme as DefaultTheme,
+  configureFonts
+} from 'react-native-paper'
 
 const darkScheme = {
   colors: {
@@ -47,5 +50,10 @@ const darkScheme = {
 
 export const theme = {
   ...DefaultTheme,
-  colors: darkScheme.colors
+  colors: darkScheme.colors,
+  fonts: configureFonts({
+    config: {
+      fontFamily: 'Noto'
+    }
+  })
 }
