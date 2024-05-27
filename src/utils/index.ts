@@ -1,12 +1,38 @@
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
+import DocumentScanner from 'react-native-document-scanner-plugin';
+import { createPdf } from 'react-native-images-to-pdf';
 
 import * as DB from './db';
 
-const pdfUpload = async (): Promise<{
+interface PDF {
   filename: string;
   fileUri: string;
-} | null> => {
+}
+
+const scanDocument = async (): Promise<PDF | null> => {
+  const filename = 'Scan';
+  const fileUri = await DocumentScanner.scanDocument().then(
+    ({ scannedImages }) => {
+      if (!scannedImages?.length) {
+        return null;
+      }
+
+      return createPdf({
+        pages: scannedImages.map((imagePath) => ({ imagePath })),
+        outputPath: `${FileSystem.cacheDirectory}${filename}.pdf`
+      });
+    }
+  );
+
+  if (!fileUri) {
+    return null;
+  }
+
+  return { filename, fileUri: `file://${fileUri}` };
+};
+
+const pdfUpload = async (): Promise<PDF | null> => {
   const result = await DocumentPicker.getDocumentAsync({
     type: 'application/pdf'
   });
@@ -26,7 +52,8 @@ const savePdf = async (filename: string, fileUri: string | undefined) => {
     return;
   }
 
-  const downloadDest = `${FileSystem.documentDirectory}/pdfs/${filename}`;
+  const downloadDest = `${FileSystem.documentDirectory}pdfs/${filename}.pdf`;
+
   await FileSystem.copyAsync({ from: fileUri, to: downloadDest });
 
   await DB.saveFile({
@@ -39,4 +66,4 @@ const destroyPDF = async (filepath: string): Promise<void> => {
   await FileSystem.deleteAsync(filepath);
 };
 
-export { pdfUpload, savePdf, destroyPDF };
+export { scanDocument, pdfUpload, savePdf, destroyPDF };

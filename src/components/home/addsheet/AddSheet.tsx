@@ -6,7 +6,7 @@ import DetailsDialog from './DetailsDialog';
 import styles from './addsheet.style';
 
 import { useFileStore } from '@/src/store/store';
-import { pdfUpload, savePdf } from '@/src/utils';
+import { pdfUpload, scanDocument, savePdf } from '@/src/utils';
 
 const AddSheet = () => {
   const [fileData, setFileData] = useState<{
@@ -19,10 +19,10 @@ const AddSheet = () => {
 
   const loadMetaData = useFileStore((store) => store.loadAllMetadata);
 
-  const handlePdfUpload = async () => {
+  const handleUpload = async (isScan: boolean) => {
     setVisible(false);
 
-    const result = await pdfUpload();
+    const result = isScan ? await scanDocument() : await pdfUpload();
     if (result) {
       setFileData(result);
       setDetailsDialogVisible(true);
@@ -30,8 +30,6 @@ const AddSheet = () => {
   };
 
   const handlePdfSave = async (filename: string) => {
-    setVisible(false);
-
     await savePdf(filename, fileData?.fileUri);
 
     loadMetaData();
@@ -57,12 +55,12 @@ const AddSheet = () => {
       >
         <Menu.Item
           leadingIcon="file-image-plus-outline"
-          onPress={() => {}}
-          title="Foto aufnehmen"
+          onPress={() => handleUpload(true)}
+          title="Scannen"
         />
         <Menu.Item
           leadingIcon="file-pdf-box"
-          onPress={handlePdfUpload}
+          onPress={() => handleUpload(false)}
           title="PDF hochladen"
         />
       </Menu>
