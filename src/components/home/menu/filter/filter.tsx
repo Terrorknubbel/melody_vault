@@ -19,6 +19,7 @@ const Filter = () => {
         marginTop: 40
       }}
       onDismiss={() => setIsMenuVisible(false)}
+      theme={{ animation: { scale: 0.3 } }}
       anchor={
         <Appbar.Action
           icon="filter-variant"

@@ -22,6 +22,7 @@ const SheetMenu = ({ setDestroyDialogVisible }: Props) => {
         marginTop: 40,
         marginRight: 10
       }}
+      theme={{ animation: { scale: 0.3 } }}
       anchor={
         <IconButton
           icon="dots-vertical"
