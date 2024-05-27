@@ -21,7 +21,7 @@ const SheetDestroyDialog = ({
   visible,
   setVisible
 }: Props) => {
-  const theme = useTheme()
+  const { colors } = useTheme()
 
   const setSnackbarVisible = useSnackbarStore((store) => store.setVisible)
   const setSnackbarMessage = useSnackbarMessageStore(
@@ -64,9 +64,9 @@ const SheetDestroyDialog = ({
         <Dialog.Actions style={{ gap: 5 }}>
           <Button
             mode="text"
-            textColor={theme.colors.error}
+            textColor={colors.error}
             style={{
-              borderColor: theme.colors.error,
+              borderColor: colors.error,
               borderRadius: 5
             }}
             onPress={deleteSheet}
@@ -75,7 +75,7 @@ const SheetDestroyDialog = ({
           </Button>
           <Button
             mode="text"
-            textColor={theme.colors.elevation.level5}
+            textColor={colors.elevation.level5}
             style={{
               borderRadius: 5
             }}

@@ -21,7 +21,7 @@ const darkScheme = {
     onError: 'rgb(105, 0, 5)',
     errorContainer: 'rgb(147, 0, 10)',
     onErrorContainer: 'rgb(255, 180, 171)',
-    background: 'rgb(29, 27, 30)',
+    background: 'rgb(4, 9, 26)',
     onBackground: 'rgb(231, 225, 229)',
     surface: 'rgb(29, 27, 30)',
     onSurface: 'rgb(231, 225, 229)',
@@ -37,7 +37,7 @@ const darkScheme = {
     elevation: {
       level0: 'transparent',
       level1: 'rgb(39, 35, 41)',
-      level2: 'rgb(44, 40, 48)',
+      level2: 'rgb(30, 30, 45)',
       level3: 'rgb(50, 44, 55)',
       level4: 'rgb(52, 46, 57)',
       level5: 'rgb(170, 170, 170)'

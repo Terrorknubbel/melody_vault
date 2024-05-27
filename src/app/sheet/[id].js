@@ -2,14 +2,15 @@ import { useNavigation } from '@react-navigation/native'
 import { Stack, useGlobalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { View, SafeAreaView } from 'react-native'
-import { Appbar } from 'react-native-paper'
+import { Appbar, useTheme } from 'react-native-paper'
 import Pdf from 'react-native-pdf'
 
 import styles from './sheet.style'
-import { COLORS } from '../../constants'
 import * as DB from '../../utils/db'
 
 const Sheet = () => {
+  const { colors } = useTheme()
+
   const params = useGlobalSearchParams()
   const navigation = useNavigation()
   const [pdfUri, setpdfUri] = useState(null)
@@ -23,11 +24,11 @@ const Sheet = () => {
   }, [params.id])
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <Stack.Screen
         options={{
           header: () => (
-            <Appbar.Header style={{ backgroundColor: COLORS.dark }}>
+            <Appbar.Header style={{ backgroundColor: colors.background }}>
               <Appbar.BackAction onPress={() => navigation.goBack()} />
             </Appbar.Header>
           )

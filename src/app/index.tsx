@@ -6,7 +6,6 @@ import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper'
 import AddSheet from '../components/home/addsheet/AddSheet'
 import Filter from '../components/home/menu/filter/filter'
 import Sheets from '../components/home/sheets/Sheets'
-import { COLORS } from '../constants'
 import {
   useFileStore,
   useSnackbarStore,
@@ -31,11 +30,11 @@ const Home = () => {
   }, [loadAllMetadata])
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <Stack.Screen
         options={{
           header: () => (
-            <Appbar.Header style={{ backgroundColor: COLORS.dark }}>
+            <Appbar.Header style={{ backgroundColor: colors.background }}>
               {!isSearchVisible && <Appbar.Content title="Melody Vault" />}
               {isSearchVisible && (
                 <Searchbar
@@ -53,18 +52,18 @@ const Home = () => {
                     setSearchQuery('')
                     setIsSearchVisible(false)
                   }}
-                  placeholderTextColor={COLORS.gray}
+                  placeholderTextColor={colors.outline}
                 />
               )}
               <Appbar.Action
                 icon="magnify"
-                color={COLORS.white}
+                color={colors.onSurface}
                 onPress={() => setIsSearchVisible(true)}
               />
               <Filter />
               <Appbar.Action
                 icon="cog"
-                color={COLORS.white}
+                color={colors.onSurface}
                 onPress={() => {}}
               />
             </Appbar.Header>

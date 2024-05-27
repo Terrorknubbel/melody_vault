@@ -5,7 +5,6 @@ import { useCallback, useEffect } from 'react'
 import { View } from 'react-native'
 import { PaperProvider } from 'react-native-paper'
 
-import { COLORS } from '../constants'
 import { initDatabase } from '../utils/db'
 import { theme } from '../utils/theme'
 
@@ -33,7 +32,7 @@ export default function Layout() {
   return (
     <PaperProvider theme={theme}>
       <View
-        style={{ flex: 1, backgroundColor: COLORS.dark }}
+        style={{ flex: 1, backgroundColor: 'rgb(4, 9, 26)' }}
         onLayout={onLayoutRootView}
       >
         <Stack />

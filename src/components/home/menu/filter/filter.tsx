@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Appbar, Menu } from 'react-native-paper'
+import { Appbar, Menu, useTheme } from 'react-native-paper'
 
-import { COLORS } from '@/src/constants'
 import { FilterEnum } from '@/src/shared/enums'
 import { useFileStore } from '@/src/store/store'
 
 const Filter = () => {
+  const { colors } = useTheme()
+
   const [isMenuVisible, setIsMenuVisible] = useState(false)
 
   const currentFilter = useFileStore((state) => state.filter)
@@ -23,7 +24,7 @@ const Filter = () => {
       anchor={
         <Appbar.Action
           icon="filter-variant"
-          color={COLORS.white}
+          color={colors.onSurface}
           onPress={() => setIsMenuVisible(true)}
         />
       }
