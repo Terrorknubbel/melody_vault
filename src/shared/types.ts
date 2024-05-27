@@ -1,5 +1,6 @@
 export interface FileMetadata {
   filename: string
+  composer: string
   filepath: string
 }
 

@@ -29,8 +29,8 @@ const AddSheet = () => {
     }
   }
 
-  const handlePdfSave = async (filename: string) => {
-    await savePdf(filename, fileData?.fileUri)
+  const handlePdfSave = async (filename: string, composer: string) => {
+    await savePdf(filename, composer, fileData?.fileUri)
 
     loadMetaData()
     setDetailsDialogVisible(false)

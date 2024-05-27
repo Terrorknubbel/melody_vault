@@ -7,7 +7,7 @@ const initDatabase = async (): Promise<void> => {
   db.transaction(
     (tx) => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS filedata (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT, filepath TEXT);'
+        'CREATE TABLE IF NOT EXISTS filedata (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT, composer TEXT, filepath TEXT);'
       )
     },
     (error) => console.log('Table creation error:', error),
@@ -20,8 +20,8 @@ const saveFile = async (metadata: FileMetadata): Promise<void> => {
   const db = SQLite.openDatabase('melody_vault')
   await db.transactionAsync(async (tx) => {
     await tx.executeSqlAsync(
-      'INSERT INTO filedata (filename, filepath) VALUES (?, ?)',
-      [metadata.filename, metadata.filepath]
+      'INSERT INTO filedata (filename, composer, filepath) VALUES (?, ?, ?)',
+      [metadata.filename, metadata.composer, metadata.filepath]
     )
   }, false)
 }

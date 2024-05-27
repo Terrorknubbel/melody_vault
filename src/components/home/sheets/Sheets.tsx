@@ -9,8 +9,10 @@ const Sheets = () => {
   const searchQuery = useFileStore((state) => state.searchQuery)
   const filter = useFileStore((state) => state.filter)
 
-  const filteredList = fileList.filter((file) =>
-    file.filename.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredList = fileList.filter(
+    (file) =>
+      file.filename.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      file.composer.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
   const sortedList = filteredList.sort((a, b) => {
@@ -29,7 +31,12 @@ const Sheets = () => {
     <List.Section>
       {sortedList.map((file) => {
         return (
-          <SheetCard key={file.id} sheetKey={file.id} name={file.filename} />
+          <SheetCard
+            key={file.id}
+            sheetKey={file.id}
+            name={file.filename}
+            composer={file.composer}
+          />
         )
       })}
     </List.Section>

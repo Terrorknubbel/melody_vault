@@ -47,7 +47,11 @@ const pdfUpload = async (): Promise<PDF | null> => {
   }
 }
 
-const savePdf = async (filename: string, fileUri: string | undefined) => {
+const savePdf = async (
+  filename: string,
+  composer: string,
+  fileUri: string | undefined
+) => {
   if (fileUri === undefined) {
     return
   }
@@ -58,6 +62,7 @@ const savePdf = async (filename: string, fileUri: string | undefined) => {
 
   await DB.saveFile({
     filename,
+    composer,
     filepath: downloadDest
   })
 }

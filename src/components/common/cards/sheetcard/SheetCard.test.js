@@ -10,6 +10,12 @@ it('displays the correct name', () => {
   expect(screen.getByText(name)).toBeTruthy()
 })
 
+it('displays the correct composer', () => {
+  const composer = 'Mozart'
+  render(<SheetCard composer={composer} />)
+  expect(screen.getByText(composer)).toBeTruthy()
+})
+
 it('does have a menu', () => {
   render(<SheetCard />)
   expect(screen.getByTestId('SheetMenu')).toBeTruthy()

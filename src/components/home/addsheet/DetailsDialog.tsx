@@ -7,7 +7,7 @@ interface Props {
   fileUri: string
   visible: boolean
   setVisible: (visible: boolean) => void
-  handleSave: (filename: string) => Promise<void>
+  handleSave: (filename: string, composer: string) => Promise<void>
 }
 
 const DetailsDialog = ({
@@ -69,7 +69,7 @@ const DetailsDialog = ({
             style={{
               borderRadius: 5
             }}
-            onPress={() => handleSave(sheetName)}
+            onPress={() => handleSave(sheetName, composer)}
           >
             Speichern
           </Button>
