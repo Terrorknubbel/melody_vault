@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { Appbar, Menu } from 'react-native-paper';
+import { useState } from 'react'
+import { Appbar, Menu } from 'react-native-paper'
 
-import { COLORS } from '@/src/constants';
-import { FilterEnum } from '@/src/shared/enums';
-import { useFileStore } from '@/src/store/store';
+import { COLORS } from '@/src/constants'
+import { FilterEnum } from '@/src/shared/enums'
+import { useFileStore } from '@/src/store/store'
 
 const Filter = () => {
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false)
 
-  const currentFilter = useFileStore((state) => state.filter);
-  const setFilter = useFileStore((state) => state.setFilter);
+  const currentFilter = useFileStore((state) => state.filter)
+  const setFilter = useFileStore((state) => state.setFilter)
 
   return (
     <Menu
@@ -47,7 +47,7 @@ const Filter = () => {
         title="Erstellt am"
       />
     </Menu>
-  );
-};
+  )
+}
 
-export default Filter;
+export default Filter

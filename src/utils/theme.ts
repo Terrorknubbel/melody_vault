@@ -1,4 +1,4 @@
-import { MD3LightTheme as DefaultTheme } from 'react-native-paper';
+import { MD3LightTheme as DefaultTheme } from 'react-native-paper'
 
 const darkScheme = {
   colors: {
@@ -43,9 +43,9 @@ const darkScheme = {
     onSurfaceDisabled: 'rgba(231, 225, 229, 0.38)',
     backdrop: 'rgba(51, 47, 55, 0.4)'
   }
-};
+}
 
 export const theme = {
   ...DefaultTheme,
   colors: darkScheme.colors
-};
+}

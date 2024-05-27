@@ -1,18 +1,18 @@
-import { Button, Dialog, Portal, Text, useTheme } from 'react-native-paper';
+import { Button, Dialog, Portal, Text, useTheme } from 'react-native-paper'
 
 import {
   useSnackbarMessageStore,
   useSnackbarStore,
   useFileStore
-} from '@/src/store/store';
-import { destroyPDF } from '@/src/utils';
-import * as DB from '@/src/utils/db';
+} from '@/src/store/store'
+import { destroyPDF } from '@/src/utils'
+import * as DB from '@/src/utils/db'
 
 interface Props {
-  sheetKey: number;
-  sheetName: string;
-  visible: boolean;
-  setVisible: (visible: boolean) => void;
+  sheetKey: number
+  sheetName: string
+  visible: boolean
+  setVisible: (visible: boolean) => void
 }
 
 const SheetDestroyDialog = ({
@@ -21,30 +21,30 @@ const SheetDestroyDialog = ({
   visible,
   setVisible
 }: Props) => {
-  const theme = useTheme();
+  const theme = useTheme()
 
-  const setSnackbarVisible = useSnackbarStore((store) => store.setVisible);
+  const setSnackbarVisible = useSnackbarStore((store) => store.setVisible)
   const setSnackbarMessage = useSnackbarMessageStore(
     (store) => store.setMessage
-  );
+  )
 
-  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata);
+  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)
 
   const deleteSheet = async (): Promise<void> => {
-    const filepath = await DB.getFilepath(sheetKey);
+    const filepath = await DB.getFilepath(sheetKey)
 
-    await destroyPDF(filepath);
-    await DB.deleteFile(sheetKey);
+    await destroyPDF(filepath)
+    await DB.deleteFile(sheetKey)
 
-    loadAllMetadata();
+    loadAllMetadata()
 
-    setSnackbarMessage({ action: 'Gelöscht', text: sheetName });
-    setSnackbarVisible(true);
-    setVisible(false);
-  };
+    setSnackbarMessage({ action: 'Gelöscht', text: sheetName })
+    setSnackbarVisible(true)
+    setVisible(false)
+  }
 
   if (!visible) {
-    return null;
+    return null
   }
 
   return (
@@ -87,7 +87,7 @@ const SheetDestroyDialog = ({
         </Dialog.Actions>
       </Dialog>
     </Portal>
-  );
-};
+  )
+}
 
-export default SheetDestroyDialog;
+export default SheetDestroyDialog

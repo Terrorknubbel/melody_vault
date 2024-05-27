@@ -6,9 +6,10 @@ module.exports = {
       'error',
       {
         singleQuote: true,
-        trailingComma: 'none'
+        trailingComma: 'none',
+        semi: false
       }
     ]
   },
   ignorePatterns: ['expo-env.d.ts']
-};
+}

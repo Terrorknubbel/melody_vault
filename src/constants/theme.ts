@@ -1,4 +1,4 @@
-import { moderateScale } from '../utils/Metrics';
+import { moderateScale } from '../utils/Metrics'
 
 const COLORS = {
   dark: '#04091a',
@@ -9,11 +9,11 @@ const COLORS = {
   background: '#6421c2',
   backgroundNeutral: '#1c1c1e',
   backgroundLight: '#123'
-};
+}
 
 const FONT = {
   regular: 'Noto'
-};
+}
 
 const SIZES = {
   xSmall: 10,
@@ -22,6 +22,6 @@ const SIZES = {
   large: moderateScale(20),
   xLarge: moderateScale(24),
   xxLarge: 32
-};
+}
 
-export { COLORS, SIZES, FONT };
+export { COLORS, SIZES, FONT }

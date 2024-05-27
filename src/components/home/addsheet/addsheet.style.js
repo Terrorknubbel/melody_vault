@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 import {
   horizontalScale,
   moderateScale,
   verticalScale
-} from '../../../utils/Metrics';
+} from '../../../utils/Metrics'
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
     paddingRight: horizontalScale(5),
     paddingBottom: verticalScale(5)
   }
-});
+})
 
-export default styles;
+export default styles

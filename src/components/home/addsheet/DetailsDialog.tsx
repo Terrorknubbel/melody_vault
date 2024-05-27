@@ -1,19 +1,13 @@
-import { useEffect, useState } from 'react';
-import {
-  Button,
-  Dialog,
-  Portal,
-  useTheme,
-  TextInput
-} from 'react-native-paper';
-import Pdf from 'react-native-pdf';
+import { useEffect, useState } from 'react'
+import { Button, Dialog, Portal, useTheme, TextInput } from 'react-native-paper'
+import Pdf from 'react-native-pdf'
 
 interface Props {
-  initialSheetName: string;
-  fileUri: string;
-  visible: boolean;
-  setVisible: (visible: boolean) => void;
-  handleSave: (filename: string) => Promise<void>;
+  initialSheetName: string
+  fileUri: string
+  visible: boolean
+  setVisible: (visible: boolean) => void
+  handleSave: (filename: string) => Promise<void>
 }
 
 const DetailsDialog = ({
@@ -23,17 +17,17 @@ const DetailsDialog = ({
   setVisible,
   handleSave
 }: Props) => {
-  const { colors } = useTheme();
+  const { colors } = useTheme()
 
-  const [sheetName, setSheetName] = useState('');
-  const [composer, setComposer] = useState('');
+  const [sheetName, setSheetName] = useState('')
+  const [composer, setComposer] = useState('')
 
   useEffect(() => {
-    setSheetName(initialSheetName);
-  }, [initialSheetName]);
+    setSheetName(initialSheetName)
+  }, [initialSheetName])
 
   if (!visible) {
-    return null;
+    return null
   }
 
   return (
@@ -93,7 +87,7 @@ const DetailsDialog = ({
         </Dialog.Actions>
       </Dialog>
     </Portal>
-  );
-};
+  )
+}
 
-export default DetailsDialog;
+export default DetailsDialog

@@ -1,34 +1,34 @@
-import { Stack } from 'expo-router';
-import { useState, useEffect } from 'react';
-import { ScrollView, View, SafeAreaView } from 'react-native';
-import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper';
+import { Stack } from 'expo-router'
+import { useState, useEffect } from 'react'
+import { ScrollView, View, SafeAreaView } from 'react-native'
+import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper'
 
-import AddSheet from '../components/home/addsheet/AddSheet';
-import Filter from '../components/home/menu/filter/filter';
-import Sheets from '../components/home/sheets/Sheets';
-import { COLORS } from '../constants';
+import AddSheet from '../components/home/addsheet/AddSheet'
+import Filter from '../components/home/menu/filter/filter'
+import Sheets from '../components/home/sheets/Sheets'
+import { COLORS } from '../constants'
 import {
   useFileStore,
   useSnackbarStore,
   useSnackbarMessageStore
-} from '../store/store';
+} from '../store/store'
 
 const Home = () => {
-  const { colors } = useTheme();
+  const { colors } = useTheme()
 
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const searchQuery = useFileStore((state) => state.searchQuery);
-  const setSearchQuery = useFileStore((state) => state.setSearchQuery);
-  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata);
+  const [isSearchVisible, setIsSearchVisible] = useState(false)
+  const searchQuery = useFileStore((state) => state.searchQuery)
+  const setSearchQuery = useFileStore((state) => state.setSearchQuery)
+  const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)
 
-  const snackbarVisible = useSnackbarStore((state) => state.visible);
-  const setSnackbarVisible = useSnackbarStore((state) => state.setVisible);
+  const snackbarVisible = useSnackbarStore((state) => state.visible)
+  const setSnackbarVisible = useSnackbarStore((state) => state.setVisible)
 
-  const snackbarMessage = useSnackbarMessageStore((state) => state.message);
+  const snackbarMessage = useSnackbarMessageStore((state) => state.message)
 
   useEffect(() => {
-    loadAllMetadata();
-  }, [loadAllMetadata]);
+    loadAllMetadata()
+  }, [loadAllMetadata])
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.dark }}>
@@ -50,8 +50,8 @@ const Home = () => {
                   }}
                   icon="arrow-left"
                   onIconPress={() => {
-                    setSearchQuery('');
-                    setIsSearchVisible(false);
+                    setSearchQuery('')
+                    setIsSearchVisible(false)
                   }}
                   placeholderTextColor={COLORS.gray}
                 />
@@ -91,7 +91,7 @@ const Home = () => {
         {`${snackbarMessage.action}: ${snackbarMessage.text}`}
       </Snackbar>
     </SafeAreaView>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

@@ -1,22 +1,22 @@
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { View } from 'react-native';
-import { List } from 'react-native-paper';
+import { useRouter } from 'expo-router'
+import { useState } from 'react'
+import { View } from 'react-native'
+import { List } from 'react-native-paper'
 
-import SheetDestroyDialog from './SheetDestroyDialog';
-import SheetMenu from './SheetMenu';
-import styles from './sheetcard.style';
+import SheetDestroyDialog from './SheetDestroyDialog'
+import SheetMenu from './SheetMenu'
+import styles from './sheetcard.style'
 
 interface Props {
-  sheetKey: number;
-  name: string;
+  sheetKey: number
+  name: string
 }
 
 const SheetCard = ({ sheetKey, name }: Props) => {
-  const router = useRouter();
-  const [destroyDialogVisible, setDestroyDialogVisible] = useState(false);
+  const router = useRouter()
+  const [destroyDialogVisible, setDestroyDialogVisible] = useState(false)
 
-  const redirect = (key: number): void => router.push(`/sheet/${key}`);
+  const redirect = (key: number): void => router.push(`/sheet/${key}`)
 
   return (
     <View style={styles.container}>
@@ -33,7 +33,7 @@ const SheetCard = ({ sheetKey, name }: Props) => {
         setVisible={setDestroyDialogVisible}
       />
     </View>
-  );
-};
+  )
+}
 
-export default SheetCard;
+export default SheetCard

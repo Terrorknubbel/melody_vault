@@ -1,33 +1,33 @@
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useCallback, useEffect } from 'react';
-import { View } from 'react-native';
-import { PaperProvider } from 'react-native-paper';
+import { useFonts } from 'expo-font'
+import { Stack } from 'expo-router'
+import * as SplashScreen from 'expo-splash-screen'
+import { useCallback, useEffect } from 'react'
+import { View } from 'react-native'
+import { PaperProvider } from 'react-native-paper'
 
-import { initDatabase } from '../utils/db';
-import { theme } from '../utils/theme';
+import { initDatabase } from '../utils/db'
+import { theme } from '../utils/theme'
 
 export default function Layout() {
   useEffect(() => {
-    initDatabase();
-  }, []);
+    initDatabase()
+  }, [])
 
   const [fontsLoaded] = useFonts({
     Noto: require('../assets/fonts/Noto.ttf')
-  });
+  })
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
-      await SplashScreen.hideAsync();
+      await SplashScreen.hideAsync()
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded])
 
   if (!fontsLoaded) {
-    return null;
+    return null
   }
 
-  SplashScreen.preventAutoHideAsync();
+  SplashScreen.preventAutoHideAsync()
 
   return (
     <PaperProvider theme={theme}>
@@ -35,5 +35,5 @@ export default function Layout() {
         <Stack />
       </View>
     </PaperProvider>
-  );
+  )
 }

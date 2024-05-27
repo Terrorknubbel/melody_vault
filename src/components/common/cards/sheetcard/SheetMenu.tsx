@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import { Menu, IconButton } from 'react-native-paper';
+import { useState } from 'react'
+import { Menu, IconButton } from 'react-native-paper'
 
 interface Props {
-  setDestroyDialogVisible: (visible: boolean) => void;
+  setDestroyDialogVisible: (visible: boolean) => void
 }
 
 const SheetMenu = ({ setDestroyDialogVisible }: Props) => {
-  const [visible, setVisible] = useState(false);
-  const changeName = (): void => setVisible(false);
+  const [visible, setVisible] = useState(false)
+  const changeName = (): void => setVisible(false)
 
   const destroy = (): void => {
-    setDestroyDialogVisible(true);
-    setVisible(false);
-  };
+    setDestroyDialogVisible(true)
+    setVisible(false)
+  }
 
   return (
     <Menu
@@ -39,7 +39,7 @@ const SheetMenu = ({ setDestroyDialogVisible }: Props) => {
         title="Löschen"
       />
     </Menu>
-  );
-};
+  )
+}
 
-export default SheetMenu;
+export default SheetMenu
