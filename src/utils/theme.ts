@@ -3,8 +3,8 @@ import {
   configureFonts
 } from 'react-native-paper'
 
-const darkScheme = {
-  colors: {
+const colorScheme = {
+  dark: {
     primary: 'rgb(220, 184, 255)',
     onPrimary: 'rgb(71, 12, 122)',
     primaryContainer: 'rgb(95, 43, 146)',
@@ -22,8 +22,8 @@ const darkScheme = {
     errorContainer: 'rgb(147, 0, 10)',
     onErrorContainer: 'rgb(255, 180, 171)',
     background: 'rgb(4, 9, 26)',
-    onBackground: 'rgb(231, 225, 229)',
-    surface: 'rgb(29, 27, 30)',
+    onBackground: 'rgb(4, 9, 26)',
+    surface: 'rgb(231, 225, 229)',
     onSurface: 'rgb(231, 225, 229)',
     surfaceVariant: 'rgb(74, 69, 78)',
     onSurfaceVariant: 'rgb(204, 196, 206)',
@@ -45,12 +45,64 @@ const darkScheme = {
     surfaceDisabled: 'rgba(231, 225, 229, 0.12)',
     onSurfaceDisabled: 'rgba(231, 225, 229, 0.38)',
     backdrop: 'rgba(51, 47, 55, 0.4)'
+  },
+  light: {
+    primary: 'rgb(50, 27, 150)',
+    onPrimary: 'rgb(255, 255, 255)',
+    primaryContainer: 'rgb(239, 219, 255)',
+    onPrimaryContainer: 'rgb(44, 0, 81)',
+    secondary: 'rgb(120, 69, 172)',
+    onSecondary: 'rgb(255, 255, 255)',
+    secondaryContainer: 'rgb(240, 219, 255)',
+    onSecondaryContainer: 'rgb(44, 0, 81)',
+    tertiary: 'rgb(128, 81, 88)',
+    onTertiary: 'rgb(255, 255, 255)',
+    tertiaryContainer: 'rgb(255, 217, 221)',
+    onTertiaryContainer: 'rgb(50, 16, 23)',
+    error: 'rgb(186, 26, 26)',
+    onError: 'rgb(255, 255, 255)',
+    errorContainer: 'rgb(255, 218, 214)',
+    onErrorContainer: 'rgb(65, 0, 2)',
+    background: 'rgb(243, 240, 245)',
+    onBackground: 'rgb(50, 27, 150)',
+    surface: 'rgb(255, 251, 255)',
+    onSurface: 'rgb(29, 27, 30)',
+    surfaceVariant: 'rgb(233, 223, 235)',
+    onSurfaceVariant: 'rgb(50, 27, 150)',
+    outline: 'rgb(123, 117, 126)',
+    outlineVariant: 'rgb(204, 196, 206)',
+    shadow: 'rgb(0, 0, 0)',
+    scrim: 'rgb(0, 0, 0)',
+    inverseSurface: 'rgb(50, 47, 51)',
+    inverseOnSurface: 'rgb(245, 239, 244)',
+    inversePrimary: 'rgb(220, 184, 255)',
+    elevation: {
+      level0: 'transparent',
+      level1: 'rgb(248, 242, 250)',
+      level2: 'rgb(244, 237, 247)',
+      level3: 'rgb(240, 232, 244)',
+      level4: 'rgb(238, 230, 243)',
+      level5: 'rgb(236, 227, 241)'
+    },
+    surfaceDisabled: 'rgba(29, 27, 30, 0.12)',
+    onSurfaceDisabled: 'rgba(29, 27, 30, 0.38)',
+    backdrop: 'rgba(51, 47, 55, 0.4)'
   }
 }
 
-export const theme = {
+export const CombinedDefaultTheme = {
   ...DefaultTheme,
-  colors: darkScheme.colors,
+  colors: colorScheme.light,
+  fonts: configureFonts({
+    config: {
+      fontFamily: 'Noto'
+    }
+  })
+}
+
+export const CombinedDarkTheme = {
+  ...DefaultTheme,
+  colors: colorScheme.dark,
   fonts: configureFonts({
     config: {
       fontFamily: 'Noto'

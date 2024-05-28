@@ -1,5 +1,5 @@
-import { Stack } from 'expo-router'
-import { useState, useEffect } from 'react'
+import { Stack, useRouter } from 'expo-router'
+import { useState, useEffect, useContext } from 'react'
 import { ScrollView, View, SafeAreaView } from 'react-native'
 import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper'
 
@@ -11,9 +11,14 @@ import {
   useSnackbarStore,
   useSnackbarMessageStore
 } from '../store/store'
+import { PreferencesContext } from '../utils/PreferencesContext'
 
 const Home = () => {
   const { colors } = useTheme()
+
+  const router = useRouter()
+
+  const { isThemeDark } = useContext(PreferencesContext)
 
   const [isSearchVisible, setIsSearchVisible] = useState(false)
   const searchQuery = useFileStore((state) => state.searchQuery)
@@ -34,8 +39,10 @@ const Home = () => {
       <Stack.Screen
         options={{
           header: () => (
-            <Appbar.Header style={{ backgroundColor: colors.background }}>
-              {!isSearchVisible && <Appbar.Content title="Melody Vault" />}
+            <Appbar.Header style={{ backgroundColor: colors.onBackground }}>
+              {!isSearchVisible && (
+                <Appbar.Content title="Melody Vault" color={colors.surface} />
+              )}
               {isSearchVisible && (
                 <Searchbar
                   mode="bar"
@@ -57,14 +64,14 @@ const Home = () => {
               )}
               <Appbar.Action
                 icon="magnify"
-                color={colors.onSurface}
+                color={colors.surface}
                 onPress={() => setIsSearchVisible(true)}
               />
               <Filter />
               <Appbar.Action
                 icon="cog"
-                color={colors.onSurface}
-                onPress={() => {}}
+                color={colors.surface}
+                onPress={() => router.push('/settings')}
               />
             </Appbar.Header>
           )

@@ -1,14 +1,31 @@
 import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { View } from 'react-native'
 import { PaperProvider } from 'react-native-paper'
 
+import { PreferencesContext } from '../utils/PreferencesContext'
 import { initDatabase } from '../utils/db'
-import { theme } from '../utils/theme'
+import { CombinedDarkTheme, CombinedDefaultTheme } from '../utils/theme'
 
 export default function Layout() {
+  const [isThemeDark, setIsThemeDark] = useState(false)
+
+  const theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme
+
+  const toggleTheme = useCallback(() => {
+    return setIsThemeDark(!isThemeDark)
+  }, [isThemeDark])
+
+  const preferences = useMemo(
+    () => ({
+      toggleTheme,
+      isThemeDark
+    }),
+    [toggleTheme, isThemeDark]
+  )
+
   useEffect(() => {
     initDatabase()
   }, [])
@@ -30,13 +47,15 @@ export default function Layout() {
   SplashScreen.preventAutoHideAsync()
 
   return (
-    <PaperProvider theme={theme}>
-      <View
-        style={{ flex: 1, backgroundColor: 'rgb(4, 9, 26)' }}
-        onLayout={onLayoutRootView}
-      >
-        <Stack />
-      </View>
-    </PaperProvider>
+    <PreferencesContext.Provider value={preferences}>
+      <PaperProvider theme={theme}>
+        <View
+          style={{ flex: 1, backgroundColor: theme.colors.background }}
+          onLayout={onLayoutRootView}
+        >
+          <Stack />
+        </View>
+      </PaperProvider>
+    </PreferencesContext.Provider>
   )
 }

@@ -24,7 +24,7 @@ const Filter = () => {
       anchor={
         <Appbar.Action
           icon="filter-variant"
-          color={colors.onSurface}
+          color={colors.surface}
           onPress={() => setIsMenuVisible(true)}
         />
       }
