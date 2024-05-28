@@ -1,5 +1,5 @@
 import { Stack, useRouter } from 'expo-router'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { ScrollView, View, SafeAreaView } from 'react-native'
 import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper'
 
@@ -11,14 +11,11 @@ import {
   useSnackbarStore,
   useSnackbarMessageStore
 } from '../store/store'
-import { PreferencesContext } from '../utils/PreferencesContext'
 
 const Home = () => {
   const { colors } = useTheme()
 
   const router = useRouter()
-
-  const { isThemeDark } = useContext(PreferencesContext)
 
   const [isSearchVisible, setIsSearchVisible] = useState(false)
   const searchQuery = useFileStore((state) => state.searchQuery)
