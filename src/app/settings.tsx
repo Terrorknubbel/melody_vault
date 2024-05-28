@@ -1,5 +1,6 @@
 import { Stack, useNavigation } from 'expo-router'
 import { useContext } from 'react'
+import { Linking } from 'react-native'
 import { Appbar, Divider, List, Switch, useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -12,6 +13,13 @@ const Settings = () => {
   const { colors } = useTheme()
   const navigation = useNavigation()
   const { toggleTheme, isThemeDark } = useContext(PreferencesContext)
+
+  const openGitHub = () => {
+    const url = 'https://github.com/Terrorknubbel/melody_vault'
+    Linking.openURL(url).catch((err) =>
+      console.error('Failed to open URL:', err)
+    )
+  }
 
   return (
     <SafeAreaView
@@ -65,7 +73,7 @@ const Settings = () => {
         />
         <List.Item
           title="Github"
-          onPress={() => {}}
+          onPress={openGitHub}
           titleStyle={styles.itemTitle}
           style={styles.item}
           left={() => <List.Icon icon="github" />}
