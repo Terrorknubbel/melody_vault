@@ -14,8 +14,7 @@ const Settings = () => {
   const navigation = useNavigation()
   const { toggleTheme, isThemeDark } = useContext(PreferencesContext)
 
-  const openGitHub = () => {
-    const url = 'https://github.com/Terrorknubbel/melody_vault'
+  const openLink = (url: string) => {
     Linking.openURL(url).catch((err) =>
       console.error('Failed to open URL:', err)
     )
@@ -66,14 +65,16 @@ const Settings = () => {
         />
         <List.Item
           title="Feedback senden"
-          onPress={() => {}}
+          onPress={() => openLink('mailto:w.macher3@gmail.com')}
           titleStyle={styles.itemTitle}
           style={styles.item}
           left={() => <List.Icon icon="email-check-outline" />}
         />
         <List.Item
           title="Github"
-          onPress={openGitHub}
+          onPress={() =>
+            openLink('https://github.com/Terrorknubbel/melody_vault')
+          }
           titleStyle={styles.itemTitle}
           style={styles.item}
           left={() => <List.Icon icon="github" />}
