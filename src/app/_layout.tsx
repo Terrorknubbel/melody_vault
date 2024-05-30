@@ -6,7 +6,7 @@ import { View } from 'react-native'
 import { PaperProvider } from 'react-native-paper'
 
 import { PreferencesContext } from '../utils/PreferencesContext'
-import { initDatabase } from '../utils/db'
+import { getDarkmode, initDatabase, setDarkmode } from '../utils/db'
 import { CombinedDarkTheme, CombinedDefaultTheme } from '../utils/theme'
 
 export default function Layout() {
@@ -14,8 +14,10 @@ export default function Layout() {
 
   const theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme
 
-  const toggleTheme = useCallback(() => {
-    return setIsThemeDark(!isThemeDark)
+  const toggleTheme = useCallback(async () => {
+    const newTheme = !isThemeDark
+    setIsThemeDark(newTheme)
+    await setDarkmode(newTheme)
   }, [isThemeDark])
 
   const preferences = useMemo(
@@ -27,7 +29,17 @@ export default function Layout() {
   )
 
   useEffect(() => {
-    initDatabase()
+    const init = async () => {
+      try {
+        await initDatabase()
+        const darkmode = await getDarkmode()
+        setIsThemeDark(darkmode)
+      } catch (error) {
+        console.log('Initialization error:', error)
+      }
+    }
+
+    init()
   }, [])
 
   const [fontsLoaded] = useFonts({

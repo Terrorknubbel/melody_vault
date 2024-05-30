@@ -2,64 +2,150 @@ import * as SQLite from 'expo-sqlite'
 
 import type { FileMetadata, FileData } from '../shared/types'
 
-const initDatabase = async (): Promise<void> => {
+const openDatabase = () => {
   const db = SQLite.openDatabase('melody_vault')
-  db.transaction(
-    (tx) => {
+  return db
+}
+
+export const initDatabase = async (): Promise<void> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS filedata (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT, composer TEXT, filepath TEXT);'
+        )
+        tx.executeSql(
+          'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER);'
+        )
+      },
+      (error) => {
+        console.log('Table creation error:', error)
+        reject(error)
+      },
+      () => {
+        console.log('Table created successfully')
+        resolve()
+      }
+    )
+  })
+}
+
+export const saveFile = async (metadata: FileMetadata): Promise<void> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          'INSERT INTO filedata (filename, composer, filepath) VALUES (?, ?, ?)',
+          [metadata.filename, metadata.composer, metadata.filepath]
+        )
+      },
+      (error) => {
+        console.log('Save file error:', error)
+        reject(error)
+      },
+      resolve
+    )
+  })
+}
+
+export const deleteFile = async (id: number): Promise<void> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql('DELETE FROM filedata WHERE id = ?', [id])
+      },
+      (error) => {
+        console.log('Delete file error:', error)
+        reject(error)
+      },
+      resolve
+    )
+  })
+}
+
+export const getFiles = async (): Promise<FileData[]> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS filedata (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT, composer TEXT, filepath TEXT);'
+        'SELECT * FROM filedata',
+        [],
+        (_, result) => resolve(result.rows._array),
+        (tx, error) => {
+          console.log('Get files error:', error)
+          reject(error)
+          return true
+        }
       )
-    },
-    (error) => console.log('Table creation error:', error),
-    () => console.log('Table created successfully')
-  )
-  console.log('Database initialization complete')
+    })
+  })
 }
 
-const saveFile = async (metadata: FileMetadata): Promise<void> => {
-  const db = SQLite.openDatabase('melody_vault')
-  await db.transactionAsync(async (tx) => {
-    await tx.executeSqlAsync(
-      'INSERT INTO filedata (filename, composer, filepath) VALUES (?, ?, ?)',
-      [metadata.filename, metadata.composer, metadata.filepath]
+export const getFilepath = async (id: number): Promise<string> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT filepath FROM filedata WHERE id = ?',
+        [id],
+        (_, result) => resolve(result.rows.item(0).filepath),
+        (tx, error) => {
+          console.log('Get filepath error:', error)
+          reject(error)
+          return true
+        }
+      )
+    })
+  })
+}
+
+export const getDarkmode = async (): Promise<boolean> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT darkmode FROM preferences',
+        [],
+        (_, result) => {
+          const darkmode =
+            result.rows.length > 0 ? result.rows.item(0).darkmode === 1 : false
+          resolve(darkmode)
+        },
+        (tx, error) => {
+          console.log('Get darkmode error:', error)
+          reject(error)
+          return true
+        }
+      )
+    })
+  })
+}
+
+export const setDarkmode = async (darkmode: boolean): Promise<void> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          'INSERT OR REPLACE INTO preferences (id, darkmode) VALUES (1, ?)',
+          [darkmode ? 1 : 0]
+        )
+      },
+      (error) => {
+        console.log('Set darkmode error:', error)
+        reject(error)
+      },
+      resolve
     )
-  }, false)
+  })
 }
-
-const deleteFile = async (id: number): Promise<void> => {
-  const db = SQLite.openDatabase('melody_vault')
-  await db.transactionAsync(async (tx) => {
-    await tx.executeSqlAsync('DELETE FROM filedata WHERE id = (?)', [id])
-  }, false)
-}
-
-const getFiles = async (): Promise<FileData[]> => {
-  const db = SQLite.openDatabase('melody_vault')
-  let files: FileData[] = []
-
-  await db.transactionAsync(async (tx) => {
-    const result: SQLite.ResultSet = await tx.executeSqlAsync(
-      'SELECT * FROM filedata',
-      []
-    )
-
-    files = Array.from(result.rows) as FileData[]
-  }, true)
-
-  return files
-}
-
-const getFilepath = async (id: number): Promise<string> => {
-  const db = SQLite.openDatabase('melody_vault')
-  let result: SQLite.ResultSet | undefined
-  await db.transactionAsync(async (tx) => {
-    result = await tx.executeSqlAsync(
-      'SELECT filepath FROM filedata WHERE id = (?)',
-      [id]
-    )
-  }, true)
-
-  return result?.rows[0].filepath
-}
-
-export { initDatabase, saveFile, deleteFile, getFiles, getFilepath }
