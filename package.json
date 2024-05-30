@@ -18,12 +18,14 @@
     ]
   },
   "dependencies": {
+    "@expo/metro-config": "^0.18.4",
     "@expo/vector-icons": "^14.0.0",
     "@react-navigation/native": "^6.0.2",
     "expo": "~50.0.14",
+    "expo-asset": "~9.0.2",
     "expo-dev-client": "~3.3.11",
     "expo-document-picker": "~11.10.1",
-    "expo-file-system": "~16.0.8",
+    "expo-file-system": "~16.0.9",
     "expo-font": "~11.10.3",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.8",

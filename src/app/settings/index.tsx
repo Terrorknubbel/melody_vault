@@ -1,16 +1,19 @@
-import { Stack, useNavigation } from 'expo-router'
+import { Stack, useNavigation, useRouter } from 'expo-router'
 import { useContext } from 'react'
 import { Linking } from 'react-native'
 import { Appbar, Divider, List, Switch, useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import styles from './settings.style'
-import { PreferencesContext } from '../utils/PreferencesContext'
+import styles from '../settings.style'
 
 import Subheader from '@/src/components/settings/Subheader'
+import { PreferencesContext } from '@/src/utils/PreferencesContext'
 
 const Settings = () => {
   const { colors } = useTheme()
+
+  const router = useRouter()
+
   const navigation = useNavigation()
   const { toggleTheme, isThemeDark } = useContext(PreferencesContext)
 
@@ -58,7 +61,7 @@ const Settings = () => {
         <Subheader text="Hilfe" />
         <List.Item
           title="Lizensen"
-          onPress={() => {}}
+          onPress={() => router.push('/settings/Licenses')}
           titleStyle={styles.itemTitle}
           style={styles.item}
           left={() => <List.Icon icon="file-document-multiple-outline" />}

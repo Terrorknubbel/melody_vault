@@ -68,7 +68,7 @@ const Home = () => {
               <Appbar.Action
                 icon="cog"
                 color={colors.surface}
-                onPress={() => router.push('/settings')}
+                onPress={() => router.push('/settings/')}
               />
             </Appbar.Header>
           )
