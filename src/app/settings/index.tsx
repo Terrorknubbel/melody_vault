@@ -4,7 +4,7 @@ import { Linking } from 'react-native'
 import { Appbar, Divider, List, Switch, useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import styles from '../settings.style'
+import styles from './settings.style'
 
 import Subheader from '@/src/components/settings/Subheader'
 import { PreferencesContext } from '@/src/utils/PreferencesContext'
