@@ -56,7 +56,8 @@ const savePdf = async (
     return
   }
 
-  const downloadDest = `${FileSystem.documentDirectory}pdfs/${filename}.pdf`
+  const timestamp = new Date().getTime()
+  const downloadDest = `${FileSystem.documentDirectory}pdfs/${timestamp}${filename}.pdf`
 
   await FileSystem.copyAsync({ from: fileUri, to: downloadDest })
 
