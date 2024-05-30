@@ -75,7 +75,7 @@ const DetailsDialog = ({
           </Button>
           <Button
             mode="text"
-            textColor={colors.elevation.level5}
+            textColor={colors.outline}
             style={{
               borderRadius: 5
             }}

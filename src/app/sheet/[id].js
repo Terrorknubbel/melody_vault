@@ -24,12 +24,15 @@ const Sheet = () => {
   }, [params.id])
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Stack.Screen
         options={{
           header: () => (
-            <Appbar.Header style={{ backgroundColor: colors.background }}>
-              <Appbar.BackAction onPress={() => navigation.goBack()} />
+            <Appbar.Header style={{ backgroundColor: colors.onBackground }}>
+              <Appbar.BackAction
+                onPress={() => navigation.goBack()}
+                color={colors.surface}
+              />
             </Appbar.Header>
           )
         }}
