@@ -52,6 +52,30 @@ export const saveFile = async (metadata: FileMetadata): Promise<void> => {
   })
 }
 
+export const updateFile = async (
+  id: number,
+  filename: string,
+  composer: string
+): Promise<void> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          'UPDATE filedata SET filename = ?, composer = ? WHERE id = ?',
+          [filename, composer, id]
+        )
+      },
+      (error) => {
+        console.log('Update file error:', error)
+        reject(error)
+      },
+      resolve
+    )
+  })
+}
+
 export const deleteFile = async (id: number): Promise<void> => {
   const db = openDatabase()
 

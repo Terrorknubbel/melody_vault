@@ -2,38 +2,53 @@ import { useState } from 'react'
 import { View } from 'react-native'
 import { Button, Menu } from 'react-native-paper'
 
-import DetailsDialog from './DetailsDialog'
 import styles from './addsheet.style'
 
-import { useFileStore } from '@/src/store/store'
+import { SheetMetadata } from '@/src/shared/types'
+import { useDetailsModalStore, useFileStore } from '@/src/store/store'
 import { pdfUpload, scanDocument, savePdf } from '@/src/utils'
 
 const AddSheet = () => {
-  const [fileData, setFileData] = useState<{
-    filename: string
-    fileUri: string
-  } | null>(null)
-
   const [visible, setVisible] = useState(false)
-  const [detailsDialogVisible, setDetailsDialogVisible] = useState(false)
 
   const loadMetaData = useFileStore((store) => store.loadAllMetadata)
+
+  const {
+    setDetailsModalVisible,
+    setDetailsSheetName,
+    setDetailsComposer,
+    setDetailsFileUri,
+    setDetailsHandleSave
+  } = useDetailsModalStore((state) => ({
+    setDetailsModalVisible: state.setVisible,
+    setDetailsSheetName: state.setSheetName,
+    setDetailsComposer: state.setComposer,
+    setDetailsFileUri: state.setFileUri,
+    setDetailsHandleSave: state.setHandleSave
+  }))
 
   const handleUpload = async (isScan: boolean) => {
     setVisible(false)
 
     const result = isScan ? await scanDocument() : await pdfUpload()
     if (result) {
-      setFileData(result)
-      setDetailsDialogVisible(true)
+      setDetailsSheetName(result.filename)
+      setDetailsComposer('')
+      setDetailsFileUri(result.fileUri)
+      setDetailsHandleSave(handlePdfSave)
+      setDetailsModalVisible(true)
     }
   }
 
-  const handlePdfSave = async (filename: string, composer: string) => {
-    await savePdf(filename, composer, fileData?.fileUri)
+  const handlePdfSave = async ({
+    filename,
+    composer,
+    filepath
+  }: SheetMetadata) => {
+    await savePdf({ filename, composer, filepath })
 
     loadMetaData()
-    setDetailsDialogVisible(false)
+    setDetailsModalVisible(false)
   }
 
   return (
@@ -65,15 +80,6 @@ const AddSheet = () => {
           title="PDF hochladen"
         />
       </Menu>
-      {fileData && (
-        <DetailsDialog
-          initialSheetName={fileData.filename}
-          fileUri={fileData.fileUri}
-          visible={detailsDialogVisible}
-          setVisible={setDetailsDialogVisible}
-          handleSave={handlePdfSave}
-        />
-      )}
     </View>
   )
 }

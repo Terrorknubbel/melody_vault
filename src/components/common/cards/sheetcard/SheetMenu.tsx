@@ -3,11 +3,11 @@ import { Menu, IconButton } from 'react-native-paper'
 
 interface Props {
   setDestroyDialogVisible: (visible: boolean) => void
+  handleEdit: () => void
 }
 
-const SheetMenu = ({ setDestroyDialogVisible }: Props) => {
+const SheetMenu = ({ setDestroyDialogVisible, handleEdit }: Props) => {
   const [visible, setVisible] = useState(false)
-  const changeName = (): void => setVisible(false)
 
   const destroy = (): void => {
     setDestroyDialogVisible(true)
@@ -31,7 +31,14 @@ const SheetMenu = ({ setDestroyDialogVisible }: Props) => {
         />
       }
     >
-      <Menu.Item leadingIcon="pencil" onPress={changeName} title="Bearbeiten" />
+      <Menu.Item
+        leadingIcon="pencil"
+        onPress={() => {
+          setVisible(false)
+          handleEdit()
+        }}
+        title="Bearbeiten"
+      />
       <Menu.Item
         testID="SheetMenu-delete-button"
         leadingIcon="delete"

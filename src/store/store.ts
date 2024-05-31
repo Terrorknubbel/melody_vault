@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { FilterEnum } from '../shared/enums'
-import type { FileData } from '../shared/types'
+import type { FileData, SheetMetadata } from '../shared/types'
 import * as DB from '../utils/db'
 
 interface FileStoreState {
@@ -22,6 +22,19 @@ interface SnackbarStoreState {
 interface SnackbarMessageStoreState {
   message: { action: string; text: string }
   setMessage: (message: { action: string; text: string }) => void
+}
+
+interface DetailsModalStoreState {
+  visible: boolean
+  setVisible: (visible: boolean) => void
+  sheetName: string
+  setSheetName: (sheetName: string) => void
+  composer: string
+  setComposer: (composer: string) => void
+  fileUri: string
+  setFileUri: (fileUri: string) => void
+  handleSave: (metadata: SheetMetadata) => void
+  setHandleSave: (handleSave: (metadata: SheetMetadata) => void) => void
 }
 
 export const useFileStore = create<FileStoreState>((set) => ({
@@ -47,3 +60,16 @@ export const useSnackbarMessageStore = create<SnackbarMessageStoreState>(
     setMessage: (message) => set({ message })
   })
 )
+
+export const useDetailsModalStore = create<DetailsModalStoreState>((set) => ({
+  visible: false,
+  setVisible: (visible) => set({ visible }),
+  sheetName: '',
+  setSheetName: (sheetName) => set({ sheetName }),
+  composer: '',
+  setComposer: (composer) => set({ composer }),
+  fileUri: '',
+  setFileUri: (fileUri) => set({ fileUri }),
+  handleSave: () => {},
+  setHandleSave: (handleSave) => set({ handleSave })
+}))

@@ -4,6 +4,7 @@ import DocumentScanner from 'react-native-document-scanner-plugin'
 import { createPdf } from 'react-native-images-to-pdf'
 
 import * as DB from './db'
+import { SheetMetadata } from '../shared/types'
 
 interface PDF {
   filename: string
@@ -47,19 +48,15 @@ const pdfUpload = async (): Promise<PDF | null> => {
   }
 }
 
-const savePdf = async (
-  filename: string,
-  composer: string,
-  fileUri: string | undefined
-) => {
-  if (fileUri === undefined) {
+const savePdf = async ({ filename, composer, filepath }: SheetMetadata) => {
+  if (filepath === undefined) {
     return
   }
 
   const timestamp = new Date().getTime()
   const downloadDest = `${FileSystem.documentDirectory}pdfs/${timestamp}${filename}.pdf`
 
-  await FileSystem.copyAsync({ from: fileUri, to: downloadDest })
+  await FileSystem.copyAsync({ from: filepath, to: downloadDest })
 
   await DB.saveFile({
     filename,

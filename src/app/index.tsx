@@ -4,6 +4,7 @@ import { ScrollView, View, SafeAreaView } from 'react-native'
 import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper'
 
 import AddSheet from '../components/home/addsheet/AddSheet'
+import DetailsDialog from '../components/home/addsheet/DetailsDialog'
 import Filter from '../components/home/menu/filter/filter'
 import Sheets from '../components/home/sheets/Sheets'
 import {
@@ -85,6 +86,8 @@ const Home = () => {
       </ScrollView>
 
       <AddSheet />
+
+      <DetailsDialog />
 
       <Snackbar
         visible={snackbarVisible}

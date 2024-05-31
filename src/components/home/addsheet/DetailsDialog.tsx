@@ -1,30 +1,30 @@
-import { useEffect, useState } from 'react'
 import { Button, Dialog, Portal, useTheme, TextInput } from 'react-native-paper'
 import Pdf from 'react-native-pdf'
 
-interface Props {
-  initialSheetName: string
-  fileUri: string
-  visible: boolean
-  setVisible: (visible: boolean) => void
-  handleSave: (filename: string, composer: string) => Promise<void>
-}
+import { useDetailsModalStore } from '@/src/store/store'
 
-const DetailsDialog = ({
-  initialSheetName,
-  fileUri,
-  visible,
-  setVisible,
-  handleSave
-}: Props) => {
+const DetailsDialog = () => {
   const { colors } = useTheme()
 
-  const [sheetName, setSheetName] = useState('')
-  const [composer, setComposer] = useState('')
-
-  useEffect(() => {
-    setSheetName(initialSheetName)
-  }, [initialSheetName])
+  const {
+    visible,
+    setVisible,
+    sheetName,
+    setSheetName,
+    composer,
+    setComposer,
+    fileUri,
+    handleSave
+  } = useDetailsModalStore((state) => ({
+    visible: state.visible,
+    setVisible: state.setVisible,
+    sheetName: state.sheetName,
+    setSheetName: state.setSheetName,
+    composer: state.composer,
+    setComposer: state.setComposer,
+    fileUri: state.fileUri,
+    handleSave: state.handleSave
+  }))
 
   if (!visible) {
     return null
@@ -52,6 +52,7 @@ const DetailsDialog = ({
           />
           <TextInput
             label="Titel"
+            autoFocus
             value={sheetName}
             mode="outlined"
             onChangeText={(text) => setSheetName(text)}
@@ -69,7 +70,9 @@ const DetailsDialog = ({
             style={{
               borderRadius: 5
             }}
-            onPress={() => handleSave(sheetName, composer)}
+            onPress={() =>
+              handleSave({ filename: sheetName, composer, filepath: fileUri })
+            }
           >
             Speichern
           </Button>
