@@ -11,5 +11,8 @@ module.exports = {
       }
     ]
   },
-  ignorePatterns: ['expo-env.d.ts']
+  ignorePatterns: ['expo-env.d.ts', '/android'],
+  env: {
+    node: true
+  }
 }
