@@ -3,216 +3,113 @@ import * as SQLite from 'expo-sqlite'
 import { FilterEnum } from '../shared/enums'
 import type { FileMetadata, FileData } from '../shared/types'
 
-const openDatabase = () => {
-  const db = SQLite.openDatabase('melody_vault')
-  return db
+const openDatabase = async () => await SQLite.openDatabaseAsync('melody_vault')
+
+export const initDatabase = async () => {
+  const db = await openDatabase()
+
+  db.runAsync(
+    'CREATE TABLE IF NOT EXISTS filedata (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT, composer TEXT, filepath TEXT);'
+  )
+
+  db.runAsync(
+    'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER, filter INTEGER);'
+  )
 }
 
-export const initDatabase = async (): Promise<void> => {
-  const db = openDatabase()
+export const saveFile = async (metadata: FileMetadata) => {
+  const db = await openDatabase()
 
-  return new Promise((resolve, reject) => {
-    db.transaction(
-      (tx) => {
-        tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS filedata (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT, composer TEXT, filepath TEXT);'
-        )
-        tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER, filter INTEGER);'
-        )
-      },
-      (error) => {
-        console.log('Table creation error:', error)
-        reject(error)
-      },
-      () => {
-        console.log('Table created successfully')
-        resolve()
-      }
-    )
-  })
-}
-
-export const saveFile = async (metadata: FileMetadata): Promise<void> => {
-  const db = openDatabase()
-
-  return new Promise((resolve, reject) => {
-    db.transaction(
-      (tx) => {
-        tx.executeSql(
-          'INSERT INTO filedata (filename, composer, filepath) VALUES (?, ?, ?)',
-          [metadata.filename, metadata.composer, metadata.filepath]
-        )
-      },
-      (error) => {
-        console.log('Save file error:', error)
-        reject(error)
-      },
-      resolve
-    )
-  })
+  db.runAsync(
+    'INSERT INTO filedata (filename, composer, filepath) VALUES (?, ?, ?)',
+    metadata.filename,
+    metadata.composer,
+    metadata.filepath
+  )
 }
 
 export const updateFile = async (
   id: number,
   filename: string,
   composer: string
-): Promise<void> => {
-  const db = openDatabase()
+) => {
+  const db = await openDatabase()
 
-  return new Promise((resolve, reject) => {
-    db.transaction(
-      (tx) => {
-        tx.executeSql(
-          'UPDATE filedata SET filename = ?, composer = ? WHERE id = ?',
-          [filename, composer, id]
-        )
-      },
-      (error) => {
-        console.log('Update file error:', error)
-        reject(error)
-      },
-      resolve
-    )
-  })
+  db.runAsync(
+    'UPDATE filedata SET filename = ?, composer = ? WHERE id = ?',
+    filename,
+    composer,
+    id
+  )
 }
 
-export const deleteFile = async (id: number): Promise<void> => {
-  const db = openDatabase()
+export const deleteFile = async (id: number) => {
+  const db = await openDatabase()
 
-  return new Promise((resolve, reject) => {
-    db.transaction(
-      (tx) => {
-        tx.executeSql('DELETE FROM filedata WHERE id = ?', [id])
-      },
-      (error) => {
-        console.log('Delete file error:', error)
-        reject(error)
-      },
-      resolve
-    )
-  })
+  db.runAsync('DELETE FROM filedata WHERE id = ?', id)
 }
 
 export const getFiles = async (): Promise<FileData[]> => {
-  const db = openDatabase()
+  const db = await openDatabase()
 
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT * FROM filedata',
-        [],
-        (_, result) => resolve(result.rows._array),
-        (tx, error) => {
-          console.log('Get files error:', error)
-          reject(error)
-          return true
-        }
-      )
-    })
-  })
+  return (await db.getAllAsync('SELECT * FROM filedata')) as FileData[]
 }
 
 export const getFilepath = async (id: number): Promise<string> => {
-  const db = openDatabase()
+  const db = await openDatabase()
 
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT filepath FROM filedata WHERE id = ?',
-        [id],
-        (_, result) => resolve(result.rows.item(0).filepath),
-        (tx, error) => {
-          console.log('Get filepath error:', error)
-          reject(error)
-          return true
-        }
-      )
-    })
-  })
+  const row = (await db.getFirstAsync(
+    'SELECT filepath FROM filedata WHERE id = ?',
+    id
+  )) as { filepath: string }
+  return row.filepath
 }
 
 export const getDarkmode = async (): Promise<boolean> => {
-  const db = openDatabase()
+  const db = await openDatabase()
 
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT darkmode FROM preferences',
-        [],
-        (_, result) => {
-          const darkmode =
-            result.rows.length > 0 ? result.rows.item(0).darkmode === 1 : false
-          resolve(darkmode)
-        },
-        (tx, error) => {
-          console.log('Get darkmode error:', error)
-          reject(error)
-          return true
-        }
-      )
-    })
-  })
+  const row = (await db.getFirstAsync('SELECT darkmode FROM preferences')) as {
+    darkmode: number | null
+  }
+
+  if (!row || !row.darkmode) {
+    return false
+  }
+
+  return row.darkmode === 1
 }
 
-export const setDarkmode = async (darkmode: boolean): Promise<void> => {
-  const db = openDatabase()
+export const setDarkmode = async (darkmode: boolean) => {
+  const db = await openDatabase()
 
-  return new Promise((resolve, reject) => {
-    db.transaction(
-      (tx) => {
-        tx.executeSql(
-          'INSERT OR REPLACE INTO preferences (id, darkmode) VALUES (1, ?)',
-          [darkmode ? 1 : 0]
-        )
-      },
-      (error) => {
-        console.log('Set darkmode error:', error)
-        reject(error)
-      },
-      resolve
-    )
-  })
+  const isDarkmode = darkmode ? 1 : 0
+  await db.runAsync(
+    'INSERT INTO preferences (id, darkmode) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET darkmode = excluded.darkmode',
+    1,
+    isDarkmode
+  )
 }
 
 export const getFilter = async (): Promise<number> => {
-  const db = openDatabase()
+  const db = await openDatabase()
 
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT filter FROM preferences',
-        [],
-        (_, result) => {
-          const filter = result.rows.length > 0 ? result.rows.item(0).filter : 0
-          resolve(filter)
-        },
-        (tx, error) => {
-          console.log('Get filter error:', error)
-          reject(error)
-          return true
-        }
-      )
-    })
-  })
+  const row = (await db.getFirstAsync('SELECT filter FROM preferences')) as {
+    filter: number | null
+  }
+
+  if (!row || !row.filter) {
+    return 0
+  }
+
+  return row.filter
 }
 
-export const setFilter = async (filter: FilterEnum): Promise<void> => {
-  const db = openDatabase()
+export const setFilter = async (filter: FilterEnum) => {
+  const db = await openDatabase()
 
-  return new Promise((resolve, reject) => {
-    db.transaction(
-      (tx) => {
-        tx.executeSql(
-          'INSERT OR REPLACE INTO preferences (id, filter) VALUES (1, ?)',
-          [filter]
-        )
-      },
-      (error) => {
-        console.log('Set filter error:', error)
-        reject(error)
-      },
-      resolve
-    )
-  })
+  await db.runAsync(
+    'INSERT INTO preferences (id, filter) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET filter = excluded.filter',
+    1,
+    filter
+  )
 }

@@ -44,7 +44,9 @@
           "iCloudContainerEnvironment": "Production"
         }
       ],
-      "react-native-document-scanner-plugin"
+      "react-native-document-scanner-plugin",
+      "expo-asset",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
