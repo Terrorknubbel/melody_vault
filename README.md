@@ -55,12 +55,12 @@ Benefits:
 
 <div align="center">
   <div>
-    <img src="images/homescreen_dark.jpg" alt="Homescreen Dark" width="412px" height="780">
-    <img src="images/homescreen_light.jpg" alt="Homescreen Light" width="412px" height="780">
+    <img src="images/homescreen_dark.jpg" alt="Homescreen Dark" width="412px" height="700">
+    <img src="images/homescreen_light.jpg" alt="Homescreen Light" width="412px" height="700">
   </div>
   <div>
-    <img src="images/pdf_view_dark.jpg" alt="PDF View Dark" width="412px" height="780">
-    <img src="images/pdf_view_light.jpg" alt="PDF View Light" width="412px" height="780">
+    <img src="images/pdf_view_dark.jpg" alt="PDF View Dark" width="412px" height="700">
+    <img src="images/pdf_view_light.jpg" alt="PDF View Light" width="412px" height="700">
   </div>
 </div>
 
