@@ -55,7 +55,7 @@ const Licenses = () => {
                 color={colors.surface}
                 onPress={() => navigation.goBack()}
               />
-              <Appbar.Content title="Lizensen" color={colors.surface} />
+              <Appbar.Content title="Lizenzen" color={colors.surface} />
             </Appbar.Header>
           )
         }}

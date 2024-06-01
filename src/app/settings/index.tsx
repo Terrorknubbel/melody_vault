@@ -60,7 +60,7 @@ const Settings = () => {
         <Divider horizontalInset style={{ marginVertical: 15 }} />
         <Subheader text="Hilfe" />
         <List.Item
-          title="Lizensen"
+          title="Lizenzen"
           onPress={() => router.push('/settings/Licenses')}
           titleStyle={styles.itemTitle}
           style={styles.item}
