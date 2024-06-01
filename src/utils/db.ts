@@ -13,7 +13,7 @@ export const initDatabase = async () => {
   )
 
   db.runAsync(
-    'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER, filter INTEGER);'
+    'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER, filter INTEGER, firstlaunch INTEGER);'
   )
 }
 
@@ -111,5 +111,32 @@ export const setFilter = async (filter: FilterEnum) => {
     'INSERT INTO preferences (id, filter) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET filter = excluded.filter',
     1,
     filter
+  )
+}
+
+export const getFirstlaunch = async (): Promise<boolean> => {
+  const db = await openDatabase()
+
+  const row = (await db.getFirstAsync(
+    'SELECT firstlaunch FROM preferences'
+  )) as {
+    firstlaunch: number | null
+  }
+
+  if (!row || row.firstlaunch === null) {
+    return true
+  }
+
+  return row.firstlaunch === 1
+}
+
+export const setFirstlaunch = async (firstlaunch: boolean) => {
+  const db = await openDatabase()
+
+  const isFirstlaunch = firstlaunch ? 1 : 0
+  await db.runAsync(
+    'INSERT INTO preferences (id, firstlaunch) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET firstlaunch = excluded.firstlaunch',
+    1,
+    isFirstlaunch
   )
 }

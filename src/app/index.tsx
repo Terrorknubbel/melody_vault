@@ -1,3 +1,4 @@
+import { useAssets } from 'expo-asset'
 import { Stack, useRouter } from 'expo-router'
 import { useState, useEffect } from 'react'
 import { ScrollView, View, SafeAreaView } from 'react-native'
@@ -12,11 +13,15 @@ import {
   useSnackbarStore,
   useSnackbarMessageStore
 } from '../store/store'
+import { savePdf } from '../utils'
+import { getFirstlaunch, setFirstlaunch } from '../utils/db'
 
 const Home = () => {
   const { colors } = useTheme()
 
   const router = useRouter()
+
+  const [assets] = useAssets([require('../assets/nocturne.pdf')])
 
   const [isSearchVisible, setIsSearchVisible] = useState(false)
   const searchQuery = useFileStore((state) => state.searchQuery)
@@ -29,8 +34,22 @@ const Home = () => {
   const snackbarMessage = useSnackbarMessageStore((state) => state.message)
 
   useEffect(() => {
-    loadAllMetadata()
-  }, [loadAllMetadata])
+    const init = async () => {
+      const firstLaunch = await getFirstlaunch()
+      if (firstLaunch && assets && assets[0].localUri) {
+        await setFirstlaunch(false)
+        await savePdf({
+          filename: '[Sample] Nocturne Op. 9 N. 2',
+          composer: 'Frédéric Chopin',
+          filepath: assets[0].localUri
+        })
+      }
+
+      await loadAllMetadata()
+    }
+
+    init()
+  }, [loadAllMetadata, assets])
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
