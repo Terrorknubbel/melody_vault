@@ -3,7 +3,8 @@ import * as SQLite from 'expo-sqlite'
 import { FilterEnum } from '../shared/enums'
 import type { FileMetadata, FileData } from '../shared/types'
 
-const openDatabase = async () => await SQLite.openDatabaseAsync('melody_vault')
+const openDatabase = async () =>
+  await SQLite.openDatabaseAsync('melody_vault', { useNewConnection: true })
 
 export const initDatabase = async () => {
   const db = await openDatabase()
