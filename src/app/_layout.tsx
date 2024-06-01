@@ -5,14 +5,17 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { View } from 'react-native'
 import { PaperProvider } from 'react-native-paper'
 
+import { useFileStore } from '../store/store'
 import { PreferencesContext } from '../utils/PreferencesContext'
-import { getDarkmode, initDatabase, setDarkmode } from '../utils/db'
+import { getDarkmode, getFilter, initDatabase, setDarkmode } from '../utils/db'
 import { CombinedDarkTheme, CombinedDefaultTheme } from '../utils/theme'
 
 export default function Layout() {
   const [isThemeDark, setIsThemeDark] = useState(false)
 
   const theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme
+
+  const setFilter = useFileStore((state) => state.setFilter)
 
   const toggleTheme = useCallback(async () => {
     const newTheme = !isThemeDark
@@ -32,15 +35,19 @@ export default function Layout() {
     const init = async () => {
       try {
         await initDatabase()
+
         const darkmode = await getDarkmode()
+        const filter = await getFilter()
+
         setIsThemeDark(darkmode)
+        setFilter(filter)
       } catch (error) {
         console.log('Initialization error:', error)
       }
     }
 
     init()
-  }, [])
+  }, [setFilter])
 
   const [fontsLoaded] = useFonts({
     Noto: require('../assets/fonts/Noto.ttf')

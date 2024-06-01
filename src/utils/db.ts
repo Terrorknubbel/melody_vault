@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite'
 
+import { FilterEnum } from '../shared/enums'
 import type { FileMetadata, FileData } from '../shared/types'
 
 const openDatabase = () => {
@@ -17,7 +18,7 @@ export const initDatabase = async (): Promise<void> => {
           'CREATE TABLE IF NOT EXISTS filedata (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT, composer TEXT, filepath TEXT);'
         )
         tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER);'
+          'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER, filter INTEGER);'
         )
       },
       (error) => {
@@ -167,6 +168,48 @@ export const setDarkmode = async (darkmode: boolean): Promise<void> => {
       },
       (error) => {
         console.log('Set darkmode error:', error)
+        reject(error)
+      },
+      resolve
+    )
+  })
+}
+
+export const getFilter = async (): Promise<number> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT filter FROM preferences',
+        [],
+        (_, result) => {
+          const filter = result.rows.length > 0 ? result.rows.item(0).filter : 0
+          resolve(filter)
+        },
+        (tx, error) => {
+          console.log('Get filter error:', error)
+          reject(error)
+          return true
+        }
+      )
+    })
+  })
+}
+
+export const setFilter = async (filter: FilterEnum): Promise<void> => {
+  const db = openDatabase()
+
+  return new Promise((resolve, reject) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          'INSERT OR REPLACE INTO preferences (id, filter) VALUES (1, ?)',
+          [filter]
+        )
+      },
+      (error) => {
+        console.log('Set filter error:', error)
         reject(error)
       },
       resolve

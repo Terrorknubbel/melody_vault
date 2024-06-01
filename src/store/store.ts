@@ -46,7 +46,10 @@ export const useFileStore = create<FileStoreState>((set) => ({
   searchQuery: '',
   setSearchQuery: (query: string) => set({ searchQuery: query }),
   filter: FilterEnum.TitleAsc,
-  setFilter: (filter: FilterEnum) => set({ filter })
+  setFilter: async (filter: FilterEnum) => {
+    await DB.setFilter(filter)
+    set({ filter })
+  }
 }))
 
 export const useSnackbarStore = create<SnackbarStoreState>((set) => ({
