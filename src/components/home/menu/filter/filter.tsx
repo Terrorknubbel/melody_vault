@@ -3,6 +3,7 @@ import { Appbar, Menu, useTheme } from 'react-native-paper'
 
 import { FilterEnum } from '@/src/shared/enums'
 import { useFileStore } from '@/src/store/store'
+import i18n from '@/src/utils/i18n'
 
 const Filter = () => {
   const { colors } = useTheme()
@@ -33,19 +34,19 @@ const Filter = () => {
         onPress={() => setFilter(FilterEnum.TitleAsc)}
         leadingIcon={currentFilter === FilterEnum.TitleAsc ? 'check' : ''}
         trailingIcon="sort-alphabetical-ascending"
-        title="Titel A-Z"
+        title={i18n.t('filter-title-a-z')}
       />
       <Menu.Item
         onPress={() => setFilter(FilterEnum.TitleDesc)}
         leadingIcon={currentFilter === FilterEnum.TitleDesc ? 'check' : ''}
         trailingIcon="sort-alphabetical-descending"
-        title="Titel Z-A"
+        title={i18n.t('filter-title-z-a')}
       />
       <Menu.Item
         onPress={() => setFilter(FilterEnum.CreatedAt)}
         leadingIcon={currentFilter === FilterEnum.CreatedAt ? 'check' : ''}
         trailingIcon="calendar-blank-outline"
-        title="Erstellt am"
+        title={i18n.t('filter-created-at')}
       />
     </Menu>
   )

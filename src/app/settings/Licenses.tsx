@@ -6,6 +6,8 @@ import { FlatList, ActivityIndicator } from 'react-native'
 import { Appbar, Text, useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+import i18n from '@/src/utils/i18n'
+
 const CHUNK_SIZE = 1000
 
 const Licenses = () => {
@@ -55,7 +57,10 @@ const Licenses = () => {
                 color={colors.surface}
                 onPress={() => navigation.goBack()}
               />
-              <Appbar.Content title="Lizenzen" color={colors.surface} />
+              <Appbar.Content
+                title={i18n.t('licenses')}
+                color={colors.surface}
+              />
             </Appbar.Header>
           )
         }}

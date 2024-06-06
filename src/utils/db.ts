@@ -14,7 +14,7 @@ export const initDatabase = async () => {
   )
 
   db.runAsync(
-    'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER, filter INTEGER, firstlaunch INTEGER);'
+    'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER, filter INTEGER, firstlaunch INTEGER, language TEXT);'
   )
 }
 
@@ -139,5 +139,29 @@ export const setFirstlaunch = async (firstlaunch: boolean) => {
     'INSERT INTO preferences (id, firstlaunch) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET firstlaunch = excluded.firstlaunch',
     1,
     isFirstlaunch
+  )
+}
+
+export const getLanguage = async (): Promise<string> => {
+  const db = await openDatabase()
+
+  const row = (await db.getFirstAsync('SELECT language FROM preferences')) as {
+    language: string
+  }
+
+  if (row === null) {
+    return ''
+  } else {
+    return row.language
+  }
+}
+
+export const setLanguage = async (language: string) => {
+  const db = await openDatabase()
+
+  await db.runAsync(
+    'INSERT INTO preferences (id, language) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET language = excluded.language',
+    1,
+    language
   )
 }

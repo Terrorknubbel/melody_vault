@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Menu, IconButton } from 'react-native-paper'
 
+import i18n from '@/src/utils/i18n'
+
 interface Props {
   setDestroyDialogVisible: (visible: boolean) => void
   handleEdit: () => void
@@ -37,13 +39,13 @@ const SheetMenu = ({ setDestroyDialogVisible, handleEdit }: Props) => {
           setVisible(false)
           handleEdit()
         }}
-        title="Bearbeiten"
+        title={i18n.t('edit')}
       />
       <Menu.Item
         testID="SheetMenu-delete-button"
         leadingIcon="delete"
         onPress={destroy}
-        title="Löschen"
+        title={i18n.t('delete')}
       />
     </Menu>
   )

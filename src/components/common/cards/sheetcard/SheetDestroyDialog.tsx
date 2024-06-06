@@ -7,6 +7,7 @@ import {
 } from '@/src/store/store'
 import { destroyPDF } from '@/src/utils'
 import * as DB from '@/src/utils/db'
+import i18n from '@/src/utils/i18n'
 
 interface Props {
   sheetKey: number
@@ -55,11 +56,9 @@ const SheetDestroyDialog = ({
         style={{ marginLeft: 'auto', marginRight: 'auto' }}
         testID="DestroyDialog"
       >
-        <Dialog.Title>Unwiderruflich löschen?</Dialog.Title>
+        <Dialog.Title>{i18n.t('delete-headline')}</Dialog.Title>
         <Dialog.Content>
-          <Text variant="bodyLarge">
-            Diese Aktion kann nicht rückgängig gemacht werden.
-          </Text>
+          <Text variant="bodyLarge">{i18n.t('delete-body')}</Text>
         </Dialog.Content>
         <Dialog.Actions style={{ gap: 5 }}>
           <Button
@@ -71,7 +70,7 @@ const SheetDestroyDialog = ({
             }}
             onPress={deleteSheet}
           >
-            Löschen
+            {i18n.t('delete')}
           </Button>
           <Button
             mode="text"
@@ -82,7 +81,7 @@ const SheetDestroyDialog = ({
             onPress={() => setVisible(false)}
             testID="DestroyDialog-cancel-button"
           >
-            Abbrechen
+            {i18n.t('cancel')}
           </Button>
         </Dialog.Actions>
       </Dialog>

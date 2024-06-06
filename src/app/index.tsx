@@ -1,6 +1,8 @@
 import { useAssets } from 'expo-asset'
+import { getLocales } from 'expo-localization'
 import { Stack, useRouter } from 'expo-router'
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ScrollView, View, SafeAreaView } from 'react-native'
 import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper'
 
@@ -14,10 +16,17 @@ import {
   useSnackbarMessageStore
 } from '../store/store'
 import { savePdf } from '../utils'
-import { getFirstlaunch, setFirstlaunch } from '../utils/db'
+import {
+  getFirstlaunch,
+  getLanguage,
+  setFirstlaunch,
+  setLanguage
+} from '../utils/db'
 
 const Home = () => {
   const { colors } = useTheme()
+
+  const { i18n } = useTranslation()
 
   const router = useRouter()
 
@@ -45,11 +54,24 @@ const Home = () => {
         })
       }
 
+      const language = await getLanguage()
+      const deviceLanguage = getLocales()[0].languageCode
+
+      let newLanguage
+      if (language === '') {
+        newLanguage = deviceLanguage || 'de'
+        setLanguage(newLanguage)
+      } else {
+        newLanguage = language
+      }
+
+      i18n.changeLanguage(newLanguage)
+
       await loadAllMetadata()
     }
 
     init()
-  }, [loadAllMetadata, assets])
+  }, [loadAllMetadata, assets, i18n])
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
@@ -63,7 +85,7 @@ const Home = () => {
               {isSearchVisible && (
                 <Searchbar
                   mode="bar"
-                  placeholder="Suchen…"
+                  placeholder={i18n.t('search')}
                   value={searchQuery}
                   onChangeText={setSearchQuery}
                   autoFocus

@@ -2,6 +2,7 @@ import { Button, Dialog, Portal, useTheme, TextInput } from 'react-native-paper'
 import Pdf from 'react-native-pdf'
 
 import { useDetailsModalStore } from '@/src/store/store'
+import i18n from '@/src/utils/i18n'
 
 const DetailsDialog = () => {
   const { colors } = useTheme()
@@ -37,7 +38,7 @@ const DetailsDialog = () => {
         onDismiss={() => setVisible(false)}
         style={{ marginLeft: 'auto', marginRight: 'auto', minWidth: 330 }}
       >
-        <Dialog.Title>Noten speichern</Dialog.Title>
+        <Dialog.Title>{i18n.t('save-sheet')}</Dialog.Title>
         <Dialog.Content style={{ gap: 20 }}>
           <Pdf
             source={{ uri: fileUri }}
@@ -51,14 +52,14 @@ const DetailsDialog = () => {
             }}
           />
           <TextInput
-            label="Titel"
+            label={i18n.t('title')}
             autoFocus
             value={sheetName}
             mode="outlined"
             onChangeText={(text) => setSheetName(text)}
           />
           <TextInput
-            label="Komponist"
+            label={i18n.t('composer')}
             value={composer}
             mode="outlined"
             onChangeText={(text) => setComposer(text)}
@@ -74,7 +75,7 @@ const DetailsDialog = () => {
               handleSave({ filename: sheetName, composer, filepath: fileUri })
             }
           >
-            Speichern
+            {i18n.t('save')}
           </Button>
           <Button
             mode="text"
@@ -85,7 +86,7 @@ const DetailsDialog = () => {
             onPress={() => setVisible(false)}
             testID="DestroyDialog-cancel-button"
           >
-            Abbrechen
+            {i18n.t('cancel')}
           </Button>
         </Dialog.Actions>
       </Dialog>
