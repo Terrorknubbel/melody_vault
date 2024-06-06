@@ -17,7 +17,7 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - name: Install npm dependencies
-        run: npm ci
+        run: npm install --legacy-peer-deps
       - name: Run ESLint
         run: npm run lint -- --max-warnings=0
       - name: Run Jest
