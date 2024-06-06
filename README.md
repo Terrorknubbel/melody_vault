@@ -84,8 +84,8 @@ Benefits:
 - [x] Full Theme Support
 - [x] Document Scanning
 - [x] Tablet-compatibility
-- [ ] Multi-language Support
-    - [ ] English
+- [x] Multi-language Support
+    - [x] English
 - [ ] PDF annotations
 - [ ] Google authentication
 - [ ] Sheet Sync/Upload
