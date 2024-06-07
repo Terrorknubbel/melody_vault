@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     bottom: moderateScale(25)
   },
   menu: {
-    marginBottom: 30 + moderateScale(10)
+    marginBottom: 20 + moderateScale(5)
   },
   button: {
     paddingLeft: horizontalScale(5),

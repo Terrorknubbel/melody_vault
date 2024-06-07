@@ -18,7 +18,8 @@ const Filter = () => {
       visible={isMenuVisible}
       contentStyle={{
         alignItems: 'flex-end',
-        marginTop: 40
+        marginTop: 40,
+        marginRight: 15
       }}
       onDismiss={() => setIsMenuVisible(false)}
       theme={{ animation: { scale: 0.3 } }}
