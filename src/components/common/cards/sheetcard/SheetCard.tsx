@@ -5,7 +5,6 @@ import { List, useTheme } from 'react-native-paper'
 
 import SheetDestroyDialog from './SheetDestroyDialog'
 import SheetMenu from './SheetMenu'
-import styles from './sheetcard.style'
 
 import { useDetailsModalStore, useFileStore } from '@/src/store/store'
 import { getFilepath, updateFile } from '@/src/utils/db'
@@ -64,17 +63,18 @@ const SheetCard = ({ sheetKey, name, composer }: Props) => {
   const redirect = (key: number): void => router.push(`/sheet/${key}`)
 
   return (
-    <View style={styles.container}>
+    <View>
       <List.Item
         title={name}
         description={composer}
         descriptionStyle={{ color: colors.outline }}
         onPress={() => redirect(sheetKey)}
-        style={styles.itemContainer}
-      />
-      <SheetMenu
-        setDestroyDialogVisible={setDestroyDialogVisible}
-        handleEdit={editSheetMenu}
+        right={() => (
+          <SheetMenu
+            setDestroyDialogVisible={setDestroyDialogVisible}
+            handleEdit={editSheetMenu}
+          />
+        )}
       />
       <SheetDestroyDialog
         sheetKey={sheetKey}

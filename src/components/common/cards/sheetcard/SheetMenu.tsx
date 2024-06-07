@@ -20,16 +20,17 @@ const SheetMenu = ({ setDestroyDialogVisible, handleEdit }: Props) => {
     <Menu
       visible={visible}
       onDismiss={() => setVisible(false)}
-      contentStyle={{
-        marginTop: 40,
-        marginRight: 10
-      }}
+      contentStyle={{ marginTop: 30 }}
       theme={{ animation: { scale: 0.3 } }}
       anchor={
         <IconButton
           icon="dots-vertical"
           onPress={() => setVisible(true)}
           testID="SheetMenu"
+          style={{
+            marginRight: -15,
+            margin: 0
+          }}
         />
       }
     >
