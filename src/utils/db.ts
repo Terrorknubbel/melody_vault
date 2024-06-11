@@ -6,16 +6,42 @@ import type { FileMetadata, FileData } from '../shared/types'
 const openDatabase = async () =>
   await SQLite.openDatabaseAsync('melody_vault', { useNewConnection: true })
 
+const getDatabaseVersion = async () => {
+  const db = await openDatabase()
+
+  const row = db.getFirstSync('PRAGMA user_version') as {
+    user_version: number
+  }
+
+  return row.user_version
+}
+
+const applyMigrations = async () => {
+  const db = await openDatabase()
+  const currentVersion = await getDatabaseVersion()
+
+  const migrations = ['ALTER TABLE filedata ADD COLUMN favorite INTEGER']
+
+  migrations.forEach((migration, i) => {
+    if (currentVersion === i) {
+      db.runSync(migration)
+      db.runSync(`PRAGMA user_version = ${i + 1}`)
+    }
+  })
+}
+
 export const initDatabase = async () => {
   const db = await openDatabase()
 
-  db.runAsync(
+  db.runSync(
     'CREATE TABLE IF NOT EXISTS filedata (id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT, composer TEXT, filepath TEXT);'
   )
 
-  db.runAsync(
+  db.runSync(
     'CREATE TABLE IF NOT EXISTS preferences (id INTEGER PRIMARY KEY AUTOINCREMENT, darkmode INTEGER, filter INTEGER, firstlaunch INTEGER, language TEXT);'
   )
+
+  applyMigrations()
 }
 
 export const saveFile = async (metadata: FileMetadata) => {
@@ -159,5 +185,33 @@ export const setLanguage = async (language: string) => {
     'INSERT INTO preferences (id, language) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET language = excluded.language',
     1,
     language
+  )
+}
+
+export const getFavorite = async (id: number): Promise<boolean> => {
+  const db = await openDatabase()
+
+  const row = (await db.getFirstAsync(
+    'SELECT favorite FROM filedata WHERE id = ?',
+    id
+  )) as {
+    favorite: number | null
+  }
+
+  if (!row || !row.favorite) {
+    return false
+  }
+
+  return row.favorite === 1
+}
+
+export const setFavorite = async (id: number, favorite: boolean) => {
+  const db = await openDatabase()
+
+  const isFavorite = favorite ? 1 : 0
+  await db.runAsync(
+    'UPDATE filedata SET favorite = ? WHERE id = ?',
+    isFavorite,
+    id
   )
 }

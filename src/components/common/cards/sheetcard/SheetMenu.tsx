@@ -6,9 +6,16 @@ import i18n from '@/src/utils/i18n'
 interface Props {
   setDestroyDialogVisible: (visible: boolean) => void
   handleEdit: () => void
+  favorite: boolean
+  toggleFavorite: () => void
 }
 
-const SheetMenu = ({ setDestroyDialogVisible, handleEdit }: Props) => {
+const SheetMenu = ({
+  setDestroyDialogVisible,
+  handleEdit,
+  favorite,
+  toggleFavorite
+}: Props) => {
   const [visible, setVisible] = useState(false)
 
   const destroy = (): void => {
@@ -41,6 +48,14 @@ const SheetMenu = ({ setDestroyDialogVisible, handleEdit }: Props) => {
           handleEdit()
         }}
         title={i18n.t('edit')}
+      />
+      <Menu.Item
+        leadingIcon={favorite ? 'heart-off' : 'heart'}
+        onPress={() => {
+          setVisible(false)
+          toggleFavorite()
+        }}
+        title={i18n.t('favorite')}
       />
       <Menu.Item
         testID="SheetMenu-delete-button"

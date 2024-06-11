@@ -1,6 +1,7 @@
 export interface FileMetadata {
   filename: string
   composer: string
+  favorite: boolean
   filepath: string
 }
 

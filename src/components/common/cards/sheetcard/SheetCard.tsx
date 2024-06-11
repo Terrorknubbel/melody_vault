@@ -1,21 +1,22 @@
 import { useRouter } from 'expo-router'
 import { useState } from 'react'
 import { View } from 'react-native'
-import { List, useTheme } from 'react-native-paper'
+import { Icon, List, useTheme } from 'react-native-paper'
 
 import SheetDestroyDialog from './SheetDestroyDialog'
 import SheetMenu from './SheetMenu'
 
 import { useDetailsModalStore, useFileStore } from '@/src/store/store'
-import { getFilepath, updateFile } from '@/src/utils/db'
+import { getFilepath, setFavorite, updateFile } from '@/src/utils/db'
 
 interface Props {
   sheetKey: number
   name: string
   composer: string
+  favorite: boolean
 }
 
-const SheetCard = ({ sheetKey, name, composer }: Props) => {
+const SheetCard = ({ sheetKey, name, composer, favorite }: Props) => {
   const { colors } = useTheme()
 
   const router = useRouter()
@@ -60,6 +61,11 @@ const SheetCard = ({ sheetKey, name, composer }: Props) => {
     setDetailsModalVisible(false)
   }
 
+  const handleToggleFavorite = async () => {
+    await setFavorite(sheetKey, !favorite)
+    loadMetaData()
+  }
+
   const redirect = (key: number): void => router.push(`/sheet/${key}`)
 
   return (
@@ -68,11 +74,26 @@ const SheetCard = ({ sheetKey, name, composer }: Props) => {
         title={name}
         description={composer}
         descriptionStyle={{ color: colors.outline }}
+        contentStyle={favorite && { marginLeft: -10 }}
         onPress={() => redirect(sheetKey)}
+        left={() =>
+          favorite ? (
+            <View
+              style={{
+                marginVertical: 'auto',
+                marginLeft: 16
+              }}
+            >
+              <Icon source="heart" color="red" size={25} />
+            </View>
+          ) : null
+        }
         right={() => (
           <SheetMenu
             setDestroyDialogVisible={setDestroyDialogVisible}
             handleEdit={editSheetMenu}
+            favorite={favorite}
+            toggleFavorite={handleToggleFavorite}
           />
         )}
       />

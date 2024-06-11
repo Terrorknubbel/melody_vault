@@ -27,15 +27,21 @@ const Sheets = () => {
     return 0
   })
 
+  const favorites = sortedList.filter((file) => file.favorite)
+  const nonFavorites = sortedList.filter((file) => !file.favorite)
+
+  const combinedList = [...favorites, ...nonFavorites]
+
   return (
     <List.Section>
-      {sortedList.map((file) => {
+      {combinedList.map((file) => {
         return (
           <SheetCard
             key={file.id}
             sheetKey={file.id}
             name={file.filename}
             composer={file.composer}
+            favorite={file.favorite}
           />
         )
       })}
