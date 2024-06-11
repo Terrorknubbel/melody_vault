@@ -146,14 +146,10 @@ export const getLanguage = async (): Promise<string> => {
   const db = await openDatabase()
 
   const row = (await db.getFirstAsync('SELECT language FROM preferences')) as {
-    language: string
+    language: string | null
   }
 
-  if (row === null) {
-    return ''
-  } else {
-    return row.language
-  }
+  return row.language ?? ''
 }
 
 export const setLanguage = async (language: string) => {

@@ -55,16 +55,13 @@ const Home = () => {
       }
 
       const language = await getLanguage()
-      const deviceLanguage = getLocales()[0].languageCode
+      const deviceLanguage = getLocales()[0].languageCode ?? 'en'
 
-      let newLanguage
-      if (language === '') {
-        newLanguage = deviceLanguage || 'de'
-        setLanguage(newLanguage)
-      } else {
-        newLanguage = language
+      if (!language) {
+        setLanguage(deviceLanguage)
       }
 
+      const newLanguage = language || deviceLanguage
       i18n.changeLanguage(newLanguage)
 
       await loadAllMetadata()
