@@ -66,15 +66,15 @@ export const getFilepath = async (id: number): Promise<string> => {
   return row.filepath
 }
 
-export const getDarkmode = async (): Promise<boolean> => {
+export const getDarkmode = async (): Promise<boolean | null> => {
   const db = await openDatabase()
 
   const row = (await db.getFirstAsync('SELECT darkmode FROM preferences')) as {
     darkmode: number | null
   }
 
-  if (!row || !row.darkmode) {
-    return false
+  if (!row || row.darkmode === null) {
+    return null
   }
 
   return row.darkmode === 1
