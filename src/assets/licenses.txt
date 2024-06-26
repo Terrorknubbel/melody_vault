@@ -2171,7 +2171,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 -----
 
-The following software may be included in this product: acorn. A copy of the source code may be downloaded from https://github.com/acornjs/acorn.git. This software contains the following license and notice below:
+The following software may be included in this product: acorn. A copy of the source code may be downloaded from git+https://github.com/acornjs/acorn.git. This software contains the following license and notice below:
 
 MIT License
 
@@ -9836,6 +9836,74 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 -----
 
+The following software may be included in this product: package-json-from-dist. A copy of the source code may be downloaded from git+https://github.com/isaacs/package-json-from-dist.git. This software contains the following license and notice below:
+
+All packages under `src/` are licensed according to the terms in
+their respective `LICENSE` or `LICENSE.md` files.
+
+The remainder of this project is licensed under the Blue Oak
+Model License, as follows:
+
+-----
+
+# Blue Oak Model License
+
+Version 1.0.0
+
+## Purpose
+
+This license gives everyone as much permission to work with
+this software as possible, while protecting contributors
+from liability.
+
+## Acceptance
+
+In order to receive this license, you must agree to its
+rules.  The rules of this license are both obligations
+under that agreement and conditions to your license.
+You must not do anything with this software that triggers
+a rule that you cannot or will not follow.
+
+## Copyright
+
+Each contributor licenses you to do everything with this
+software that would otherwise infringe that contributor's
+copyright in it.
+
+## Notices
+
+You must ensure that everyone who gets a copy of
+any part of this software from you, with or without
+changes, also gets the text of this license or a link to
+<https://blueoakcouncil.org/license/1.0.0>.
+
+## Excuse
+
+If anyone notifies you in writing that you have not
+complied with [Notices](#notices), you can keep your
+license by taking all practical steps to comply within 30
+days after the notice.  If you do not do so, your license
+ends immediately.
+
+## Patent
+
+Each contributor licenses you to do everything with this
+software that would otherwise infringe any patent claims
+they can license or become able to license.
+
+## Reliability
+
+No contributor can revoke this license.
+
+## No Liability
+
+***As far as the law allows, this software comes as is,
+without any warranty or condition, and no contributor
+will be liable to anyone for any damages related to this
+software or this license, under any kind of legal claim.***
+
+-----
+
 The following software may be included in this product: parseurl. A copy of the source code may be downloaded from https://github.com/pillarjs/parseurl.git. This software contains the following license and notice below:
 
 (The MIT License)
@@ -10149,7 +10217,7 @@ MIT, ISC, BSD-2-Clause, BSD-3-Clause, Apache-2.0
 
 ## Bundled dependencies
 
-### @angular/compiler@v18.0.0
+### @angular/compiler@v18.0.2
 
 > Angular - the compiler library
 
@@ -10159,7 +10227,7 @@ Author: angular
 
 ----------------------------------------
 
-### @babel/code-frame@v7.24.6
+### @babel/code-frame@v7.24.7
 
 > Generate errors that contain a code frame that point to source locations.
 
@@ -10193,7 +10261,7 @@ Author: The Babel Team (https://babel.dev/team)
 
 ----------------------------------------
 
-### @babel/helper-validator-identifier@v7.24.6
+### @babel/helper-validator-identifier@v7.24.7
 
 > Validate identifier/keywords name
 
@@ -10226,7 +10294,7 @@ Author: The Babel Team (https://babel.dev/team)
 
 ----------------------------------------
 
-### @babel/highlight@v7.24.6
+### @babel/highlight@v7.24.7
 
 > Syntax highlight JavaScript strings for output in terminals.
 
@@ -10260,7 +10328,7 @@ Author: The Babel Team (https://babel.dev/team)
 
 ----------------------------------------
 
-### @babel/parser@v7.24.6
+### @babel/parser@v7.24.7
 
 > A JavaScript parser
 
@@ -10588,7 +10656,7 @@ Author: Alex Bell <alex@bellandwhistle.net>
 
 ----------------------------------------
 
-### @typescript-eslint/types@v7.10.0
+### @typescript-eslint/types@v7.13.0
 
 > Types for the TypeScript-ESTree AST spec
 
@@ -10620,7 +10688,7 @@ Repository: <https://github.com/typescript-eslint/typescript-eslint.git>
 
 ----------------------------------------
 
-### @typescript-eslint/typescript-estree@v7.10.0
+### @typescript-eslint/typescript-estree@v7.13.0
 
 > A parser that converts TypeScript source code into an ESTree compatible form
 
@@ -11660,7 +11728,7 @@ Contributors:
 
 ----------------------------------------
 
-### flow-parser@v0.236.0
+### flow-parser@v0.237.2
 
 > JavaScript parser written in OCaml. Produces ESTree AST
 
@@ -12696,7 +12764,7 @@ Repository: <git@github.com:teambition/merge2.git>
 
 ----------------------------------------
 
-### meriyah@v4.4.3
+### meriyah@v4.5.0
 
 > A 100% compliant, self-hosted javascript parser with high focus on both performance and stability
 
@@ -12966,7 +13034,7 @@ Author: Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
 
 ----------------------------------------
 
-### picocolors@v1.0.0
+### picocolors@v1.0.1
 
 > The tiniest and the fastest library for terminal output formatting with ANSI colors
 
