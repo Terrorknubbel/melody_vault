@@ -5,6 +5,7 @@ import { View, SafeAreaView } from 'react-native'
 import { Appbar, useTheme } from 'react-native-paper'
 import Pdf from 'react-native-pdf'
 
+import PageIndicator from './PageIndicator'
 import styles from './sheet.style'
 import * as DB from '../../utils/db'
 
@@ -13,11 +14,15 @@ const Sheet = () => {
 
   const params = useGlobalSearchParams()
   const navigation = useNavigation()
-  const [pdfUri, setpdfUri] = useState(null)
+  const [pdfUri, setpdfUri] = useState<string | undefined>(undefined)
+  const [numberOfPages, setNumberOfPages] = useState<number | null>(null)
+  const [currentPage, setCurrentPage] = useState<number | null>(null)
 
   useEffect(() => {
     const getFilepath = async () => {
-      setpdfUri(await DB.getFilepath(params.id))
+      if (params.id) {
+        setpdfUri(await DB.getFilepath(+params.id))
+      }
     }
 
     getFilepath()
@@ -43,6 +48,16 @@ const Sheet = () => {
           source={{ uri: pdfUri }}
           enablePaging
           horizontal
+          onLoadComplete={(numberOfPages) => {
+            setNumberOfPages(numberOfPages)
+          }}
+          onPageChanged={(page) => {
+            setCurrentPage(page)
+          }}
+        />
+        <PageIndicator
+          numberOfPages={numberOfPages}
+          currentPage={currentPage}
         />
       </View>
     </SafeAreaView>
