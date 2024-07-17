@@ -21,6 +21,7 @@
     "@expo/metro-config": "^0.18.4",
     "@expo/vector-icons": "^14.0.0",
     "@react-navigation/native": "^6.0.2",
+    "@sentry/react-native": "~5.22.0",
     "ajv": "^8.16.0",
     "expo": "^51.0.9",
     "expo-asset": "~10.0.6",

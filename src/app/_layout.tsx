@@ -1,5 +1,6 @@
+import * as Sentry from '@sentry/react-native'
 import { useFonts } from 'expo-font'
-import { Stack } from 'expo-router'
+import { useNavigationContainerRef, Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { View, useColorScheme } from 'react-native'
@@ -10,7 +11,21 @@ import { PreferencesContext } from '../utils/PreferencesContext'
 import { getDarkmode, getFilter, initDatabase, setDarkmode } from '../utils/db'
 import { CombinedDarkTheme, CombinedDefaultTheme } from '../utils/theme'
 
-export default function Layout() {
+const routingInstrumentation = new Sentry.ReactNavigationInstrumentation()
+
+Sentry.init({
+  dsn: 'https://04232518f1837077e7d7ca4d08958724@o4507526194069504.ingest.de.sentry.io/4507526241058896',
+  integrations: [
+    new Sentry.ReactNativeTracing({
+      routingInstrumentation,
+      enableNativeFramesTracking: true
+    })
+  ]
+})
+
+function Layout() {
+  const ref = useNavigationContainerRef()
+
   const [isThemeDark, setIsThemeDark] = useState(useColorScheme() === 'dark')
 
   const theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme
@@ -33,24 +48,26 @@ export default function Layout() {
 
   useEffect(() => {
     const init = async () => {
-      try {
-        await initDatabase()
+      await initDatabase()
 
-        const darkmode = await getDarkmode()
-        const filter = await getFilter()
+      const darkmode = await getDarkmode()
+      const filter = await getFilter()
 
-        if (darkmode !== null) {
-          setIsThemeDark(darkmode)
-        }
-
-        setFilter(filter)
-      } catch (error) {
-        console.log('Initialization error:', error)
+      if (darkmode !== null) {
+        setIsThemeDark(darkmode)
       }
+
+      setFilter(filter)
     }
 
     init()
   }, [setFilter])
+
+  useEffect(() => {
+    if (ref) {
+      routingInstrumentation.registerNavigationContainer(ref)
+    }
+  }, [ref])
 
   const [fontsLoaded] = useFonts({
     Noto: require('../assets/fonts/Noto.ttf')
@@ -81,3 +98,5 @@ export default function Layout() {
     </PreferencesContext.Provider>
   )
 }
+
+export default Sentry.wrap(Layout)

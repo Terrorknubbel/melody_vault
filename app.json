@@ -48,7 +48,15 @@
       "react-native-document-scanner-plugin",
       "expo-asset",
       "expo-font",
-      "expo-localization"
+      "expo-localization",
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "organization": "wolfgang-macher",
+          "project": "melody-vault"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
