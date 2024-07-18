@@ -8,13 +8,15 @@ interface Props {
   handleEdit: () => void
   favorite: boolean
   toggleFavorite: () => void
+  share: () => void
 }
 
 const SheetMenu = ({
   setDestroyDialogVisible,
   handleEdit,
   favorite,
-  toggleFavorite
+  toggleFavorite,
+  share
 }: Props) => {
   const [visible, setVisible] = useState(false)
 
@@ -56,6 +58,14 @@ const SheetMenu = ({
           toggleFavorite()
         }}
         title={i18n.t('favorite')}
+      />
+      <Menu.Item
+        leadingIcon="share-variant"
+        onPress={() => {
+          setVisible(false)
+          share()
+        }}
+        title={i18n.t('share')}
       />
       <Menu.Item
         testID="SheetMenu-delete-button"
