@@ -4,17 +4,14 @@ import { Stack, useRouter } from 'expo-router'
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, View, SafeAreaView } from 'react-native'
-import { Appbar, Snackbar, Searchbar, useTheme } from 'react-native-paper'
+import { Appbar, Searchbar, useTheme } from 'react-native-paper'
 
+import Snackbar from '../components/common/Snackbar'
 import AddSheet from '../components/home/addsheet/AddSheet'
 import DetailsDialog from '../components/home/addsheet/DetailsDialog'
 import Filter from '../components/home/menu/filter/filter'
 import Sheets from '../components/home/sheets/Sheets'
-import {
-  useFileStore,
-  useSnackbarStore,
-  useSnackbarMessageStore
-} from '../store/store'
+import { useFileStore } from '../store/store'
 import { savePdf } from '../utils'
 import {
   getFirstlaunch,
@@ -26,7 +23,7 @@ import {
 const Home = () => {
   const { colors } = useTheme()
 
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const router = useRouter()
 
@@ -36,11 +33,6 @@ const Home = () => {
   const searchQuery = useFileStore((state) => state.searchQuery)
   const setSearchQuery = useFileStore((state) => state.setSearchQuery)
   const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)
-
-  const snackbarVisible = useSnackbarStore((state) => state.visible)
-  const setSnackbarVisible = useSnackbarStore((state) => state.setVisible)
-
-  const snackbarMessage = useSnackbarMessageStore((state) => state.message)
 
   useEffect(() => {
     const init = async () => {
@@ -82,7 +74,7 @@ const Home = () => {
               {isSearchVisible && (
                 <Searchbar
                   mode="bar"
-                  placeholder={i18n.t('search')}
+                  placeholder={t('search')}
                   value={searchQuery}
                   onChangeText={setSearchQuery}
                   autoFocus
@@ -127,13 +119,7 @@ const Home = () => {
 
       <DetailsDialog />
 
-      <Snackbar
-        visible={snackbarVisible}
-        onDismiss={() => setSnackbarVisible(false)}
-        duration={3000}
-      >
-        {`${snackbarMessage.action}: ${snackbarMessage.text}`}
-      </Snackbar>
+      <Snackbar />
     </SafeAreaView>
   )
 }

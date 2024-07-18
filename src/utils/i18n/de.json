@@ -25,5 +25,12 @@
   "set-language": "Sprache wählen",
   "german": "Deutsch",
   "english": "Englisch",
-  "favorite": "Favorit"
+  "favorite": "Favorit",
+  "files": "Dateien",
+  "select-files": "Dateien auswählen",
+  "export": "Exportieren",
+  "export-failed": "Export fehlgeschlagen",
+  "export-failed-description": "Das ausgewählte Verzeichnis ist nicht beschreibbar. Bitte wählen Sie ein anderes Verzeichnis.",
+  "all": "Alle",
+  "successful": "erfolgreich"
 }

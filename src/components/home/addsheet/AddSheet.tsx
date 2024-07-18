@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { Button, Menu } from 'react-native-paper'
 
@@ -12,7 +11,6 @@ import i18n from '@/src/utils/i18n'
 
 const AddSheet = () => {
   const [visible, setVisible] = useState(false)
-  const { t } = useTranslation()
 
   const loadMetaData = useFileStore((store) => store.loadAllMetadata)
 
@@ -68,7 +66,7 @@ const AddSheet = () => {
             mode="contained"
             onPress={() => setVisible(true)}
           >
-            {t('add')}
+            {i18n.t('add')}
           </Button>
         }
       >

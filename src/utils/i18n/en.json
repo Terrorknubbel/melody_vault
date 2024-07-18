@@ -25,5 +25,12 @@
   "set-language": "Set language",
   "german": "German",
   "english": "English",
-  "favorite": "Favorite"
+  "favorite": "Favorite",
+  "files": "files",
+  "select-files": "Select files",
+  "export": "Export",
+  "export-failed": "Export failed",
+  "export-failed-description": "Selected directory is not writable. Please choose another directory.",
+  "all": "All",
+  "successful": "successful"
 }

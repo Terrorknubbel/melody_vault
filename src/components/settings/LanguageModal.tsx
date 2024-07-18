@@ -32,7 +32,7 @@ const LanguageModal = ({ visible, setVisible }: Props) => {
         onDismiss={() => setVisible(false)}
         style={{ marginLeft: 'auto', marginRight: 'auto' }}
       >
-        <Dialog.Title>{i18n.t('set-language')}</Dialog.Title>
+        <Dialog.Title>{t('set-language')}</Dialog.Title>
         <Dialog.Content style={{ paddingHorizontal: 20 }}>
           <View
             style={{
@@ -63,13 +63,13 @@ const LanguageModal = ({ visible, setVisible }: Props) => {
               onPress={() => setLanguage('en')}
             />
             <Text variant="bodyLarge" onPress={() => setLanguage('en')}>
-              {i18n.t('english')}
+              {t('english')}
             </Text>
           </View>
         </Dialog.Content>
         <Dialog.Actions style={{ gap: 5 }}>
           <Button mode="text" onPress={save}>
-            {i18n.t('save')}
+            {t('save')}
           </Button>
         </Dialog.Actions>
       </Dialog>

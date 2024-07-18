@@ -4,9 +4,11 @@ import { Linking } from 'react-native'
 import { Appbar, Divider, List, Switch, useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import LanguageModal from './LanguageModal'
 import styles from './settings.style'
+import LanguageModal from '../../components/settings/LanguageModal'
 
+import Snackbar from '@/src/components/common/Snackbar'
+import ExportModal from '@/src/components/settings/ExportModal'
 import Subheader from '@/src/components/settings/Subheader'
 import { PreferencesContext } from '@/src/utils/PreferencesContext'
 import i18n from '@/src/utils/i18n'
@@ -18,6 +20,7 @@ const Settings = () => {
   const { toggleTheme, isThemeDark } = useContext(PreferencesContext)
 
   const [languageModalVisible, setLanguageModalVisible] = useState(false)
+  const [exportModalVisible, setExportModalVisible] = useState(false)
 
   const openLink = (url: string) => {
     Linking.openURL(url).catch((err) =>
@@ -72,6 +75,18 @@ const Settings = () => {
           onPress={() => setLanguageModalVisible(true)}
           left={() => <List.Icon icon="translate" />}
         />
+        <Subheader
+          text={
+            i18n.t('files').charAt(0).toUpperCase() + i18n.t('files').slice(1)
+          }
+        />
+        <List.Item
+          title={i18n.t('export')}
+          titleStyle={styles.itemTitle}
+          style={styles.item}
+          onPress={() => setExportModalVisible(true)}
+          left={() => <List.Icon icon="download" />}
+        />
         <Divider horizontalInset style={{ marginVertical: 15 }} />
         <Subheader text={i18n.t('help')} />
         <List.Item
@@ -102,6 +117,11 @@ const Settings = () => {
         visible={languageModalVisible}
         setVisible={setLanguageModalVisible}
       />
+      <ExportModal
+        visible={exportModalVisible}
+        setVisible={setExportModalVisible}
+      />
+      <Snackbar />
     </SafeAreaView>
   )
 }

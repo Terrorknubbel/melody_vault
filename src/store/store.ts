@@ -17,6 +17,8 @@ interface FileStoreState {
 interface SnackbarStoreState {
   visible: boolean
   setVisible: (visible: boolean) => void
+  duration: number
+  setDuration: (duration: number) => void
 }
 
 interface SnackbarMessageStoreState {
@@ -54,7 +56,9 @@ export const useFileStore = create<FileStoreState>((set) => ({
 
 export const useSnackbarStore = create<SnackbarStoreState>((set) => ({
   visible: false,
-  setVisible: (visible) => set({ visible })
+  setVisible: (visible) => set({ visible }),
+  duration: 3000,
+  setDuration: (duration) => set({ duration })
 }))
 
 export const useSnackbarMessageStore = create<SnackbarMessageStoreState>(

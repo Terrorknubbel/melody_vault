@@ -61,7 +61,8 @@ const savePdf = async ({ filename, composer, filepath }: SheetMetadata) => {
   await DB.saveFile({
     filename,
     composer,
-    filepath: downloadDest
+    filepath: downloadDest,
+    favorite: false
   })
 }
 
