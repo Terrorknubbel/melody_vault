@@ -14,6 +14,7 @@ import {
 
 import styles from './exportModal.style'
 
+import { SnackbarMode } from '@/src/shared/enums'
 import { FileData } from '@/src/shared/types'
 import {
   useFileStore,
@@ -45,6 +46,7 @@ const ExportModal = ({ visible, setVisible }: Props) => {
     (store) => store.setMessage
   )
   const setSnackbarDuration = useSnackbarStore((store) => store.setDuration)
+  const setSnackbarMode = useSnackbarStore((store) => store.setMode)
 
   const handleExport = async () => {
     setVisible(false)
@@ -71,6 +73,7 @@ const ExportModal = ({ visible, setVisible }: Props) => {
         text: t('export-failed-description')
       })
       setSnackbarDuration(6000)
+      setSnackbarMode(SnackbarMode.Error)
       setSnackbarVisible(true)
       return
     }
@@ -97,7 +100,6 @@ const ExportModal = ({ visible, setVisible }: Props) => {
       action: 'Export ' + i18n.t('successful'),
       text: selectedFiles.length + ' ' + i18n.t('files')
     })
-    setSnackbarDuration(3000)
     setSnackbarVisible(true)
   }
 

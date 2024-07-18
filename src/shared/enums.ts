@@ -3,3 +3,8 @@ export const enum FilterEnum {
   TitleDesc,
   CreatedAt
 }
+
+export const enum SnackbarMode {
+  Success,
+  Error
+}

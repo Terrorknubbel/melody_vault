@@ -28,8 +28,6 @@ const SheetDestroyDialog = ({
   const setSnackbarMessage = useSnackbarMessageStore(
     (store) => store.setMessage
   )
-  const setSnackbarDuration = useSnackbarStore((store) => store.setDuration)
-
   const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)
 
   const deleteSheet = async (): Promise<void> => {
@@ -41,7 +39,6 @@ const SheetDestroyDialog = ({
     loadAllMetadata()
 
     setSnackbarMessage({ action: 'Gelöscht', text: sheetName })
-    setSnackbarDuration(3000)
     setSnackbarVisible(true)
     setVisible(false)
   }

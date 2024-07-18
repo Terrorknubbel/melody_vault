@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { FilterEnum } from '../shared/enums'
+import { FilterEnum, SnackbarMode } from '../shared/enums'
 import type { FileData, SheetMetadata } from '../shared/types'
 import * as DB from '../utils/db'
 
@@ -19,6 +19,8 @@ interface SnackbarStoreState {
   setVisible: (visible: boolean) => void
   duration: number
   setDuration: (duration: number) => void
+  mode: SnackbarMode
+  setMode: (mode: SnackbarMode) => void
 }
 
 interface SnackbarMessageStoreState {
@@ -58,7 +60,9 @@ export const useSnackbarStore = create<SnackbarStoreState>((set) => ({
   visible: false,
   setVisible: (visible) => set({ visible }),
   duration: 3000,
-  setDuration: (duration) => set({ duration })
+  setDuration: (duration) => set({ duration }),
+  mode: SnackbarMode.Success,
+  setMode: (mode) => set({ mode })
 }))
 
 export const useSnackbarMessageStore = create<SnackbarMessageStoreState>(

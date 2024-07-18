@@ -60,7 +60,7 @@ const colorScheme = {
     tertiaryContainer: 'rgb(255, 217, 221)',
     onTertiaryContainer: 'rgb(50, 16, 23)',
     error: 'rgb(186, 26, 26)',
-    onError: 'rgb(255, 255, 255)',
+    onError: 'rgb(160, 20, 5)',
     errorContainer: 'rgb(255, 218, 214)',
     onErrorContainer: 'rgb(65, 0, 2)',
     background: 'rgb(243, 240, 245)',
