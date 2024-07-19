@@ -1,6 +1,5 @@
 import * as FileSystem from 'expo-file-system'
 import { StorageAccessFramework } from 'expo-file-system'
-import { t } from 'i18next'
 import { useState } from 'react'
 import { ScrollView } from 'react-native'
 import {
@@ -69,8 +68,8 @@ const ExportModal = ({ visible, setVisible }: Props) => {
       )
     ) {
       setSnackbarMessage({
-        action: t('export-failed'),
-        text: t('export-failed-description')
+        action: i18n.t('export-failed'),
+        text: i18n.t('export-failed-description')
       })
       setSnackbarDuration(6000)
       setSnackbarMode(SnackbarMode.Error)
@@ -98,7 +97,10 @@ const ExportModal = ({ visible, setVisible }: Props) => {
 
     setSnackbarMessage({
       action: 'Export ' + i18n.t('successful'),
-      text: selectedFiles.length + ' ' + i18n.t('files')
+      text:
+        selectedFiles.length +
+        ' ' +
+        (selectedFiles.length > 1 ? i18n.t('files') : i18n.t('file'))
     })
     setSnackbarVisible(true)
   }
