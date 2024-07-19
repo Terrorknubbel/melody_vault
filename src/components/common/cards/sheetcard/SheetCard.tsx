@@ -1,4 +1,6 @@
+import { cacheDirectory, copyAsync } from 'expo-file-system'
 import { useRouter } from 'expo-router'
+import { shareAsync } from 'expo-sharing'
 import { useState } from 'react'
 import { View } from 'react-native'
 import { Icon, List, useTheme } from 'react-native-paper'
@@ -66,6 +68,17 @@ const SheetCard = ({ sheetKey, name, composer, favorite }: Props) => {
     loadMetaData()
   }
 
+  const share = async () => {
+    const fileUri = await getFilepath(sheetKey)
+    const shareUri = `${cacheDirectory}${name}.pdf`
+    await copyAsync({
+      from: fileUri,
+      to: shareUri
+    })
+
+    shareAsync(shareUri)
+  }
+
   const redirect = (key: number): void => router.push(`/sheet/${key}`)
 
   return (
@@ -94,6 +107,7 @@ const SheetCard = ({ sheetKey, name, composer, favorite }: Props) => {
             handleEdit={editSheetMenu}
             favorite={favorite}
             toggleFavorite={handleToggleFavorite}
+            share={share}
           />
         )}
       />

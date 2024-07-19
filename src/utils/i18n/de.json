@@ -32,5 +32,6 @@
   "export-failed": "Export fehlgeschlagen",
   "export-failed-description": "Das ausgewählte Verzeichnis ist nicht beschreibbar. Bitte wählen Sie ein anderes Verzeichnis.",
   "all": "Alle",
-  "successful": "erfolgreich"
+  "successful": "erfolgreich",
+  "share": "Teilen"
 }

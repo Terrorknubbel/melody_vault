@@ -32,5 +32,6 @@
   "export-failed": "Export failed",
   "export-failed-description": "Selected directory is not writable. Please choose another directory.",
   "all": "All",
-  "successful": "successful"
+  "successful": "successful",
+  "share": "Share"
 }
