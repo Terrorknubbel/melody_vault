@@ -2,7 +2,7 @@ import * as FileSystem from 'expo-file-system'
 import { StorageAccessFramework } from 'expo-file-system'
 import { t } from 'i18next'
 import { useState } from 'react'
-import { ScrollView, View } from 'react-native'
+import { ScrollView } from 'react-native'
 import {
   Button,
   Dialog,
