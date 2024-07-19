@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     paddingTop: verticalScale(5),
     paddingRight: horizontalScale(5),
     paddingBottom: verticalScale(5)
-  }
+  },
+  itemContent: { marginTop: -2 }
 })
 
 export default styles

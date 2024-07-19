@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Menu, IconButton } from 'react-native-paper'
 
+import styles from './sheetMenu.style'
+
 import i18n from '@/src/utils/i18n'
 
 interface Props {
@@ -49,6 +51,7 @@ const SheetMenu = ({
           setVisible(false)
           handleEdit()
         }}
+        contentStyle={styles.itemContent}
         title={i18n.t('edit')}
       />
       <Menu.Item
@@ -57,6 +60,7 @@ const SheetMenu = ({
           setVisible(false)
           toggleFavorite()
         }}
+        contentStyle={styles.itemContent}
         title={i18n.t('favorite')}
       />
       <Menu.Item
@@ -65,12 +69,14 @@ const SheetMenu = ({
           setVisible(false)
           share()
         }}
+        contentStyle={styles.itemContent}
         title={i18n.t('share')}
       />
       <Menu.Item
         testID="SheetMenu-delete-button"
         leadingIcon="delete"
         onPress={destroy}
+        contentStyle={styles.itemContent}
         title={i18n.t('delete')}
       />
     </Menu>

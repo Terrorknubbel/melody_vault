@@ -60,6 +60,7 @@ const Settings = () => {
           title={i18n.t('dark-mode')}
           titleStyle={styles.itemTitle}
           style={styles.item}
+          contentStyle={styles.listContent}
           left={() => <List.Icon icon="theme-light-dark" />}
           right={() => (
             <Switch value={isThemeDark} onValueChange={toggleTheme} />
@@ -72,6 +73,7 @@ const Settings = () => {
           }
           titleStyle={styles.itemTitle}
           style={styles.item}
+          contentStyle={styles.listContent}
           onPress={() => setLanguageModalVisible(true)}
           left={() => <List.Icon icon="translate" />}
         />
@@ -84,6 +86,7 @@ const Settings = () => {
           title={i18n.t('export')}
           titleStyle={styles.itemTitle}
           style={styles.item}
+          contentStyle={styles.listContent}
           onPress={() => setExportModalVisible(true)}
           left={() => <List.Icon icon="download" />}
         />
@@ -94,6 +97,7 @@ const Settings = () => {
           onPress={() => router.push('/settings/Licenses')}
           titleStyle={styles.itemTitle}
           style={styles.item}
+          contentStyle={styles.listContent}
           left={() => <List.Icon icon="file-document-multiple-outline" />}
         />
         <List.Item
@@ -101,6 +105,7 @@ const Settings = () => {
           onPress={() => openLink('mailto:w.macher3@gmail.com')}
           titleStyle={styles.itemTitle}
           style={styles.item}
+          contentStyle={styles.listContent}
           left={() => <List.Icon icon="email-check-outline" />}
         />
         <List.Item
@@ -110,6 +115,7 @@ const Settings = () => {
           }
           titleStyle={styles.itemTitle}
           style={styles.item}
+          contentStyle={styles.listContent}
           left={() => <List.Icon icon="github" />}
         />
       </List.Section>

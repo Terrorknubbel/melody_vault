@@ -73,11 +73,13 @@ const AddSheet = () => {
         <Menu.Item
           leadingIcon="file-image-plus-outline"
           onPress={() => handleUpload(true)}
+          contentStyle={styles.itemContent}
           title={i18n.t('scan')}
         />
         <Menu.Item
           leadingIcon="file-pdf-box"
           onPress={() => handleUpload(false)}
+          contentStyle={styles.itemContent}
           title={i18n.t('pdf-upload')}
         />
       </Menu>
