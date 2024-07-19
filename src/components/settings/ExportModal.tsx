@@ -109,52 +109,53 @@ const ExportModal = ({ visible, setVisible }: Props) => {
 
   return (
     <Portal>
-      <Dialog visible onDismiss={() => setVisible(false)}>
+      <Dialog visible onDismiss={() => setVisible(false)} style={styles.dialog}>
         <Dialog.Title>{i18n.t('select-files')}</Dialog.Title>
-        <Dialog.Content>
-          <View style={styles.selectionContainer}>
-            <Checkbox.Item
-              label={i18n.t('all')}
-              status={allChecked ? 'checked' : 'unchecked'}
-              position="leading"
-              labelStyle={styles.checkboxLabel}
-              style={[styles.checkbox, { paddingTop: 0 }]}
-              onPress={() => {
-                setAllChecked(!allChecked)
-                const tempArr = [...filesToSelect]
-                tempArr.forEach((fileData) => {
-                  fileData.checked = !allChecked
-                })
-                setFilesToSelect(tempArr)
-              }}
-            />
-            <Divider bold style={styles.divider} />
-            <ScrollView
-              showsVerticalScrollIndicator
-              keyboardShouldPersistTaps="handled"
-              style={{ maxHeight: verticalScale(350) }}
-            >
-              {filesToSelect.map((fileData, index) => (
-                <Checkbox.Item
-                  key={index}
-                  label={fileData.filename}
-                  labelStyle={styles.checkboxLabel}
-                  status={fileData.checked ? 'checked' : 'unchecked'}
-                  position="leading"
-                  style={[styles.checkbox, { paddingVertical: 3 }]}
-                  onPress={() => {
-                    const tempArr = [...filesToSelect]
-                    tempArr.splice(index, 1, {
-                      ...fileData,
-                      checked: !fileData.checked
-                    })
-                    setFilesToSelect(tempArr)
-                    setAllChecked(tempArr.every((file) => file.checked))
-                  }}
-                />
-              ))}
-            </ScrollView>
-          </View>
+        <Dialog.Content style={styles.content}>
+          <Checkbox.Item
+            label={i18n.t('all')}
+            status={allChecked ? 'checked' : 'unchecked'}
+            position="leading"
+            labelStyle={styles.checkboxLabel}
+            style={[styles.checkbox, { paddingTop: 0 }]}
+            onPress={() => {
+              setAllChecked(!allChecked)
+              const tempArr = [...filesToSelect]
+              tempArr.forEach((fileData) => {
+                fileData.checked = !allChecked
+              })
+              setFilesToSelect(tempArr)
+            }}
+          />
+          <Divider bold style={styles.divider} />
+          <ScrollView
+            showsVerticalScrollIndicator
+            keyboardShouldPersistTaps="handled"
+            style={{
+              flexGrow: 0,
+              maxHeight: verticalScale(350)
+            }}
+          >
+            {filesToSelect.map((fileData, index) => (
+              <Checkbox.Item
+                key={index}
+                label={fileData.filename}
+                labelStyle={styles.checkboxLabel}
+                status={fileData.checked ? 'checked' : 'unchecked'}
+                position="leading"
+                style={[styles.checkbox, { paddingVertical: 3 }]}
+                onPress={() => {
+                  const tempArr = [...filesToSelect]
+                  tempArr.splice(index, 1, {
+                    ...fileData,
+                    checked: !fileData.checked
+                  })
+                  setFilesToSelect(tempArr)
+                  setAllChecked(tempArr.every((file) => file.checked))
+                }}
+              />
+            ))}
+          </ScrollView>
         </Dialog.Content>
         <Dialog.Actions style={styles.actions}>
           <Button

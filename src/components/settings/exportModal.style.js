@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
-  selectionContainer: { alignItems: 'flex-start' },
+  dialog: { marginLeft: 'auto', marginRight: 'auto', maxWidth: '90%' },
+  content: { alignItems: 'flex-start' },
   checkboxLabel: { textAlign: 'left' },
-  checkbox: { paddingLeft: 0, width: '100%' },
+  checkbox: { paddingLeft: 0 },
   divider: { width: '100%' },
   actions: { gap: 5 },
   button: { borderRadius: 5 }
