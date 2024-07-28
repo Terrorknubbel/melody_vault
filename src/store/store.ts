@@ -5,6 +5,7 @@ import type { FileData, SheetMetadata } from '../shared/types'
 import * as DB from '../utils/db'
 
 interface FileStoreState {
+  initFilter: () => Promise<void>
   fileList: FileData[]
   setFileList: (fileList: FileData[]) => void
   loadAllMetadata: () => Promise<void>
@@ -59,6 +60,10 @@ export const useFileStore = create<FileStoreState>((set) => ({
   },
   searchQuery: '',
   setSearchQuery: (query: string) => set({ searchQuery: query }),
+  initFilter: async () => {
+    const filter = await DB.getFilter()
+    set({ filter })
+  },
   filter: FilterEnum.TitleAsc,
   setFilter: async (filter: FilterEnum) => {
     await DB.setFilter(filter)

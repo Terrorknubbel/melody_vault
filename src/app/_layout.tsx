@@ -11,7 +11,6 @@ import { useFileStore, useStreakStore } from '../store/store'
 import { PreferencesContext } from '../utils/PreferencesContext'
 import {
   getDarkmode,
-  getFilter,
   getLastOpened,
   initDatabase,
   setDarkmode,
@@ -42,6 +41,8 @@ function Layout() {
   const theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme
 
   const initStreak = useStreakStore((state) => state.initStreak)
+  const initFilter = useFileStore((state) => state.initFilter)
+
   const streak = useStreakStore((state) => state.streak)
   const setStreak = useStreakStore((state) => state.setStreak)
   const setStreakVisible = useStreakStore((state) => state.setStreakVisible)
@@ -70,20 +71,18 @@ function Layout() {
       await initDatabase()
 
       const darkmode = await getDarkmode()
-      const filter = await getFilter()
 
       if (darkmode !== null) {
         setIsThemeDark(darkmode)
       }
 
-      setFilter(filter)
-
+      await initFilter()
       await initStreak()
       setInitialized(true)
     }
 
     init()
-  }, [setFilter, initStreak])
+  }, [setFilter, initStreak, initFilter])
 
   useEffect(() => {
     const init = async () => {
