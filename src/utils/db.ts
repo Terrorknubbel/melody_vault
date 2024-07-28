@@ -182,7 +182,7 @@ export const getLastOpened = async (): Promise<number> => {
     last_opened: number | null
   }
 
-  return row.last_opened ?? 0
+  return row?.last_opened ?? 0
 }
 
 export const setLastOpened = async (last_opened: number) => {
@@ -202,7 +202,7 @@ export const getStreak = async (): Promise<number> => {
     streak: number | null
   }
 
-  return row.streak ?? 1
+  return row?.streak ?? 1
 }
 
 export const setStreak = async (streak: number) => {
@@ -247,7 +247,7 @@ export const getLanguage = async (): Promise<string> => {
     language: string | null
   }
 
-  return row.language ?? ''
+  return row?.language ?? ''
 }
 
 export const setLanguage = async (language: string) => {
