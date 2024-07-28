@@ -2,7 +2,7 @@
   "expo": {
     "name": "Melody Vault",
     "slug": "melody_vault",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "orientation": "default",
     "icon": "./src/assets/images/icon.png",
     "scheme": "melodyvault",
@@ -30,7 +30,7 @@
         "android.permission.ACCESS_NETWORK_STATE"
       ],
       "package": "com.anonymous.melody_vault",
-      "versionCode": 5
+      "versionCode": 6
     },
     "web": {
       "bundler": "metro",
