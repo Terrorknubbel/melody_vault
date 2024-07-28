@@ -40,11 +40,7 @@ const Settings = () => {
     setStreakAllowed(newStreakAllowed)
   }
 
-  const openLink = (url: string) => {
-    Linking.openURL(url).catch((err) =>
-      console.error('Failed to open URL:', err)
-    )
-  }
+  const openLink = (url: string) => Linking.openURL(url)
 
   return (
     <SafeAreaView
