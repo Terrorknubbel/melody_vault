@@ -41,6 +41,16 @@ interface DetailsModalStoreState {
   setHandleSave: (handleSave: (metadata: SheetMetadata) => void) => void
 }
 
+interface StreakStoreState {
+  initStreak: () => Promise<void>
+  streak: number
+  setStreak: (streak: number) => void
+  streakVisible: boolean
+  setStreakVisible: (streakVisible: boolean) => void
+  streakAllowed: boolean
+  setStreakAllowed: (streakAllowed: boolean) => void
+}
+
 export const useFileStore = create<FileStoreState>((set) => ({
   fileList: [],
   setFileList: (fileList) => set({ fileList }),
@@ -83,4 +93,26 @@ export const useDetailsModalStore = create<DetailsModalStoreState>((set) => ({
   setFileUri: (fileUri) => set({ fileUri }),
   handleSave: () => {},
   setHandleSave: (handleSave) => set({ handleSave })
+}))
+
+export const useStreakStore = create<StreakStoreState>((set) => ({
+  initStreak: async () => {
+    const streak = await DB.getStreak()
+    set({ streak })
+
+    const streakAllowed = await DB.getStreakAllowed()
+    set({ streakAllowed })
+  },
+  streak: 0,
+  setStreak: async (streak) => {
+    await DB.setStreak(streak)
+    set({ streak })
+  },
+  streakVisible: false,
+  setStreakVisible: (streakVisible) => set({ streakVisible }),
+  streakAllowed: false,
+  setStreakAllowed: async (streakAllowed) => {
+    await DB.setStreakAllowed(streakAllowed)
+    set({ streakAllowed })
+  }
 }))

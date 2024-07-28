@@ -10,6 +10,7 @@ import LanguageModal from '../../components/settings/LanguageModal'
 import Snackbar from '@/src/components/common/Snackbar'
 import ExportModal from '@/src/components/settings/ExportModal'
 import Subheader from '@/src/components/settings/Subheader'
+import { useStreakStore } from '@/src/store/store'
 import { PreferencesContext } from '@/src/utils/PreferencesContext'
 import i18n from '@/src/utils/i18n'
 
@@ -21,6 +22,23 @@ const Settings = () => {
 
   const [languageModalVisible, setLanguageModalVisible] = useState(false)
   const [exportModalVisible, setExportModalVisible] = useState(false)
+
+  const streak = useStreakStore((state) => state.streak)
+
+  const streakAllowed = useStreakStore((state) => state.streakAllowed)
+  const setStreakAllowed = useStreakStore((state) => state.setStreakAllowed)
+
+  const setStreakVisible = useStreakStore((state) => state.setStreakVisible)
+
+  const toggleStreak = async () => {
+    const newStreakAllowed = !streakAllowed
+
+    if (newStreakAllowed) {
+      setStreakVisible(newStreakAllowed)
+    }
+
+    setStreakAllowed(newStreakAllowed)
+  }
 
   const openLink = (url: string) => {
     Linking.openURL(url).catch((err) =>
@@ -64,6 +82,17 @@ const Settings = () => {
           left={() => <List.Icon icon="theme-light-dark" />}
           right={() => (
             <Switch value={isThemeDark} onValueChange={toggleTheme} />
+          )}
+        />
+        <List.Item
+          title={i18n.t('streak-setting-title')}
+          description={i18n.t('streak-setting-description') + ': ' + streak}
+          titleStyle={styles.itemTitle}
+          style={styles.item}
+          contentStyle={styles.listContent}
+          left={() => <List.Icon icon="fire" />}
+          right={() => (
+            <Switch value={streakAllowed} onValueChange={toggleStreak} />
           )}
         />
         <List.Item

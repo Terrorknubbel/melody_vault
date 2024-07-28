@@ -34,5 +34,7 @@
   "export-failed-description": "Das ausgewählte Verzeichnis ist nicht beschreibbar. Bitte wählen Sie ein anderes Verzeichnis.",
   "all": "Alle",
   "successful": "erfolgreich",
-  "share": "Teilen"
+  "share": "Teilen",
+  "streak-setting-title": "Streak beim Start anzeigen",
+  "streak-setting-description": "Aktuelle Tages-Streak"
 }

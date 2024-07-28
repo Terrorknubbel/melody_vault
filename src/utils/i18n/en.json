@@ -34,5 +34,7 @@
   "export-failed-description": "Selected directory is not writable. Please choose another directory.",
   "all": "All",
   "successful": "successful",
-  "share": "Share"
+  "share": "Share",
+  "streak-setting-title": "Display streak on startup",
+  "streak-setting-description": "Current day streak"
 }

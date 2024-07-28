@@ -18,14 +18,20 @@ const getDatabaseVersion = async () => {
 
 const applyMigrations = async () => {
   const db = await openDatabase()
-  const currentVersion = await getDatabaseVersion()
+  let currentVersion = await getDatabaseVersion()
 
-  const migrations = ['ALTER TABLE filedata ADD COLUMN favorite INTEGER']
+  const migrations = [
+    'ALTER TABLE filedata ADD COLUMN favorite INTEGER',
+    'ALTER TABLE preferences ADD COLUMN last_opened INTEGER',
+    'ALTER TABLE preferences ADD COLUMN streak INTEGER',
+    'ALTER TABLE preferences ADD COLUMN streak_allowed INTEGER'
+  ]
 
   migrations.forEach((migration, i) => {
     if (currentVersion === i) {
       db.runSync(migration)
       db.runSync(`PRAGMA user_version = ${i + 1}`)
+      currentVersion = i + 1
     }
   })
 }
@@ -109,11 +115,10 @@ export const getDarkmode = async (): Promise<boolean | null> => {
 export const setDarkmode = async (darkmode: boolean) => {
   const db = await openDatabase()
 
-  const isDarkmode = darkmode ? 1 : 0
   await db.runAsync(
     'INSERT INTO preferences (id, darkmode) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET darkmode = excluded.darkmode',
     1,
-    isDarkmode
+    Number(darkmode)
   )
 }
 
@@ -168,6 +173,73 @@ export const setFirstlaunch = async (firstlaunch: boolean) => {
   )
 }
 
+export const getLastOpened = async (): Promise<number> => {
+  const db = await openDatabase()
+
+  const row = (await db.getFirstAsync(
+    'SELECT last_opened FROM preferences'
+  )) as {
+    last_opened: number | null
+  }
+
+  return row.last_opened ?? 0
+}
+
+export const setLastOpened = async (last_opened: number) => {
+  const db = await openDatabase()
+
+  await db.runAsync(
+    'INSERT INTO preferences (id, last_opened) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET last_opened = excluded.last_opened',
+    1,
+    last_opened
+  )
+}
+
+export const getStreak = async (): Promise<number> => {
+  const db = await openDatabase()
+
+  const row = (await db.getFirstAsync('SELECT streak FROM preferences')) as {
+    streak: number | null
+  }
+
+  return row.streak ?? 1
+}
+
+export const setStreak = async (streak: number) => {
+  const db = await openDatabase()
+
+  await db.runAsync(
+    'INSERT INTO preferences (id, streak) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET streak = excluded.streak',
+    1,
+    streak
+  )
+}
+
+export const getStreakAllowed = async (): Promise<boolean> => {
+  const db = await openDatabase()
+
+  const row = (await db.getFirstAsync(
+    'SELECT streak_allowed FROM preferences'
+  )) as {
+    streak_allowed: number | null
+  }
+
+  if (!row || !row.streak_allowed) {
+    return false
+  }
+
+  return row.streak_allowed === 1
+}
+
+export const setStreakAllowed = async (streakAllowed: boolean) => {
+  const db = await openDatabase()
+  await db.runAsync(
+    'INSERT INTO preferences (id, streak_allowed) VALUES (?, ?) ON CONFLICT(id) DO UPDATE SET streak_allowed = excluded.streak_allowed',
+    1,
+    Number(streakAllowed)
+  )
+}
+
 export const getLanguage = async (): Promise<string> => {
   const db = await openDatabase()
 
@@ -208,10 +280,9 @@ export const getFavorite = async (id: number): Promise<boolean> => {
 export const setFavorite = async (id: number, favorite: boolean) => {
   const db = await openDatabase()
 
-  const isFavorite = favorite ? 1 : 0
   await db.runAsync(
     'UPDATE filedata SET favorite = ? WHERE id = ?',
-    isFavorite,
+    Number(favorite),
     id
   )
 }

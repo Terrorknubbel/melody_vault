@@ -6,10 +6,20 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { View, useColorScheme } from 'react-native'
 import { PaperProvider } from 'react-native-paper'
 
-import { useFileStore } from '../store/store'
+import Streak from '../components/common/Streak'
+import { useFileStore, useStreakStore } from '../store/store'
 import { PreferencesContext } from '../utils/PreferencesContext'
-import { getDarkmode, getFilter, initDatabase, setDarkmode } from '../utils/db'
+import {
+  getDarkmode,
+  getFilter,
+  getLastOpened,
+  initDatabase,
+  setDarkmode,
+  setLastOpened
+} from '../utils/db'
 import { CombinedDarkTheme, CombinedDefaultTheme } from '../utils/theme'
+
+const dayjs = require('dayjs')
 
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation()
 
@@ -30,6 +40,14 @@ function Layout() {
   const [isThemeDark, setIsThemeDark] = useState(useColorScheme() === 'dark')
 
   const theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme
+
+  const initStreak = useStreakStore((state) => state.initStreak)
+  const streak = useStreakStore((state) => state.streak)
+  const setStreak = useStreakStore((state) => state.setStreak)
+  const setStreakVisible = useStreakStore((state) => state.setStreakVisible)
+
+  const [initialized, setInitialized] = useState(false)
+  const [isStreakInitialized, setIsStreakInitialized] = useState(false)
 
   const setFilter = useFileStore((state) => state.setFilter)
 
@@ -59,10 +77,44 @@ function Layout() {
       }
 
       setFilter(filter)
+
+      await initStreak()
+      setInitialized(true)
     }
 
     init()
-  }, [setFilter])
+  }, [setFilter, initStreak])
+
+  useEffect(() => {
+    const init = async () => {
+      const lastOpenedUTC = await getLastOpened()
+      const currentTimeUTC = new Date().getTime()
+
+      if (lastOpenedUTC === 0) {
+        await setLastOpened(currentTimeUTC)
+        setStreakVisible(true)
+        return
+      }
+
+      const dayDiff = dayjs(currentTimeUTC).diff(lastOpenedUTC, 'day')
+
+      if (dayDiff === 0) return
+
+      if (dayDiff === 1) {
+        setStreak(streak + 1)
+      } else {
+        setStreak(1)
+      }
+
+      await setLastOpened(currentTimeUTC)
+      setStreakVisible(true)
+    }
+
+    if (initialized && !isStreakInitialized) {
+      init()
+      setIsStreakInitialized(true)
+    }
+  }, [initialized, streak, setStreak, setStreakVisible, isStreakInitialized])
 
   useEffect(() => {
     if (ref) {
@@ -94,6 +146,7 @@ function Layout() {
           onLayout={onLayoutRootView}
         >
           <Stack />
+          <Streak />
         </View>
       </PaperProvider>
     </PreferencesContext.Provider>
