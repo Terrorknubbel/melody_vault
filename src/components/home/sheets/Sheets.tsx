@@ -1,12 +1,17 @@
+import { NativeEventSubscription } from 'react-native'
 import { List } from 'react-native-paper'
 
 import SheetCard from '@/src/components/common/cards/sheetcard/SheetCard'
 import { FilterEnum } from '@/src/shared/enums'
-import { useFileStore } from '@/src/store/store'
+import { useFileStore, useSearchBarStore } from '@/src/store/store'
 
-const Sheets = () => {
+interface Props {
+  searchBackHandler: NativeEventSubscription
+}
+
+const Sheets = ({ searchBackHandler }: Props) => {
   const fileList = useFileStore((state) => state.fileList)
-  const searchQuery = useFileStore((state) => state.searchQuery)
+  const searchQuery = useSearchBarStore((state) => state.searchQuery)
   const filter = useFileStore((state) => state.filter)
 
   const filteredList = fileList.filter(
@@ -42,6 +47,7 @@ const Sheets = () => {
             name={file.filename}
             composer={file.composer}
             favorite={file.favorite}
+            searchBackHandler={searchBackHandler}
           />
         )
       })}

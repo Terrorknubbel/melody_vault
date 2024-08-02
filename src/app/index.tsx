@@ -1,9 +1,9 @@
 import { useAssets } from 'expo-asset'
 import { getLocales } from 'expo-localization'
 import { Stack, useRouter } from 'expo-router'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, View, SafeAreaView } from 'react-native'
+import { ScrollView, View, SafeAreaView, BackHandler } from 'react-native'
 import { Appbar, Searchbar, useTheme } from 'react-native-paper'
 
 import Snackbar from '../components/common/Snackbar'
@@ -11,7 +11,7 @@ import AddSheet from '../components/home/addsheet/AddSheet'
 import DetailsDialog from '../components/home/addsheet/DetailsDialog'
 import Filter from '../components/home/menu/filter/filter'
 import Sheets from '../components/home/sheets/Sheets'
-import { useFileStore } from '../store/store'
+import { useFileStore, useSearchBarStore } from '../store/store'
 import { savePdf } from '../utils'
 import {
   getFirstlaunch,
@@ -29,10 +29,25 @@ const Home = () => {
 
   const [assets] = useAssets([require('../assets/nocturne.pdf')])
 
-  const [isSearchVisible, setIsSearchVisible] = useState(false)
-  const searchQuery = useFileStore((state) => state.searchQuery)
-  const setSearchQuery = useFileStore((state) => state.setSearchQuery)
+  const searchBarVisible = useSearchBarStore((state) => state.visible)
+  const setSearchBarVisible = useSearchBarStore((state) => state.setVisible)
+
+  const searchQuery = useSearchBarStore((state) => state.searchQuery)
+  const setSearchQuery = useSearchBarStore((state) => state.setSearchQuery)
+
+  const closeSearchBar = useSearchBarStore((state) => state.close)
+
   const loadAllMetadata = useFileStore((state) => state.loadAllMetadata)
+
+  const searchBackHandler = BackHandler.addEventListener(
+    'hardwareBackPress',
+    () => {
+      if (searchBarVisible) {
+        closeSearchBar()
+        return true
+      }
+    }
+  )
 
   useEffect(() => {
     const init = async () => {
@@ -62,16 +77,20 @@ const Home = () => {
     init()
   }, [loadAllMetadata, assets, i18n])
 
+  useEffect(() => {
+    return () => searchBackHandler.remove()
+  }, [searchBackHandler, searchBarVisible])
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
       <Stack.Screen
         options={{
           header: () => (
             <Appbar.Header style={{ backgroundColor: colors.onBackground }}>
-              {!isSearchVisible && (
+              {!searchBarVisible && (
                 <Appbar.Content title="Melody Vault" color={colors.surface} />
               )}
-              {isSearchVisible && (
+              {searchBarVisible && (
                 <Searchbar
                   mode="bar"
                   placeholder={t('search')}
@@ -83,17 +102,14 @@ const Home = () => {
                     backgroundColor: colors.elevation.level2
                   }}
                   icon="arrow-left"
-                  onIconPress={() => {
-                    setSearchQuery('')
-                    setIsSearchVisible(false)
-                  }}
+                  onIconPress={closeSearchBar}
                   placeholderTextColor={colors.outline}
                 />
               )}
               <Appbar.Action
                 icon="magnify"
                 color={colors.surface}
-                onPress={() => setIsSearchVisible(true)}
+                onPress={() => setSearchBarVisible(true)}
               />
               <Filter />
               <Appbar.Action
@@ -111,7 +127,7 @@ const Home = () => {
         keyboardShouldPersistTaps="handled"
       >
         <View style={{ flex: 1 }}>
-          <Sheets />
+          <Sheets searchBackHandler={searchBackHandler} />
         </View>
       </ScrollView>
 

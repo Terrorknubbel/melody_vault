@@ -2,13 +2,17 @@ import { cacheDirectory, copyAsync } from 'expo-file-system'
 import { useRouter } from 'expo-router'
 import { shareAsync } from 'expo-sharing'
 import { useState } from 'react'
-import { View } from 'react-native'
+import { NativeEventSubscription, View } from 'react-native'
 import { Icon, List, useTheme } from 'react-native-paper'
 
 import SheetDestroyDialog from './SheetDestroyDialog'
 import SheetMenu from './SheetMenu'
 
-import { useDetailsModalStore, useFileStore } from '@/src/store/store'
+import {
+  useDetailsModalStore,
+  useFileStore,
+  useSearchBarStore
+} from '@/src/store/store'
 import { getFilepath, setFavorite, updateFile } from '@/src/utils/db'
 
 interface Props {
@@ -16,13 +20,22 @@ interface Props {
   name: string
   composer: string
   favorite: boolean
+  searchBackHandler: NativeEventSubscription
 }
 
-const SheetCard = ({ sheetKey, name, composer, favorite }: Props) => {
+const SheetCard = ({
+  sheetKey,
+  name,
+  composer,
+  favorite,
+  searchBackHandler
+}: Props) => {
   const { colors } = useTheme()
 
   const router = useRouter()
   const [destroyDialogVisible, setDestroyDialogVisible] = useState(false)
+
+  const closeSearchBar = useSearchBarStore((state) => state.close)
 
   const loadMetaData = useFileStore((store) => store.loadAllMetadata)
 
@@ -79,7 +92,12 @@ const SheetCard = ({ sheetKey, name, composer, favorite }: Props) => {
     shareAsync(shareUri)
   }
 
-  const redirect = (key: number): void => router.push(`/sheet/${key}`)
+  const redirect = (key: number): void => {
+    closeSearchBar()
+    searchBackHandler.remove()
+
+    router.push(`/sheet/${key}`)
+  }
 
   return (
     <View>

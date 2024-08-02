@@ -9,10 +9,16 @@ interface FileStoreState {
   fileList: FileData[]
   setFileList: (fileList: FileData[]) => void
   loadAllMetadata: () => Promise<void>
-  searchQuery: string
-  setSearchQuery: (query: string) => void
   filter: FilterEnum
   setFilter: (filter: FilterEnum) => void
+}
+
+interface SearchBarStoreState {
+  visible: boolean
+  setVisible: (visible: boolean) => void
+  close: () => void
+  searchQuery: string
+  setSearchQuery: (searchQuery: string) => void
 }
 
 interface SnackbarStoreState {
@@ -58,8 +64,6 @@ export const useFileStore = create<FileStoreState>((set) => ({
   loadAllMetadata: async () => {
     set({ fileList: await DB.getFiles() })
   },
-  searchQuery: '',
-  setSearchQuery: (query: string) => set({ searchQuery: query }),
   initFilter: async () => {
     const filter = await DB.getFilter()
     set({ filter })
@@ -69,6 +73,16 @@ export const useFileStore = create<FileStoreState>((set) => ({
     await DB.setFilter(filter)
     set({ filter })
   }
+}))
+
+export const useSearchBarStore = create<SearchBarStoreState>((set) => ({
+  visible: false,
+  setVisible: (visible) => set({ visible }),
+  close: () => {
+    set({ visible: false, searchQuery: '' })
+  },
+  searchQuery: '',
+  setSearchQuery: (searchQuery: string) => set({ searchQuery })
 }))
 
 export const useSnackbarStore = create<SnackbarStoreState>((set) => ({
